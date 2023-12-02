@@ -8,7 +8,7 @@
  * @copyright Mcublog Copyright (c) 2022
  *
  */
-#include "common_type.h"
+#include "app/common_type.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME cm
 #if defined(NDEBUG)
@@ -16,7 +16,7 @@
 #else
 #define LOG_MODULE_LEVEL (3)
 #endif
-#include "log_libs.h"
+#include "app/debug/log_libs.h"
 //<<----------------------
 
 //>>---------------------- Public functions

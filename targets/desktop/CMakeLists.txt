@@ -1,0 +1,35 @@
+include(${PROJECT_SOURCE_DIR}/config/common.cmake)
+include(${PROJECT_SOURCE_DIR}/config/desktop.cmake)
+
+# For testing using desktop gcc compiler
+set(CMAKE_C_COMPILER gcc)
+SET(CMAKE_CXX_COMPILER g++)
+
+# Set defines
+add_definitions(-DprojCOVERAGE_TEST=0)
+add_definitions(-D_WINDOWS_)
+add_definitions(-DDESKTOP)
+
+# Add includes dir
+include_directories(${DESKTOP_INCLUDE_DIR} ${PROJECT_SOURCE_DIR})
+# Add sources
+file(GLOB_RECURSE DESKTOP_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+    ${APP_DIR}/*.c
+    ${APP_DIR}/*.cpp
+    ${LIBS_DIR}/SoftwareTimer/*.c)
+
+# Buid DESKTOP target
+add_executable(${DESKTOP_TARGET}
+    ${DESKTOP_SOURCES}
+)
+
+# Include paths
+target_include_directories(${DESKTOP_TARGET} PRIVATE
+    ${PROJECT_SOURCE_DIR}
+    ${APP_DIR}
+)
+
+# # Add pthread
+target_link_libraries(${DESKTOP_TARGET} pthread)

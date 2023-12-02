@@ -1,0 +1,26 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "Firmware",
+            "includePath": [
+                "${workspaceFolder}/app/**"
+            ],
+            "defines": [
+                "ARM_MATH_CM4",
+                "STM32FXX",
+                "USE_STDPERIPH_DRIVER"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/app/**",
+                    "${workspaceFolder}/targets/**"
+                ]
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",
+            "configurationProvider": "go2sh.cmake-integration"
+        }
+    ]
+}

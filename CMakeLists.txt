@@ -34,6 +34,7 @@ LOG_INFO("Desktop target:..." ${DESKTOP_TARGET})
 LOG_INFO("MCU target:......." ${MCU_TARGET})
 
 add_subdirectory(config)
+add_subdirectory(libs)
 add_subdirectory(targets)
 # add_subdirectory(hw_test)
 

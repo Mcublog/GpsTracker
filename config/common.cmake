@@ -21,46 +21,6 @@ set(APP_INCLUDES
 
 file(GLOB_RECURSE APP_SOURCES   ${APP_DIR}/*.c)
 
-set(LIBS_DIR                    ${PROJECT_SOURCE_DIR}/libs)
-set(BOOTLOADER_SOURCE_DIR       ${PROJECT_SOURCE_DIR}/bootloader/sources)
-set(PIRIT2F_DIR                 ${PROJECT_SOURCE_DIR}/pirit_2f)
-set(PIRIT_SOURCE_DIR            ${PROJECT_SOURCE_DIR}/pirit_2f/src/sources)
-set(PIRIT_PRINTER_SOURCE_DIR    ${PROJECT_SOURCE_DIR}/pirit_p/sources)
-set(HW_DIR                      ${STM32F205_TARGET_PATH}/hw)
-set(TEST_DIR                    ${PROJECT_SOURCE_DIR}/test)
-set(TEST_HW_DIR                 ${STM32F205_TARGET_PATH}/test_hw)
-set(STM32_PINOUT_DIR            ${STM32F205_TARGET_PATH}/pinout)
-set(GD32_PINOUT_DIR             ${GD32F427_TARGET_PATH}/pinout)
-
-set(HAL_INCLUDE_DIRS
-    # Put here your include dirs, one in each line,
-    # relative to CMakeLists.txt file location
-    ${LIBS_DIR}/STM32F2xx_StdPeriph_Driver/inc
-    ${LIBS_DIR}/CMSIS
-)
-# endregion
-
-# region BOOTLODER
-set(BOOT_USB_DIR ${LIBS_DIR}/usb)
-set(BOOT_SYSTEM_DIRS
-    ${STM32F205_TARGET_PATH}/fw/system
-)
-
-set(F205_BOOT_INCLUDE_DIRS
-    ${HAL_INCLUDE_DIRS}
-    ${BOOT_SYSTEM_DIRS}
-    ${BOOT_USB_DIR}
-    ${HW_DIR}
-    ${APP_INCLUDES}
-    ${BOOTLOADER_SOURCE_DIR}
-    ${TARGETS_DIR}
-)
-# endregion
-
-# region FW
-set(FW_SYSTEM_DIR
-    ${STM32F205_TARGET_PATH}/fw/system
-)
 # endregion
 
 # region RTT

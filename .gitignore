@@ -1,2 +1,3 @@
 scripts/flash_burn.jlink
 build/
+app/utils/build_marks_actual.c

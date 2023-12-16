@@ -25,7 +25,7 @@ include(config/desktop.cmake)
 include(config/utils.cmake)
 # endregion
 
-project(GpsTracker VERSION 0.0.1 LANGUAGES C CXX ASM)
+project(GpsTracker VERSION 0.1.0 LANGUAGES C CXX ASM)
 
 LOG_INFO("Version:.........." ${CMAKE_PROJECT_VERSION})
 LOG_INFO("Host system:......" ${CMAKE_SYSTEM_NAME})
@@ -34,6 +34,7 @@ LOG_INFO("Desktop target:..." ${DESKTOP_TARGET})
 LOG_INFO("MCU target:......." ${MCU_TARGET})
 
 add_subdirectory(config)
+add_subdirectory(libs)
 add_subdirectory(targets)
 # add_subdirectory(hw_test)
 

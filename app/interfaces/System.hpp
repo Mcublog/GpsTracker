@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "app/common_type.h"
+#include "app/system/common.h"
 #include "app/interfaces/Serial.hpp"
 
 typedef union

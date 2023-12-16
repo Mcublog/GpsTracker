@@ -15,7 +15,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "app/common_type.h"
+#include "app/system/common.h"
 #include "app/io/serial/cobs/serial.h"
 #include "app/interfaces/Serial.hpp"
 // libs

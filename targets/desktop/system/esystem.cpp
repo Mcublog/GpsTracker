@@ -8,7 +8,7 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
-#include "app/common_type.h"
+#include "app/system/common.h"
 #include "app/system/system.h"
 #include "targets/desktop/impl/SystemEmu.hpp"
 

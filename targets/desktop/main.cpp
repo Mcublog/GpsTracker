@@ -11,8 +11,13 @@
 #include <cstdio>
 #include <cstring>
 
+#include "app/application.h"
+#include "app/system/System.hpp"
 #include "app/utils/build_marks.h"
+#include "app/utils/delay.h"
 #include "app/version.h"
+#include "targets/desktop/io_mock/io_mock.h"
+// libs
 #include "lwgps/lwgps.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME main
@@ -63,14 +68,15 @@ int main(void)
     LOG_INFO("Longitude: %f degrees", hgps.longitude);
     LOG_INFO("Altitude: %f meters", hgps.altitude);
 
+    iomock_init();
     while (1)
     {
-        // application();
-        // while (sys_get_wakeup_cause().d32 == 0)
-        // {
-        //     delay_ms(1);
-        // }
-        // printf("\n\n");
+        application();
+        while (System::instance().get_wakeup_cause().d32 == 0)
+        {
+            delay_ms(1);
+        }
+        printf("\n\n");
     }
 }
 //<<----------------------

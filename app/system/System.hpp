@@ -37,7 +37,7 @@ typedef enum
 class System
 {
 private:
-    System();
+    System() {};
 
 public:
     System(const System&) = delete;

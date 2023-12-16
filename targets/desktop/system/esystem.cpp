@@ -14,11 +14,6 @@
 
 static SystemEmu m_system = SystemEmu();
 
-/**
- * @brief Return instance of system interface
- *
- * @return
- */
 System *isystem()
 {
     return (System *)&m_system;

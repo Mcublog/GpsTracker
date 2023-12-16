@@ -8,6 +8,12 @@
 extern "C" {
 #endif
 
+    /**
+     * @brief Link function to actual system implemenation
+     *
+     * @return System* it is pointer to actual system implementation
+     * for example: desktop emulator or hw on stm32
+     */
     System *isystem();
 
 #ifdef __cplusplus

@@ -9,7 +9,7 @@
  *
  */
 #include "targets/desktop/impl/SystemEmu.hpp"
-#include "targets/desktop/io_mock/Sdev.hpp"
+#include "targets/desktop/impl/Sdev.hpp"
 // #include "targets/desktop/mocks/AccEmu.hpp"
 // #include "targets/desktop/mocks/SensorEmu.hpp"
 // #include "targets/desktop/mocks/EmuVoltage.hpp"

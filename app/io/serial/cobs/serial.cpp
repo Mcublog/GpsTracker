@@ -18,7 +18,8 @@
 #include "app/common_type.h"
 #include "app/io/serial/cobs/serial.h"
 #include "app/io/serial/Serial.hpp"
-#include "libs/cobs-c/cobsr.h"
+// libs
+#include "cobsr.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ios
 #if defined(NDEBUG)
@@ -26,7 +27,7 @@
 #else
 #define LOG_MODULE_LEVEL (3)
 #endif
-#include "log_libs.h"
+#include "app/debug/log_libs.h"
 //<<----------------------
 
 //>>---------------------- Local declaration

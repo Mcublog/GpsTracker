@@ -2,7 +2,7 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include "app/io/serial_types.h"
+#include "app/io/serial/types.h"
 
 class Serial
 {

@@ -8,7 +8,7 @@
  * @copyright Viacheslav mcublog (c) 2023
  *
  */
-#include "app/io/Serial.hpp"
+#include "app/io/serial/Serial.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME serial
 #if defined(NDEBUG)
@@ -16,7 +16,7 @@
 #else
 #define LOG_MODULE_LEVEL (3)
 #endif
-#include "log_libs.h"
+#include "app/debug/log_libs.h"
 //<<----------------------
 
 /**

@@ -16,7 +16,9 @@ include_directories(${DESKTOP_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/targets/desktop
     ${lwgps_SOURCE_DIR}/lwgps/src/include
-    ${ring-buffer_SOURCE_DIR})
+    ${ring_buffer_SOURCE_DIR}
+    ${cobsc_SOURCE_DIR}
+)
 
 # Add sources
 file(GLOB_RECURSE DESKTOP_SOURCES
@@ -31,6 +33,7 @@ add_executable(${DESKTOP_TARGET}
     ${DESKTOP_SOURCES}
     ${LWGPS_LIB_SOURCES}
     ${RING_BUFFER_LIB_SOURCES}
+    ${COBRSR_LIB_SOURCES}
 )
 
 # Include paths

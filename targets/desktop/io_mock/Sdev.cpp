@@ -54,7 +54,7 @@ static void *m_receiving_data(void*)
             continue;
         }
         ios_chunk_t data = {&byte, 1};
-        instance().get_serial_device()->IrqHandler(&data);
+        isystem()->get_serial_device()->IrqHandler(&data);
     }
 }
 //<<----------------------

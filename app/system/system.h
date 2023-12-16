@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-    System &instance();
+    System *isystem();
 
 #ifdef __cplusplus
 }

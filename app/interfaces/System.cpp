@@ -21,50 +21,18 @@
  */
 #include <functional>
 
-#include "app/common_type.h"
 #include "app/interfaces/System.hpp"
 #include "app/io/gpio/gpio.h"
 #include "app/storage/backup.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME sys
+#define LOG_MODULE_NAME isys
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------
 
 //>>---------------------- Locals
-#ifdef DESKTOP
-
-#include "targets/desktop/io_mock/Sdev.hpp"
-// #include "targets/desktop/mocks/AccEmu.hpp"
-// #include "targets/desktop/mocks/SensorEmu.hpp"
-// #include "targets/desktop/mocks/EmuVoltage.hpp"
-
-static SDevice m_sdev = SDevice();
-// static AccEmu m_acc = AccEmu();
-// static SensorEmu m_sensor = SensorEmu();
-// static EmuVoltage m_voltage = EmuVoltage();
-
-#else
-
-// #include "targets/stm32f407ve_common/src/AccLis3d.hpp"
-// #include "targets/stm32f407ve_common/src/AdcVoltage.hpp"
-// #include "targets/stm32f407ve_common/src/SensorBme280.hpp"
-// #include "targets/stm32f407ve_common/src/UsbSerial.hpp"
-
-// static USBSerial m_sdev = USBSerial();
-// static AccLis3D m_acc = AccLis3D();
-// static SensorBme280 m_sensor = SensorBme280();
-// static AdcVoltage m_voltage = AdcVoltage();
-
-#endif
-
-// static SensorLog m_sensor_log = SensorLog();
-// static AccLog m_acc_log = AccLog();
-// static Scheduler m_scheduler = Scheduler();
-// static Indication m_indication =
-//     Indication((indication_mode_handler_t)indicataion_handler);
 //<<----------------------
 
 /**
@@ -73,7 +41,7 @@ static SDevice m_sdev = SDevice();
  * @return true need to return from app
  * @return false
  */
-bool System::go_to_stanby(void)
+bool System::go_to_stanby()
 {
     LOG_INFO("go to stanby mode");
     delay_ms(100);
@@ -85,7 +53,7 @@ bool System::go_to_stanby(void)
  *
  * @return wakeup cause bits
  */
-wakeup_cause_t System::get_wakeup_cause(void)
+wakeup_cause_t System::get_wakeup_cause()
 {
     wakeup_cause_t cause = {};
     if (io_read_accel_irq_pin())
@@ -113,7 +81,7 @@ wakeup_cause_t System::get_wakeup_cause(void)
  *
  * @return sys_mode_t
  */
-sys_mode_t System::mode_get(void)
+sys_mode_t System::mode_get()
 {
     if (tu_get_current_time() < TIME_FOR_CHECK_SYNC)
     {
@@ -140,16 +108,6 @@ void System::mode_set(sys_mode_t mode)
 /**
  * @brief
  *
- * @return Serial*
- */
-Serial *System::get_serial_device(void)
-{
-    return (Serial *)&m_sdev;
-}
-
-/**
- * @brief
- *
  * @param perf
  * @return
  */
@@ -163,7 +121,7 @@ void System::set_performance(sys_performance_t perf)
  *
  * @return sys_performance_t
  */
-sys_performance_t System::get_performance(void)
+sys_performance_t System::get_performance()
 {
     LOG_INFO("get_performance: dummy");
     return sys_performance_t::NOMINAL;
@@ -174,18 +132,18 @@ sys_performance_t System::get_performance(void)
  *
  * @return
  */
-void System::reinit_peripheral(void)
+void System::reinit_peripheral()
 {
     LOG_INFO("reinit_peripheral: dummy");
 }
 
-bool System::is_wake_up_event(void)
+bool System::is_wake_up_event()
 {
     return false;
 }
 
 
-void System::infitite_loop(void)
+void System::infitite_loop()
 {
     LOG_ERROR("SYS INFINITE LOOP !!!");
     while (1)

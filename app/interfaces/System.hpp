@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "app/common_type.h"
 #include "app/interfaces/Serial.hpp"
 
 typedef union
@@ -37,33 +38,25 @@ typedef enum
 class System
 {
 private:
-    System() {};
 
 public:
-    System(const System&) = delete;
-    System& operator=(const System &) = delete;
-    System(System &&) = delete;
-    System & operator=(System &&) = delete;
 
-    static auto& instance(){
-        static System m_system;
-        return m_system;
-    }
+    virtual void what() = 0;
 
-    virtual bool go_to_stanby(void);
-    wakeup_cause_t get_wakeup_cause(void);
-    bool is_wake_up_event(void);
+    virtual bool go_to_stanby();
+    wakeup_cause_t get_wakeup_cause();
+    bool is_wake_up_event();
 
     void mode_set(sys_mode_t mode);
-    sys_mode_t mode_get(void);
+    sys_mode_t mode_get();
 
-    Serial *get_serial_device(void);
+    virtual Serial *get_serial_device() = 0;
 
     virtual void set_performance(sys_performance_t perf);
-    virtual sys_performance_t get_performance(void);
-    virtual void reinit_peripheral(void);
+    virtual sys_performance_t get_performance();
+    virtual void reinit_peripheral();
 
-    void infitite_loop(void);
+    void infitite_loop();
 };
 
 #endif // APP_SYSTEM_INTERFACES_SYSTEM_H

@@ -43,8 +43,8 @@ bool iomock_read_bool(const char *filename)
     FILE *fp = fopen(filename, "r"); // read mode
     if (fp == NULL)
     {
-        LOG_ERROR("Error while opening: %s", filename);
         sem_post(&m_mutex);
+        LOG_ERROR("Error while opening: %s", filename);
         return false;
     }
     char ch = 0;
@@ -103,6 +103,7 @@ void iomock_write_data(const char *filename, const void *data, uint32_t size)
     FILE *fp = fopen(filename, "wb");
     if (fp == NULL)
     {
+        sem_post(&m_mutex);
         LOG_ERROR("Error while opening: %s", filename);
         return;
     }
@@ -125,8 +126,8 @@ void iomock_read_data(const char *filename, void *data, uint32_t size)
     FILE *fp = fopen(filename, "rb");
     if (fp == NULL)
     {
-        LOG_ERROR("Error while opening: %s", filename);
         sem_post(&m_mutex);
+        LOG_ERROR("Error while opening: %s", filename);
         return;
     }
     if (fread(data, size, 1, fp) != 1)
@@ -236,6 +237,7 @@ bool iomock_file_create(const char *filename, const void *init, const uint32_t s
     FILE *fp = fopen(filename, "w+b");
     if (fp == NULL)
     {
+        sem_post(&m_mutex);
         LOG_ERROR("Some other error occured");
         return true;
     }

@@ -12,7 +12,7 @@
 #include <cstring>
 
 #include "app/application.h"
-#include "app/system/System.hpp"
+#include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/delay.h"
 #include "app/version.h"
@@ -72,7 +72,7 @@ int main(void)
     while (1)
     {
         application();
-        while (System::instance().get_wakeup_cause().d32 == 0)
+        while (instance().get_wakeup_cause().d32 == 0)
         {
             delay_ms(1);
         }

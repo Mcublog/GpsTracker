@@ -15,7 +15,7 @@
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
 // #include "app/mode/cobs_proto.hpp" // NOTE: cobs support proto
-#include "app/system/System.hpp"
+#include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/data_print.h"
 #include "app/utils/delay.h"
@@ -38,7 +38,7 @@ void application(void)
     LOG_INFO("Git hash: %s", bm_get_fw_hash());
     LOG_INFO("Build time: %s", bm_get_fw_build_timestamp());
 
-    auto &sys = System::instance();
+    auto &sys = instance();
     wakeup_cause_t cause = sys.get_wakeup_cause();
     dprint_wakeup_cause(&cause);
 

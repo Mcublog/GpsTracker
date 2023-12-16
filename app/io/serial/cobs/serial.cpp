@@ -17,7 +17,7 @@
 
 #include "app/common_type.h"
 #include "app/io/serial/cobs/serial.h"
-#include "app/io/serial/Serial.hpp"
+#include "app/interfaces/Serial.hpp"
 // libs
 #include "cobsr.h"
 //>>---------------------- Log control

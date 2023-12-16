@@ -21,19 +21,15 @@
  */
 #include <functional>
 
-#include "app/system/System.hpp"
 #include "app/common_type.h"
+#include "app/interfaces/System.hpp"
 #include "app/io/gpio/gpio.h"
 #include "app/storage/backup.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME sys
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

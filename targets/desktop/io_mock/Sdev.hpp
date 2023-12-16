@@ -2,7 +2,7 @@
 #ifndef SDEVICE_H
 #define SDEVICE_H
 
-#include "app/io/serial/Serial.hpp"
+#include "app/interfaces/Serial.hpp"
 
 class SDevice : public Serial
 {

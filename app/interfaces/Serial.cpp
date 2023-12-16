@@ -8,14 +8,10 @@
  * @copyright Viacheslav mcublog (c) 2023
  *
  */
-#include "app/io/serial/Serial.hpp"
+#include "app/interfaces/Serial.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME serial
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

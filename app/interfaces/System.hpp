@@ -1,11 +1,11 @@
 
-#ifndef SYSTEM_H
-#define SYSTEM_H
+#ifndef APP_SYSTEM_INTERFACES_SYSTEM_H
+#define APP_SYSTEM_INTERFACES_SYSTEM_H
 
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "app/io/serial/Serial.hpp"
+#include "app/interfaces/Serial.hpp"
 
 typedef union
 {
@@ -66,9 +66,4 @@ public:
     void infitite_loop(void);
 };
 
-
-
-
-
-
-#endif // SYSTEM_H
+#endif // APP_SYSTEM_INTERFACES_SYSTEM_H

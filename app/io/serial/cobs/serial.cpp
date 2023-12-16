@@ -22,11 +22,7 @@
 #include "cobsr.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ios
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

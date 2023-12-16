@@ -13,11 +13,7 @@
 #include "app/storage/backup.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME bkup
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (2)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

@@ -9,9 +9,10 @@ class SystemEmu final : public System
   private:
 
   public:
+    void init();
+    void what(void);
 
-    void what(void) override;
-    Serial *get_serial_device(void) override;
+    Parser *cobs_parser();
 };
 
 #endif // TARGETS_DESKTOP_IMPL_SYSTEM_EMU_HPP

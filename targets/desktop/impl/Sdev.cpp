@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "app/system/system.h"
+#include "app/proto/cobs/wrapper.h"
 #include "app/utils/delay.h"
 #include "targets/desktop/impl/Sdev.hpp"
 //>>---------------------- Log control
@@ -54,7 +54,7 @@ static void *m_receiving_data(void*)
             continue;
         }
         ios_chunk_t data = {&byte, 1};
-        isystem()->get_serial_device()->IrqHandler(&data);
+        cobsw_irq_handler(&data);
     }
 }
 //<<----------------------

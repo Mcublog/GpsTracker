@@ -9,6 +9,7 @@
  *
  */
 #include "targets/desktop/impl/SystemEmu.hpp"
+#include "app/proto/cobs/Parser.hpp"
 #include "targets/desktop/impl/Sdev.hpp"
 // #include "targets/desktop/mocks/AccEmu.hpp"
 // #include "targets/desktop/mocks/SensorEmu.hpp"
@@ -22,11 +23,15 @@
 
 //>>---------------------- Locals
 static SDevice m_sdev = SDevice();
+static Parser m_cobsp = Parser();
 // static AccEmu m_acc = AccEmu();
 // static SensorEmu m_sensor = SensorEmu();
 // static EmuVoltage m_voltage = EmuVoltage();
 //<<----------------------
-
+void SystemEmu::init()
+{
+    m_cobsp.init(&m_sdev);
+}
 /**
  * @brief Print system type in log
  *
@@ -39,9 +44,9 @@ void SystemEmu::what(void)
 /**
  * @brief
  *
- * @return Serial*
+ * @return Parser*
  */
-Serial *SystemEmu::get_serial_device(void)
+Parser *SystemEmu::cobs_parser()
 {
-    return (Serial *)&m_sdev;
+    return &m_cobsp;
 }

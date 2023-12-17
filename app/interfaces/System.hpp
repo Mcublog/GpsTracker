@@ -7,6 +7,7 @@
 
 #include "app/system/common.h"
 #include "app/interfaces/Serial.hpp"
+#include "app/proto/cobs/Parser.hpp"
 
 typedef union
 {
@@ -40,6 +41,7 @@ class System
 private:
 
 public:
+    virtual void init() = 0;
 
     virtual void what() = 0;
 
@@ -50,7 +52,7 @@ public:
     void mode_set(sys_mode_t mode);
     sys_mode_t mode_get();
 
-    virtual Serial *get_serial_device() = 0;
+    virtual Parser *cobs_parser() = 0;
 
     virtual void set_performance(sys_performance_t perf);
     virtual sys_performance_t get_performance();

@@ -26,7 +26,7 @@ file(GLOB_RECURSE DESKTOP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
-    ${LIBS_DIR}/SoftwareTimer/*.c)
+)
 
 # Buid DESKTOP target
 add_executable(${DESKTOP_TARGET}

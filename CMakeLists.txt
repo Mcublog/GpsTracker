@@ -41,5 +41,5 @@ add_subdirectory(targets)
 # region Tests
 # message("******* [Unit test list] *******")
 # enable_testing()
-# add_subdirectory(test)
+add_subdirectory(test)
 # endregion

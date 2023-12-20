@@ -52,6 +52,7 @@ public:
     void mode_set(sys_mode_t mode);
     sys_mode_t mode_get();
 
+    virtual Serial *communication_serial() = 0;
     virtual Parser *cobs_parser() = 0;
 
     virtual void set_performance(sys_performance_t perf);

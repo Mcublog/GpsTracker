@@ -12,6 +12,7 @@ class SystemEmu final : public System
     void init();
     void what(void);
 
+    Serial *communication_serial();
     Parser *cobs_parser();
 };
 

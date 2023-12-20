@@ -44,3 +44,18 @@ if(${RTT_ENABLE})
     )
 endif()
 # endregion
+
+# Mocking sources
+file(GLOB_RECURSE DESKTOP_IMPL_SOURCES
+    ${TARGETS_DIR}/desktop/*.c
+    ${TARGETS_DIR}/desktop/*.cpp
+)
+
+# Removed unused files
+list(REMOVE_ITEM DESKTOP_IMPL_SOURCES ${TARGETS_DIR}/desktop/main.cpp)
+
+# App sources
+file(GLOB_RECURSE APP_DIR_SOURCES
+    ${APP_DIR}/*.c
+    ${APP_DIR}/*.cpp
+)

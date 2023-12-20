@@ -22,7 +22,8 @@
 //<<----------------------
 
 //>>---------------------- Locals
-static SDevice m_sdev = SDevice();
+static SDevice m_sdev = SDevice("/dev/ttyS11");
+static SDevice m_gps_sdev = SDevice("/dev/ttyS13");
 static Parser m_cobsp = Parser();
 // static AccEmu m_acc = AccEmu();
 // static SensorEmu m_sensor = SensorEmu();
@@ -31,6 +32,8 @@ static Parser m_cobsp = Parser();
 void SystemEmu::init()
 {
     m_cobsp.init(&m_sdev);
+    ios_ctl_t ctl = {};
+    m_gps_sdev.Init(&ctl);
 }
 /**
  * @brief Print system type in log

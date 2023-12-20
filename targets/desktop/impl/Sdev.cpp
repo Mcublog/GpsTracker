@@ -18,6 +18,7 @@
 #include "app/proto/cobs/wrapper.h"
 #include "app/utils/delay.h"
 #include "targets/desktop/impl/Sdev.hpp"
+#include "targets/desktop/settings.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME     sdev
 #define LOG_MODULE_LEVEL    (3)
@@ -60,6 +61,11 @@ static void *m_receiving_data(void*)
 //<<----------------------
 
 //>>---------------------- Exported function
+SDevice::SDevice(const char *portname)
+{
+    m_portname = portname;
+}
+
 /**
  * @brief
  *
@@ -72,8 +78,8 @@ bool SDevice::Init(ios_ctl_t *ctl)
     Serial::Init(ctl);
     memcpy(ctl, &m_ctl, sizeof(m_ctl));
 
-    LOG_INFO("Usage: %s", DEFAULT_SERIAL_PORT);
-    m_io_stream = open(DEFAULT_SERIAL_PORT, O_RDWR | O_NONBLOCK);
+    LOG_INFO("Usage: %s", m_portname);
+    m_io_stream = open(m_portname, O_RDWR | O_NONBLOCK);
     if (m_io_stream == (-1))
     {
         perror("open");

@@ -7,9 +7,11 @@
 class SDevice : public Serial
 {
   private:
-    const char *DEFAULT_SERIAL_PORT = "/dev/ttyS11";
+    const char *m_portname = "/dev/ttyS11";
 
   public:
+    SDevice(const char *portname);
+
     bool Init(ios_ctl_t *ctl);
     bool Write(uint8_t *data, uint32_t size);
 };

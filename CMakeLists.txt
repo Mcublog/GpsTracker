@@ -36,7 +36,7 @@ LOG_INFO("MCU target:......." ${MCU_TARGET})
 add_subdirectory(config)
 add_subdirectory(libs)
 add_subdirectory(targets)
-# add_subdirectory(hw_test)
+add_subdirectory(hw_test)
 
 # region Tests
 # message("******* [Unit test list] *******")

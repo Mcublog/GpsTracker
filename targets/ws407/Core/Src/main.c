@@ -25,7 +25,17 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+//>>---------------------- Log control
+#include "app/application.h"
 
+#define LOG_MODULE_NAME main
+#if defined(NDEBUG)
+#define LOG_MODULE_LEVEL (0)
+#else
+#define LOG_MODULE_LEVEL (3)
+#endif
+#include "app/debug/log_libs.h"
+//<<----------------------
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,7 +102,7 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
-
+  application();
   /* USER CODE END 2 */
 
   /* Infinite loop */

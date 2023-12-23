@@ -20,6 +20,7 @@ add_executable(${TEST_TARGET}
 
 # Include paths
 target_include_directories(${TEST_TARGET} PRIVATE
+    ${CONFIG_DIR}
     ${TEST_INCLUDE_FILES}
 )
 

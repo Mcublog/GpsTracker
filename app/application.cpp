@@ -77,6 +77,15 @@ void application(void)
     LOG_INFO("Altitude: %f meters", m_hgps.altitude);
 
     System *sys = isystem();
+    if (sys == nullptr)
+    {
+        LOG_ERROR("sys is not ready");
+        while (1)
+        {
+            /* code */
+        }
+
+    }
     sys->what();
     sys->init();
 

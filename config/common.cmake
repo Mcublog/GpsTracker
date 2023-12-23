@@ -5,6 +5,7 @@ set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # region COMMON
 set(APP_DIR ${PROJECT_SOURCE_DIR}/app)
+set(CONFIG_DIR ${APP_DIR}/config)
 
 # Root directory of targets
 set(TARGETS_DIR ${PROJECT_SOURCE_DIR}/targets)

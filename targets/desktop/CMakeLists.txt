@@ -40,6 +40,7 @@ add_executable(${DESKTOP_TARGET}
 target_include_directories(${DESKTOP_TARGET} PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${APP_DIR}
+    ${CONFIG_DIR}
 )
 
 # # Add pthread

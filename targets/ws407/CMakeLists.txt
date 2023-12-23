@@ -9,8 +9,8 @@ set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
 file(GLOB_RECURSE SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.c
     ${CMAKE_CURRENT_SOURCE_DIR}/*.s
-    # ${STM32F407VE_COMMON_TARGET_PATH}/src/*.c
-    # ${STM32F407VE_COMMON_TARGET_PATH}/src/*.cpp
+    ${PROJECT_SOURCE_DIR}/targets/f407common/*.c
+    ${PROJECT_SOURCE_DIR}/targets/f407common/*.cpp
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp)
 
@@ -38,9 +38,10 @@ add_executable(${WS407_TARGET}
 
 # Include paths
 target_include_directories(${WS407_TARGET} PRIVATE
-    ${STM32F407VE_COMMON_TARGET_PATH}/src
+    ${PROJECT_SOURCE_DIR}/targets/f407common
     ${HAL_INCLUDE_DIRS}
     ${APP_DIRS}
+    ${CONFIG_DIR}
     ${RTT_INCLUDE_DIRS}
     ${USB_INCLUDES}
     ${PROJECT_SOURCE_DIR}

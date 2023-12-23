@@ -1,5 +1,3 @@
-set(STM32F205_TARGET_PATH           ${PROJECT_SOURCE_DIR}/targets/stm32f205)
-set(GD32F427_TARGET_PATH            ${PROJECT_SOURCE_DIR}/targets/gd32f427)
 set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # Include utils

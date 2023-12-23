@@ -32,7 +32,7 @@ function(build_jlink_script target)
         COMMAND ${CMAKE_COMMAND} -E copy
         ARGS ${target}.hex ${PROJECT_SOURCE_DIR}/build/output/${target}.hex)
 
-    configure_file(${PROJECT_SOURCE_DIR}/config/burn.jlink.in
+    configure_file(${PROJECT_SOURCE_DIR}/config/fw_burn.jlink.in
         ${CMAKE_CURRENT_BINARY_DIR}/${target}.jlink
         ESCAPE_QUOTES)
 endfunction()

@@ -21,10 +21,9 @@ int main(void)
 {
     iomock_init();
     LOG_INFO("GpsSerialEmuTest");
-    SDevice m_gps_sdev = SDevice("/dev/ttyS13");
+    SDevice m_gps_sdev = SDevice("/dev/ttyS13", nullptr);
 
     while(1)
     {
-        m_gps_sdev.read();
     }
 }

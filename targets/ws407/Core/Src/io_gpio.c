@@ -27,7 +27,7 @@
  */
 void io_gpio_red_led(bool on)
 {
-    // HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, on ? GPIO_PIN_SET : GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, on ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void io_gpio_green_led(bool on)

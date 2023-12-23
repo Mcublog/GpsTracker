@@ -5,6 +5,7 @@ set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # region COMMON
 set(APP_DIR ${PROJECT_SOURCE_DIR}/app)
+set(LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 set(CONFIG_DIR ${APP_DIR}/config)
 
 # Root directory of targets
@@ -17,9 +18,6 @@ set(APP_INCLUDES
     ${APP_DIR}/storage
     ${APP_DIR}/tools
 )
-
-file(GLOB_RECURSE APP_SOURCES   ${APP_DIR}/*.c)
-
 # endregion
 
 # region RTT

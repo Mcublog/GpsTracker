@@ -14,14 +14,10 @@
 #include <math.h>
 
 #include "app/system/config.h"
-#include "app/common_type.h"
+#include "app/system/common.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME config
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

@@ -26,7 +26,7 @@ file(GLOB_RECURSE DESKTOP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
-    ${LIBS_DIR}/SoftwareTimer/*.c)
+)
 
 # Buid DESKTOP target
 add_executable(${DESKTOP_TARGET}
@@ -40,6 +40,7 @@ add_executable(${DESKTOP_TARGET}
 target_include_directories(${DESKTOP_TARGET} PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${APP_DIR}
+    ${CONFIG_DIR}
 )
 
 # # Add pthread

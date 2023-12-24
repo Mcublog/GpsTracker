@@ -1,6 +1,6 @@
 
-#ifndef IO_SERIAL_H
-#define IO_SERIAL_H
+#ifndef APP_IO_SERIAL_COBS_SERIAL_H
+#define APP_IO_SERIAL_COBS_SERIAL_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -27,4 +27,4 @@ extern "C"
 }
 #endif
 
-#endif // IO_SERIAL_H
+#endif // APP_IO_SERIAL_COBS_SERIAL_H

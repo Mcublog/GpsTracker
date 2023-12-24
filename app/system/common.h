@@ -1,6 +1,6 @@
 
-#ifndef COMMON_TYPES_H
-#define COMMON_TYPES_H
+#ifndef APP_SYSTEM_COMMON_H
+#define APP_SYSTEM_COMMON_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -53,4 +53,4 @@ extern "C"
 }
 #endif
 
-#endif // COMMON_TYPES_H
+#endif // APP_SYSTEM_COMMON_H

@@ -14,7 +14,7 @@
 
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
-// #include "app/mode/cobs_proto.hpp" // NOTE: cobs support proto
+#include "app/proto/cobs/process.hpp"
 #include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/data_print.h"
@@ -77,7 +77,17 @@ void application(void)
     LOG_INFO("Altitude: %f meters", m_hgps.altitude);
 
     System *sys = isystem();
+    if (sys == nullptr)
+    {
+        LOG_ERROR("sys is not ready");
+        while (1)
+        {
+            /* code */
+        }
+
+    }
     sys->what();
+    sys->init();
 
     wakeup_cause_t cause = sys->get_wakeup_cause();
     dprint_wakeup_cause(&cause);
@@ -102,8 +112,7 @@ void application(void)
 
         if (cause.field.by_external_power)
         {
-            // Prepare::to_external_power();
-            // Scpp::process();
+            Cobs::process();
         }
         cause = sys->get_wakeup_cause();
     }

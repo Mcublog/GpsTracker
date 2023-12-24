@@ -15,18 +15,14 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "app/common_type.h"
+#include "app/system/common.h"
 #include "app/io/serial/cobs/serial.h"
 #include "app/interfaces/Serial.hpp"
 // libs
 #include "cobsr.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ios
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

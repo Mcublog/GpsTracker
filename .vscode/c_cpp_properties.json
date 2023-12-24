@@ -14,7 +14,8 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}/app/**",
-                    "${workspaceFolder}/targets/**"
+                    "${workspaceFolder}/targets/**",
+                    "${workspaceFolder}/libs/**"
                 ]
             },
             "cStandard": "c11",

@@ -14,11 +14,7 @@
 #include "app/utils/data_print.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME dprint
-#if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (0)
-#else
 #define LOG_MODULE_LEVEL (3)
-#endif
 #include "app/debug/log_libs.h"
 //<<----------------------
 

@@ -2,10 +2,9 @@ if SWD
 speed 4000
 Device STM32F407VE
 Con
-erase
 r
 h
-loadfile @CMAKE_BINARY_DIR@/targets/stm32f407/@STM32F407F_TARGET@.hex
+loadfile @CMAKE_BINARY_DIR@/output/@target@.hex
 r
 h
 g

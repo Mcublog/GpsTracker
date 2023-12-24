@@ -9,15 +9,15 @@
  *
  */
 #include <stdlib.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "app/system/system.h"
+#include "app/proto/cobs/wrapper.h"
 #include "app/utils/delay.h"
 #include "targets/desktop/impl/Sdev.hpp"
+#include "app/system/system.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME     sdev
 #define LOG_MODULE_LEVEL    (3)
@@ -25,41 +25,18 @@
 //<<----------------------
 
 //>>---------------------- Local declaration
-#define INPUT_BUFFER_SIZE   (256)
-#define OUTPUT_BUFFER_SIZE  (256)
-
-static uint8_t m_input_buffer[INPUT_BUFFER_SIZE];
-static uint8_t m_output_buffer[OUTPUT_BUFFER_SIZE];
-
-static ios_ctl_t m_ctl = {
-    {m_input_buffer,    INPUT_BUFFER_SIZE},
-    {m_output_buffer,   OUTPUT_BUFFER_SIZE},
-    nullptr
-};
-
-static int m_io_stream;
-static pthread_t m_thread_id;
 //<<----------------------
 
 //>>---------------------- Local definitions
-static void *m_receiving_data(void*)
-{
-    while (1)
-    {
-        uint8_t byte = 0;
-        long size = read(m_io_stream, &byte, 1);
-        if (size <= 0)
-        {
-            delay_ms(1);
-            continue;
-        }
-        ios_chunk_t data = {&byte, 1};
-        isystem()->get_serial_device()->IrqHandler(&data);
-    }
-}
 //<<----------------------
 
 //>>---------------------- Exported function
+SDevice::SDevice(const char *portname, void*(*read_thread)(void*))
+{
+    m_portname = portname;
+    m_read_thread = read_thread;
+}
+
 /**
  * @brief
  *
@@ -70,16 +47,21 @@ static void *m_receiving_data(void*)
 bool SDevice::Init(ios_ctl_t *ctl)
 {
     Serial::Init(ctl);
-    memcpy(ctl, &m_ctl, sizeof(m_ctl));
+    // memcpy(ctl, &m_ctl, sizeof(m_ctl));
 
-    LOG_INFO("Usage: %s", DEFAULT_SERIAL_PORT);
-    m_io_stream = open(DEFAULT_SERIAL_PORT, O_RDWR | O_NONBLOCK);
+    LOG_INFO("Usage: %s", m_portname);
+    m_io_stream = open(m_portname, O_RDWR | O_NONBLOCK);
     if (m_io_stream == (-1))
     {
         perror("open");
         exit(1);
     }
-    pthread_create(&m_thread_id, NULL, m_receiving_data, NULL);
+    if (m_read_thread == nullptr)
+    {
+        LOG_ERROR("m_read_thread == nullptr");
+        return false;
+    }
+    pthread_create(&m_thread_id, NULL, m_read_thread, NULL);
     return true;
 }
 

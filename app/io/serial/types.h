@@ -5,6 +5,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 typedef struct
 {
     uint32_t size;
@@ -32,5 +37,8 @@ typedef struct
     ios_irq_handler_t irq_handler;
 } ios_ctl_t;
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif // APP_IO_SERIAL_TYPES_H

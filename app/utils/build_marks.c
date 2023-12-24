@@ -8,7 +8,7 @@
  * @copyright Viacheslav mcublog (c) 2023
  *
  */
-#include "app/common_type.h"
+#include "app/system/common.h"
 #include "app/utils/build_marks.h"
 
 /**

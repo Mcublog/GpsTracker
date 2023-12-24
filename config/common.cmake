@@ -1,5 +1,3 @@
-set(STM32F205_TARGET_PATH           ${PROJECT_SOURCE_DIR}/targets/stm32f205)
-set(GD32F427_TARGET_PATH            ${PROJECT_SOURCE_DIR}/targets/gd32f427)
 set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # Include utils
@@ -7,6 +5,8 @@ set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # region COMMON
 set(APP_DIR ${PROJECT_SOURCE_DIR}/app)
+set(LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
+set(CONFIG_DIR ${APP_DIR}/config)
 
 # Root directory of targets
 set(TARGETS_DIR ${PROJECT_SOURCE_DIR}/targets)
@@ -18,9 +18,6 @@ set(APP_INCLUDES
     ${APP_DIR}/storage
     ${APP_DIR}/tools
 )
-
-file(GLOB_RECURSE APP_SOURCES   ${APP_DIR}/*.c)
-
 # endregion
 
 # region RTT
@@ -44,3 +41,18 @@ if(${RTT_ENABLE})
     )
 endif()
 # endregion
+
+# Mocking sources
+file(GLOB_RECURSE DESKTOP_IMPL_SOURCES
+    ${TARGETS_DIR}/desktop/*.c
+    ${TARGETS_DIR}/desktop/*.cpp
+)
+
+# Removed unused files
+list(REMOVE_ITEM DESKTOP_IMPL_SOURCES ${TARGETS_DIR}/desktop/main.cpp)
+
+# App sources
+file(GLOB_RECURSE APP_DIR_SOURCES
+    ${APP_DIR}/*.c
+    ${APP_DIR}/*.cpp
+)

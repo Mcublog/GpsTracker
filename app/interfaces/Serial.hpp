@@ -1,6 +1,6 @@
 
-#ifndef APP_IO_SERIAL_SERIAL_HPP
-#define APP_IO_SERIAL_SERIAL_HPP
+#ifndef APP_INTERFACES_SERIAL_SERIAL_HPP
+#define APP_INTERFACES_SERIAL_SERIAL_HPP
 
 #include "app/io/serial/types.h"
 
@@ -22,4 +22,4 @@ class Serial
     uint32_t IrqHandler(ios_chunk_t *chunk);
 };
 
-#endif // APP_IO_SERIAL_SERIAL_HPP
+#endif // APP_INTERFACES_SERIAL_SERIAL_HPP

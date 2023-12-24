@@ -1,1 +1,1 @@
-add_subdirectory(lis3dh)
+add_subdirectory(lis3dsh)

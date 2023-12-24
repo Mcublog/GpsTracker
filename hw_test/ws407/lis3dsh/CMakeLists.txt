@@ -6,7 +6,7 @@ include(${PROJECT_SOURCE_DIR}/hw_test/ws407/hw_test.cmake)
 set(CMAKE_C_COMPILER    arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
 #
-set(TEST_HW_TARGET "ws407_lis3dh_test")
+set(TEST_HW_TARGET "ws407_lis3dsh_test")
 #
 # Removed unused files
 list(REMOVE_ITEM SOURCES ${APP_DIR}/application.cpp)

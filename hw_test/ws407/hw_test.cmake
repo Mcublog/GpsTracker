@@ -7,7 +7,7 @@ file(GLOB_RECURSE SOURCES
     ${PROJECT_SOURCE_DIR}/targets/ws407/*.cpp
     ${PROJECT_SOURCE_DIR}/targets/f407common/*.c
     ${PROJECT_SOURCE_DIR}/targets/f407common/*.cpp
-    ${PROJECT_SOURCE_DIR}/libs/lis3dh/*.c
+    ${PROJECT_SOURCE_DIR}/libs/lis3dsh/*.c
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
     ${LWGPS_LIB_SOURCES}
@@ -36,7 +36,7 @@ set(LIBS_INCLUDES
     ${lwgps_SOURCE_DIR}/lwgps/src/include
     ${ring_buffer_SOURCE_DIR}
     ${cobsc_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/hw_test/ws407/lis3dh)
+    ${PROJECT_SOURCE_DIR}/libs/lis3dsh)
 
 # Removed unused files
 list(REMOVE_ITEM SOURCES ${APP_DIR}/application.cpp)

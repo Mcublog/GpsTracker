@@ -57,18 +57,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define ACC_nCS0_Pin GPIO_PIN_4
-#define ACC_nCS0_GPIO_Port GPIOA
-#define ACC_SCLK_Pin GPIO_PIN_5
-#define ACC_SCLK_GPIO_Port GPIOA
-#define ACC_MISO_Pin GPIO_PIN_6
-#define ACC_MISO_GPIO_Port GPIOA
-#define ACC_MOSI_Pin GPIO_PIN_7
-#define ACC_MOSI_GPIO_Port GPIOA
 #define LED_Pin GPIO_PIN_12
 #define LED_GPIO_Port GPIOD
 #define USB_ext_power_Pin GPIO_PIN_9
 #define USB_ext_power_GPIO_Port GPIOA
+#define ACC_SCLK_SCL_Pin GPIO_PIN_3
+#define ACC_SCLK_SCL_GPIO_Port GPIOB
+#define ACC_MISO_SDO_Pin GPIO_PIN_4
+#define ACC_MISO_SDO_GPIO_Port GPIOB
+#define ACC_MOSI_SDA_Pin GPIO_PIN_5
+#define ACC_MOSI_SDA_GPIO_Port GPIOB
+#define ACC_nCS0_Pin GPIO_PIN_6
+#define ACC_nCS0_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

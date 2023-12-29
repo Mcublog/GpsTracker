@@ -14,8 +14,9 @@
 #include "app/proto/commands.h"
 #include "app/system/system.h"
 #include "app/utils/delay.h"
+#include "app/utils/time_utils.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME cobsp
+#define LOG_MODULE_NAME comm
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------
@@ -63,7 +64,7 @@ bool Cobs::process(void)
         if (m_gnssp->is_message_received())
         {
             lwgps_t *gnss = m_gnssp->read_message();
-            LOG_INFO("Valid status: %d", gnss->is_valid);
+            LOG_INFO("Valid status: %d: %s", gnss->is_valid, tu_print_current_time_only());
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);

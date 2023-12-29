@@ -19,6 +19,7 @@
 #define LOG_MODULE_NAME tu_mock
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
+//<<----------------------
 
 //>>---------------------- Type definitions
 #define TU_SCHEDULE_ALARM (0)
@@ -166,12 +167,21 @@ const char *tu_print_current_time_only(void)
 const char *tu_print_time_only(const time_t *time)
 {
     char *substr = ctime(time);
+    // example of out:
+    // Fri Dec 29 22:36:08 2023
+    // Thu Jan  1 03:43:29 1970
+
     int32_t len = 0;
+    int dummy[3];
 
     for (int32_t i = 0; i < 4; i++)
     {
         substr = strstr((const char *)substr, " ");
         substr++;
+        // parsing xx:xx:xx time
+        int numb = sscanf(substr, "%d:%d:%d", &dummy[0], &dummy[1], &dummy[2]);
+        if (numb == 3)
+            break;
     }
     len = strlen(substr);
     substr[len - 6] = 0;

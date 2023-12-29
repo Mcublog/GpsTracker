@@ -8,6 +8,8 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
+#include <cstring>
+
 #include "app/gps/GnssParser.hpp"
 #include "app/system/system.h"
 //>>---------------------- Log control
@@ -39,9 +41,21 @@ static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
  */
 bool GnssParser::init(Serial *dev)
 {
+    lwgps_init(&m_hgps);
     m_ctl.irq_handler = wrapper_irq_handler;
     m_sdev = dev;
     return m_sdev->Init(&m_ctl);
+}
+
+/**
+ * @brief
+ *
+ * @return true
+ * @return false
+ */
+bool GnssParser::is_message_received(void) const
+{
+    return m_msg_ready;
 }
 
 /**
@@ -52,5 +66,9 @@ bool GnssParser::init(Serial *dev)
  */
 uint32_t GnssParser::irq_handler(ios_chunk_t *chunk)
 {
+    m_msg_ready = (bool)lwgps_process(&m_hgps, chunk->data, chunk->size);
+    if (m_msg_ready)
+        std::memcpy(&m_hgps_ready, &m_hgps, sizeof(lwgps_t));
+    return chunk->size;
 }
 //<<----------------------

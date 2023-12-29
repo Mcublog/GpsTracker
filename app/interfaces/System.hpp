@@ -5,9 +5,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "app/system/common.h"
+#include "app/gps/GnssParser.hpp"
 #include "app/interfaces/Serial.hpp"
 #include "app/proto/cobs/Parser.hpp"
+#include "app/system/common.h"
 
 typedef union
 {
@@ -54,6 +55,7 @@ public:
 
     virtual Serial *communication_serial() = 0;
     virtual Parser *cobs_parser() = 0;
+    virtual GnssParser *gnss_parser() = 0;
 
     virtual void set_performance(sys_performance_t perf);
     virtual sys_performance_t get_performance();

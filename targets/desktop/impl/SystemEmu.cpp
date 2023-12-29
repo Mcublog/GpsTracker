@@ -12,10 +12,11 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "app/utils/delay.h"
-#include "targets/desktop/impl/SystemEmu.hpp"
+#include "app/gps/GnssParser.hpp"
 #include "app/proto/cobs/Parser.hpp"
+#include "app/utils/delay.h"
 #include "targets/desktop/impl/Sdev.hpp"
+#include "targets/desktop/impl/SystemEmu.hpp"
 // #include "targets/desktop/mocks/AccEmu.hpp"
 // #include "targets/desktop/mocks/SensorEmu.hpp"
 // #include "targets/desktop/mocks/EmuVoltage.hpp"
@@ -35,6 +36,7 @@ static void *m_receiving_data(void*);
 static SDevice m_sdev = SDevice("/dev/ttyS11", m_receiving_data);
 static SDevice m_gps_sdev = SDevice("/dev/ttyS13", nullptr);
 static Parser m_cobsp = Parser();
+static GnssParser m_gnssp = GnssParser();
 // static AccEmu m_acc = AccEmu();
 // static SensorEmu m_sensor = SensorEmu();
 // static EmuVoltage m_voltage = EmuVoltage();
@@ -69,6 +71,7 @@ void SystemEmu::init()
 {
 
     m_cobsp.init(&m_sdev);
+    // m_gnssp.init(&m_gps_sdev);
     // m_gps_sdev.Init(&m_ctl);
 }
 /**
@@ -92,4 +95,14 @@ Serial *SystemEmu::communication_serial()
 Parser *SystemEmu::cobs_parser()
 {
     return &m_cobsp;
+}
+
+/**
+ * @brief
+ *
+ * @return GnssParser*
+ */
+GnssParser *SystemEmu::gnss_parser()
+{
+    return &m_gnssp;
 }

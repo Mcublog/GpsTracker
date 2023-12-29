@@ -48,7 +48,7 @@ def main():
     try:
         while True:
             time.sleep(1)
-            print("...")
+            print(f"{int(time.time())}: ...")
     except Exception as e:
         print(e)
 

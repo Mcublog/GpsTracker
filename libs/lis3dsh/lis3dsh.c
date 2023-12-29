@@ -423,4 +423,26 @@ void LIS3DSH_ReadACC(int16_t *pData)
         pData[i] = (int16_t)valueinfloat;
     }
 }
+
+/**
+ * @brief
+ *
+ * @param addr
+ * @param value
+ */
+void LIS3DSH_WriteReg(uint8_t addr, uint8_t value)
+{
+    ACCELERO_IO_Write(&value, addr, 1);
+}
+
+/**
+ * @brief
+ *
+ * @param addr
+ * @param value
+ */
+void LIS3DSH_ReadReg(uint8_t addr, uint8_t *value)
+{
+    ACCELERO_IO_Read(value, addr, 1);
+}
 //<<----------------------

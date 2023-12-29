@@ -8,6 +8,47 @@ extern "C"
 {
 #endif
 
+
+    typedef union {
+        struct
+        {
+            uint8_t strt : 1;
+            uint8_t reserved1 : 1;
+            uint8_t vfilt : 1;
+            uint8_t int1_en : 1;
+            uint8_t int2_en : 1;
+            uint8_t iel : 1;
+            uint8_t iea : 1;
+            uint8_t dr_en : 1;
+        } f;
+        uint8_t d8;
+    } reg3_t;
+
+    typedef union {
+        struct
+        {
+            uint8_t xen : 1;
+            uint8_t yen : 1;
+            uint8_t zen : 1;
+            uint8_t bdu : 1;
+            uint8_t odr : 4;
+        } f;
+        uint8_t d8;
+    } reg4_t;
+
+    typedef union {
+        struct
+        {
+            uint8_t sim : 1;
+            uint8_t st1 : 1;
+            uint8_t st2 : 1;
+            uint8_t fscale : 3;
+            uint8_t bw : 2;
+        } f;
+        uint8_t d8;
+    } reg5_t;
+
+
     typedef struct
     {
         uint8_t Output_DataRate; /* Output Data Rate into CTRL_REG4 register */
@@ -1051,6 +1092,9 @@ extern "C"
     void LIS3DSH_FullScaleCmd(uint8_t FS_value);
     void LIS3DSH_RebootCmd(void);
     void LIS3DSH_ReadACC(int16_t *pData);
+
+    void LIS3DSH_WriteReg(uint8_t addr, uint8_t value);
+    void LIS3DSH_ReadReg(uint8_t addr, uint8_t *value);
 
 #ifdef __cplusplus
 }

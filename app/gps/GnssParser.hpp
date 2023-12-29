@@ -24,6 +24,8 @@ class GnssParser
     bool init(Serial *dev);
     bool is_message_received(void) const;
 
+    lwgps_t *read_message(void);
+
     uint32_t irq_handler(ios_chunk_t *chunk);
 };
 

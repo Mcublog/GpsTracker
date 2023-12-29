@@ -61,6 +61,17 @@ bool GnssParser::is_message_received(void) const
 /**
  * @brief
  *
+ * @return lwgps_t*
+ */
+lwgps_t *GnssParser::read_message(void)
+{
+    m_msg_ready = false;
+    return &m_hgps_ready;
+}
+
+/**
+ * @brief
+ *
  * @param chunk
  * @return uint32_t
  */

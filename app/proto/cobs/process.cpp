@@ -22,6 +22,7 @@
 
 //>>---------------------- Locals
 Parser *m_parser = nullptr;
+GnssParser *m_gnssp = nullptr;
 
 static bool m_command_handler(const command_t *command)
 {
@@ -53,12 +54,20 @@ static const command_list_item_t m_command_list[CMDID_LAST] = {
 bool Cobs::process(void)
 {
     m_parser = isystem()->cobs_parser();
+    m_gnssp = isystem()->gnss_parser();
 
-    // ios_serial_init((void *)m_sdev);
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 
     while (1)
     {
+        if (m_gnssp->is_message_received())
+        {
+            lwgps_t *gnss = m_gnssp->read_message();
+            LOG_INFO("Valid status: %d", gnss->is_valid);
+            LOG_INFO("Latitude: %f degrees", gnss->latitude);
+            LOG_INFO("Longitude: %f degrees", gnss->longitude);
+            LOG_INFO("Altitude: %f meters", gnss->altitude);
+        }
 
         if (m_parser->is_message_received() == false)
         {

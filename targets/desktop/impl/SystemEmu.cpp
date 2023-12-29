@@ -31,48 +31,50 @@
 #define INPUT_BUFFER_SIZE   (256)
 #define OUTPUT_BUFFER_SIZE  (256)
 
-static void *m_receiving_data(void*);
+static void *communication_reading(void*);
+static void *gnss_reading(void*);
 
-static SDevice m_sdev = SDevice("/dev/ttyS11", m_receiving_data);
-static SDevice m_gps_sdev = SDevice("/dev/ttyS13", nullptr);
+static SDevice m_sdev = SDevice("/dev/ttyS11", communication_reading);
+static SDevice m_gps_sdev = SDevice("/dev/ttyS13", gnss_reading);
 static Parser m_cobsp = Parser();
 static GnssParser m_gnssp = GnssParser();
 // static AccEmu m_acc = AccEmu();
 // static SensorEmu m_sensor = SensorEmu();
 // static EmuVoltage m_voltage = EmuVoltage();
 
-
-static uint8_t m_input_buffer[INPUT_BUFFER_SIZE];
-static uint8_t m_output_buffer[OUTPUT_BUFFER_SIZE];
-
-static ios_ctl_t m_ctl = {
-    {m_input_buffer,    INPUT_BUFFER_SIZE},
-    {m_output_buffer,   OUTPUT_BUFFER_SIZE},
-    nullptr
-};
-
-static void *m_receiving_data(void*)
+static void read_process(SDevice *ser)
 {
     while (1)
     {
         uint8_t byte = 0;
-        long size = read(m_sdev.m_io_stream, &byte, 1);
+        long size = read(ser->m_io_stream, &byte, 1);
         if (size <= 0)
         {
             delay_ms(1);
             continue;
         }
         ios_chunk_t data = {&byte, 1};
-        m_sdev.IrqHandler(&data);
+        ser->IrqHandler(&data);
     }
+}
+
+static void *communication_reading(void*)
+{
+    read_process(&m_sdev);
+    return nullptr;
+}
+
+static void *gnss_reading(void*)
+{
+    read_process(&m_gps_sdev);
+    return nullptr;
 }
 //<<----------------------
 void SystemEmu::init()
 {
 
     m_cobsp.init(&m_sdev);
-    // m_gnssp.init(&m_gps_sdev);
-    // m_gps_sdev.Init(&m_ctl);
+    m_gnssp.init(&m_gps_sdev);
 }
 /**
  * @brief Print system type in log

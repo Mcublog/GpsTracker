@@ -20,20 +20,30 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
-//>>---------------------- Exported function
-
+//>>---------------------- Private function
 #ifdef __cplusplus
-extern "C" {
-#endif
-
-static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
+extern "C"
 {
-    return isystem()->cobs_parser()->irq_handler(chunk);
-}
+#endif
+
+    static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
+    {
+        return isystem()->cobs_parser()->irq_handler(chunk);
+    }
 
 #ifdef __cplusplus
 }
 #endif
+
+#define INPUT_BUFFER_SIZE (256)
+#define OUTPUT_BUFFER_SIZE (256)
+
+static uint8_t m_input_buffer[INPUT_BUFFER_SIZE];
+static uint8_t m_output_buffer[OUTPUT_BUFFER_SIZE];
+//<<----------------------
+
+
+//>>---------------------- Exported function
 
 /**
  * @brief
@@ -44,7 +54,9 @@ static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
  */
 bool Parser::init(Serial *dev)
 {
-    m_ctl.irq_handler = wrapper_irq_handler;
+    m_ctl = {{m_input_buffer, INPUT_BUFFER_SIZE},
+             {m_output_buffer, OUTPUT_BUFFER_SIZE},
+             wrapper_irq_handler};
     m_sdev = dev;
     return m_sdev->Init(&m_ctl);
 }
@@ -72,17 +84,16 @@ ios_message_t *Parser::read_message(void)
     m_msg_ready = false;
 
     cobsr_decode_result result =
-        cobsr_decode(m_ctl.out.data, m_ctl.out.limit,
-                     m_ctl.in.data, (--m_pos));
+        cobsr_decode(m_ctl.out.data, m_ctl.out.limit, m_ctl.in.data, (--m_pos));
     m_pos = 0;
     if (result.status != COBSR_DECODE_OK)
     {
         LOG_ERROR("result decode: %d", result.status);
         return NULL;
     }
-    LOG_INFO("rx: size: %d", ((ios_message_t*)m_ctl.out.data)->size);
+    LOG_INFO("rx: size: %d", ((ios_message_t *)m_ctl.out.data)->size);
 
-    return (ios_message_t*)m_ctl.out.data;
+    return (ios_message_t *)m_ctl.out.data;
 }
 
 /**

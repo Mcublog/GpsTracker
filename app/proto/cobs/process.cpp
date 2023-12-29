@@ -28,8 +28,8 @@ GnssParser *m_gnssp = nullptr;
 static bool m_command_handler(const command_t *command)
 {
     LOG_INFO("handle: id: %#x channel: %#x", command->id, command->channel);
-    // if (command->id == CMDID_SET_RTC)
-    //     tu_set_time((time_t *)command->data);
+    if (command->id == CMDID_SET_RTC)
+        tu_set_time((time_t *)command->data);
     // else if (command->id == CMDID_SET_SETTINGS)
     // {
     //     config_t *config = (config_t *)(command->data);

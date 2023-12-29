@@ -83,6 +83,7 @@ void SystemHW::what(void)
 Serial *SystemHW::communication_serial()
 {
     //return &m_sdev;
+    LOG_ERROR("not implement");
     return nullptr;
 }
 /**
@@ -93,5 +94,17 @@ Serial *SystemHW::communication_serial()
 Parser *SystemHW::cobs_parser()
 {
     // return &m_cobsp;
+    LOG_ERROR("not implement");
+    return nullptr;
+}
+
+/**
+ * @brief
+ *
+ * @return GnssParser*
+ */
+GnssParser *SystemHW::gnss_parser()
+{
+    LOG_ERROR("not implement");
     return nullptr;
 }

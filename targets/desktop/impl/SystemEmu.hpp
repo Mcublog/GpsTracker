@@ -14,6 +14,7 @@ class SystemEmu final : public System
 
     Serial *communication_serial();
     Parser *cobs_parser();
+    GnssParser *gnss_parser();
 };
 
 #endif // TARGETS_DESKTOP_IMPL_SYSTEM_EMU_HPP

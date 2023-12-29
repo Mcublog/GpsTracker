@@ -14,6 +14,7 @@
 #include "app/application.h"
 #include "app/system/system.h"
 #include "app/utils/delay.h"
+#include "app/utils/time_utils.h"
 #include "targets/desktop/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME main
@@ -24,6 +25,7 @@
 int main(void)
 {
     iomock_init();
+    tu_init();
     LOG_INFO("Emu started...");
     while (1)
     {

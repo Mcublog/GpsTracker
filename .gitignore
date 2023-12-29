@@ -3,3 +3,4 @@ build/
 app/utils/build_marks_actual.c
 targets/ws407/Makefile
 targets/ws407/.mxproject
+env/

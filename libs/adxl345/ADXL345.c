@@ -102,22 +102,22 @@ static ADXL345_Result_t
 ADXL345_WriteRegs(ADXL345_Handler_t *Handler,
                   uint8_t StartReg, uint8_t *Data, uint8_t BytesCount)
 {
-  const uint8_t ADXL345_SEND_BUFFER_SIZE = 8;
+  const uint8_t ADXL345_SEND_BUFFER_SIZE = 9;
   uint8_t Buffer[ADXL345_SEND_BUFFER_SIZE];
   uint8_t Len = 0;
 
-  // Buffer[0] = StartReg; // send register address to set RTC pointer
-  // while (BytesCount)
+  Buffer[0] = StartReg; // send register address to set RTC pointer
+  while (BytesCount)
   {
-    // Len = MIN(BytesCount, sizeof(Buffer));
-    memcpy((void*)(Buffer), (const void*)Data, Len);
+    Len = MIN(BytesCount, sizeof(Buffer)-1);
+    memcpy((void*)(Buffer+1), (const void*)Data, Len);
 
-    if (Handler->PlatformSend(StartReg, Buffer, BytesCount) != 0)
+    if (Handler->PlatformI2CSend(Handler->AddressI2C, Buffer, Len+1) != 0)
       return ADXL345_FAIL;
 
-    // Data += Len;
-    // Buffer[0] += Len;
-    // BytesCount -= Len;
+    Data += Len;
+    Buffer[0] += Len;
+    BytesCount -= Len;
   }
 
   return ADXL345_OK;
@@ -127,7 +127,10 @@ static ADXL345_Result_t
 ADXL345_ReadRegs(ADXL345_Handler_t *Handler,
                  uint8_t StartReg, uint8_t *Data, uint8_t BytesCount)
 {
-  if (Handler->PlatformReceive(StartReg, Data, BytesCount) != 0)
+  if (Handler->PlatformI2CSend(Handler->AddressI2C, &StartReg, 1) != 0)
+    return ADXL345_FAIL;
+
+  if (Handler->PlatformI2CReceive(Handler->AddressI2C, Data, BytesCount) != 0)
     return ADXL345_FAIL;
 
   return ADXL345_OK;
@@ -1009,13 +1012,15 @@ ADXL345_IRQ_Handler(ADXL345_Handler_t *Handler)
 ADXL345_Result_t
 ADXL345_Init(ADXL345_Handler_t *Handler)
 {
-  if ((Handler->PlatformInit == NULL) ||
-      (Handler->PlatformDeInit == NULL) ||
-      (Handler->PlatformSend == NULL) ||
-      (Handler->PlatformReceive == NULL))
+  if ((Handler->PlatformI2CInit == NULL) ||
+      (Handler->PlatformI2CDeInit == NULL) ||
+      (Handler->PlatformI2CSend == NULL) ||
+      (Handler->PlatformI2CReceive == NULL))
     return ADXL345_FAIL;
 
-  if (Handler->PlatformInit() != 0)
+  ADXL345_SetAddressI2C(Handler, 0);
+
+  if (Handler->PlatformI2CInit() != 0)
     return ADXL345_FAIL;
 
   return ADXL345_OK;
@@ -1040,7 +1045,7 @@ ADXL345_DeInit(ADXL345_Handler_t *Handler)
   if (ADXL345_Set_PowerControl(Handler, &PowerControl) != ADXL345_OK)
     return ADXL345_FAIL;
 
-  if (Handler->PlatformDeInit() != 0)
+  if (Handler->PlatformI2CDeInit() != 0)
     return ADXL345_FAIL;
   return ADXL345_OK;
 }

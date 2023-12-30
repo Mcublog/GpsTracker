@@ -284,10 +284,10 @@ typedef struct ADXL345_Sample_s
 /**
  * @brief  Handler data type
  * @note   User must initialize this this functions before using library:
- *         - PlatformInit
- *         - PlatformDeInit
- *         - PlatformSend
- *         - PlatformReceive
+ *         - PlatformI2CInit
+ *         - PlatformI2CDeInit
+ *         - PlatformI2CSend
+ *         - PlatformI2CReceive
  *         - InterruptCallback
  * @note   If success the functions must return 0
  */
@@ -296,13 +296,13 @@ typedef struct ADXL345_Handler_s
   uint8_t AddressI2C;
 
   // Initializes platform dependent part
-  int8_t (*PlatformInit)(void);
+  int8_t (*PlatformI2CInit)(void);
   // De-initializes platform dependent part
-  int8_t (*PlatformDeInit)(void);
+  int8_t (*PlatformI2CDeInit)(void);
   // Send Data to the slave with the address of Address. (0 <= Address <= 127)
-  int8_t (*PlatformSend)(uint8_t Address, uint8_t *Data, uint8_t Len);
+  int8_t (*PlatformI2CSend)(uint8_t Address, uint8_t *Data, uint8_t Len);
   // Receive Data from the slave with the address of Address. (0 <= Address <= 127)
-  int8_t (*PlatformReceive)(uint8_t Address, uint8_t *Data, uint8_t Len);
+  int8_t (*PlatformI2CReceive)(uint8_t Address, uint8_t *Data, uint8_t Len);
 
   // Callback For Interrupts. This function will call from ADXL345_IRQ_Handler
   int8_t (*InterruptCallback)(ADXL345_Interrupt_t Interrupt);

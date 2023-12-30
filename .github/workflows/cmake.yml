@@ -28,7 +28,7 @@ jobs:
   #         report_paths: 'build/*.xml'
 
   build-job:
-    needs: test-job
+    # needs: test-job
     runs-on: ubuntu-latest
     container:
       image: mcublog/embedded_gcc_cmake:latest

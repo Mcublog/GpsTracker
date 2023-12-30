@@ -5,6 +5,7 @@ set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # region COMMON
 set(APP_DIR ${PROJECT_SOURCE_DIR}/app)
+set(PLATFORMS_DIR ${PROJECT_SOURCE_DIR}/platforms)
 set(LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 set(CONFIG_DIR ${APP_DIR}/config)
 
@@ -55,4 +56,9 @@ list(REMOVE_ITEM DESKTOP_IMPL_SOURCES ${TARGETS_DIR}/desktop/main.cpp)
 file(GLOB_RECURSE APP_DIR_SOURCES
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
+)
+
+file(GLOB_RECURSE EMU_PLATFORM_SOURCES
+    ${PLATFORMS_DIR}/emu/*.c
+    ${PLATFORMS_DIR}/emu/*.cpp
 )

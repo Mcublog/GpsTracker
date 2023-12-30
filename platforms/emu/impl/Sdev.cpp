@@ -15,9 +15,9 @@
 #include <fcntl.h>
 
 #include "app/proto/cobs/wrapper.h"
-#include "app/utils/delay.h"
-#include "targets/desktop/impl/Sdev.hpp"
 #include "app/system/system.h"
+#include "app/utils/delay.h"
+#include "platforms/emu/impl/Sdev.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME     sdev
 #define LOG_MODULE_LEVEL    (3)

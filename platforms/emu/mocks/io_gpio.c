@@ -9,7 +9,7 @@
  *
  */
 #include "app/io/gpio/gpio.h"
-#include "targets/desktop/io_mock/io_mock.h"
+#include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME io_gpio
 #define LOG_MODULE_LEVEL (3)

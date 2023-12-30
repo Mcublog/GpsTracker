@@ -13,3 +13,7 @@ Some useful Python scritps.
 ```bash
 export PYTHONPATH="${PYTHONPATH}:utils"
 ```
+
+## Docs
+
+* [Motion Detection Alogrithm](/doc/MotionDetectionAlgo.md)

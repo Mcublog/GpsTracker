@@ -67,6 +67,7 @@ bool Cobs::process(void)
         {
             lwgps_t *gnss = m_gnssp->read_message();
             LOG_INFO("Valid status: %d: %s", gnss->is_valid, tu_print_current_time_only());
+            LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);

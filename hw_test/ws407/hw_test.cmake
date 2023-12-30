@@ -5,8 +5,8 @@ file(GLOB_RECURSE SOURCES
     ${PROJECT_SOURCE_DIR}/targets/ws407/*.s
     ${PROJECT_SOURCE_DIR}/targets/ws407/*.c
     ${PROJECT_SOURCE_DIR}/targets/ws407/*.cpp
-    ${PROJECT_SOURCE_DIR}/targets/f407common/*.c
-    ${PROJECT_SOURCE_DIR}/targets/f407common/*.cpp
+    ${PROJECT_SOURCE_DIR}/platforms/hw/*.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/*.cpp
     ${PROJECT_SOURCE_DIR}/libs/lis3dsh/*.c
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp

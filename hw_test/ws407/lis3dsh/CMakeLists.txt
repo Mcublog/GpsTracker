@@ -21,7 +21,7 @@ add_executable(${TEST_HW_TARGET}
 target_include_directories(${TEST_HW_TARGET}
     PRIVATE
     ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/targets/f407common/
+    ${PROJECT_SOURCE_DIR}/platforms/hw/stm32
     ${CONFIG_DIR}
     ${LIBS_INCLUDES}
     ${HAL_WS407_INCLUDE_DIRS}

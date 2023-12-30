@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 #include "app/utils/delay.h"
-#include "targets/f407common/SystemHw.hpp"
+#include "platforms/hw/SystemHw.hpp"
 #include "app/proto/cobs/Parser.hpp"
 // #include "targets/desktop/impl/Sdev.hpp"
 // #include "targets/desktop/mocks/AccEmu.hpp"

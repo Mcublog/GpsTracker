@@ -10,7 +10,7 @@
  */
 #include "app/system/common.h"
 #include "app/system/system.h"
-#include "targets/f407common/SystemHw.hpp"
+#include "platforms/hw/SystemHw.hpp"
 
 static SystemHW m_system = SystemHW();
 

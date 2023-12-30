@@ -84,10 +84,39 @@ void application(void)
     adxl345h.PlatformI2CSend = write;
     adxl345h.PlatformI2CReceive = read;
 
-    ADXL345_SetAddressI2C(&adxl345h, 0);
+    ADXL345_Result_t res = ADXL345_Init(&adxl345h);
+
+    res = ADXL345_Set_Rate(&adxl345h, ADXL345_RATE_25);
+
+    ADXL345_PowerControl_t pwr_ctrl = {};
+    pwr_ctrl.Measure = 1;
+    res = ADXL345_Set_PowerControl(&adxl345h, &pwr_ctrl);
+
+    ADXL345_ActivityInactivity_t actconfig = {};
+
+    actconfig.ActivityThreshold = 100;
+    actconfig.InactivityThreshold = 25;
+    actconfig.InactivityTime = 10;
+
+    actconfig.Control.InactivityEnableZ = 1; // Enable inactivity for Z-axis
+    actconfig.Control.InactivityEnableY = 1; // Enable inactivity for Y-axis
+    actconfig.Control.InactivityEnableX = 1; // Enable inactivity for X-axis
+    actconfig.Control.InactivityCoupled = 1; // 0 => DC , 1 => AC
+    actconfig.Control.ActivityEnableZ   = 1; // Enable activity for Z-axis
+    actconfig.Control.ActivityEnableY   = 1; // Enable activity for Y-axis
+    actconfig.Control.ActivityEnableX   = 1; // Enable activity for X-axis
+    actconfig.Control.ActivityCoupled   = 1; // 0 => DC , 1 => AC
+
+    res = ADXL345_Set_ActivityInactivity(&adxl345h, &actconfig);
+
+    ADXL345_InterruptConfig_t config = {};
+    config.Enable.Activity = 1;
+    config.Map.Activity = 1;
+
+    res = ADXL345_Set_InterruptConfig(&adxl345h, &config);
     while (true)
     {
-        ADXL345_Result_t res = ADXL345_CheckDeviceID(&adxl345h);
+        res = ADXL345_CheckDeviceID(&adxl345h);
         LOG_INFO("result: %d", res);
 
         delay_ms(500);

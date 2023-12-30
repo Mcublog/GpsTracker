@@ -62,3 +62,8 @@ file(GLOB_RECURSE EMU_PLATFORM_SOURCES
     ${PLATFORMS_DIR}/emu/*.c
     ${PLATFORMS_DIR}/emu/*.cpp
 )
+
+
+file(GLOB ADXL345_SOURCES
+    ${PROJECT_SOURCE_DIR}/libs/adxl345/*.c
+)

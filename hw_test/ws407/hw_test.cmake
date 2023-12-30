@@ -14,6 +14,7 @@ file(GLOB_RECURSE SOURCES
     ${RING_BUFFER_LIB_SOURCES}
     ${COBRSR_LIB_SOURCES}
     ${RTT_SOURCES}
+    ${ADXL345_SOURCES}
 )
 
 set(HAL_WS407_INCLUDE_DIRS
@@ -36,7 +37,8 @@ set(LIBS_INCLUDES
     ${lwgps_SOURCE_DIR}/lwgps/src/include
     ${ring_buffer_SOURCE_DIR}
     ${cobsc_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/libs/lis3dsh)
+    ${PROJECT_SOURCE_DIR}/libs/lis3dsh
+    ${PROJECT_SOURCE_DIR}/libs/adxl345)
 
 # Removed unused files
 list(REMOVE_ITEM SOURCES ${APP_DIR}/application.cpp)

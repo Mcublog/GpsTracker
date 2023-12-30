@@ -1,1 +1,2 @@
 add_subdirectory(lis3dsh)
+add_subdirectory(adxl345)

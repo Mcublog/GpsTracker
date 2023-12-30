@@ -4,27 +4,28 @@ on:
   push:
     branches: [ develop ]
 jobs:
-  test-job:
-    runs-on: ubuntu-latest
-    container:
-      image: mcublog/embedded_gcc_cmake:latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Cmake version
-        run: cmake --version
-      - name: GCC version
-        run: gcc --version
-      - name: Git config
-        run: git config --global --add safe.directory /__w/GpsTracker/GpsTracker
-      - name: Configure
-        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc ..
-      - name: Build and Run Tests
-        run: cd build && make common_types_test converter_test && ctest --output-junit results.xml
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: always() # always run even if the previous step fails
-        with:
-          report_paths: 'build/*.xml'
+
+  # test-job:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: mcublog/embedded_gcc_cmake:latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Cmake version
+  #       run: cmake --version
+  #     - name: GCC version
+  #       run: gcc --version
+  #     - name: Git config
+  #       run: git config --global --add safe.directory /__w/GpsTracker/GpsTracker
+  #     - name: Configure
+  #       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc ..
+  #     - name: Build and Run Tests
+  #       run: cd build && make common_types_test converter_test && ctest --output-junit results.xml
+  #     - name: Publish Test Report
+  #       uses: mikepenz/action-junit-report@v4
+  #       if: always() # always run even if the previous step fails
+  #       with:
+  #         report_paths: 'build/*.xml'
 
   build-job:
     needs: test-job

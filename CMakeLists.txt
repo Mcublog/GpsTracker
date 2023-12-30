@@ -40,6 +40,6 @@ add_subdirectory(hw_test)
 
 # region Tests
 # message("******* [Unit test list] *******")
-# enable_testing()
+enable_testing()
 add_subdirectory(test)
 # endregion

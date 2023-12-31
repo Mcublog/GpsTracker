@@ -38,7 +38,7 @@ static pthread_t m_rtc_thread_id = 0;
 static const tu_alarm_t *m_alarms = NULL;
 static bool m_alarm_enabled = false;
 
-static bool m_rtc_alarm_flag = true;
+static bool m_rtc_alarm_flag = false;
 //<<----------------------
 
 //>>---------------------- Local function definition

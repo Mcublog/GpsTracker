@@ -17,3 +17,4 @@ export PYTHONPATH="${PYTHONPATH}:utils"
 ## Docs
 
 * [Motion Detection Alogrithm](/doc/MotionDetectionAlgo.md)
+* [Emulator Readme](/platforms/emu/README.md)

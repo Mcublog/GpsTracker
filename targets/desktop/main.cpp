@@ -30,11 +30,12 @@ int main(void)
     while (1)
     {
         application();
+        LOG_INFO("power down: %s", tu_print_current_time_only());
         while (isystem()->get_wakeup_cause().d32 == 0)
         {
             delay_ms(1);
         }
-        printf("\n\n");
+        LOG_INFO("========================");
     }
 }
 //<<----------------------

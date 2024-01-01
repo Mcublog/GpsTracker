@@ -15,7 +15,7 @@
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
-#include "targets/desktop/io_mock/io_mock.h"
+#include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME main
 #define LOG_MODULE_LEVEL (3)
@@ -30,11 +30,12 @@ int main(void)
     while (1)
     {
         application();
+        LOG_INFO("power down: %s", tu_print_current_time_only());
         while (isystem()->get_wakeup_cause().d32 == 0)
         {
             delay_ms(1);
         }
-        printf("\n\n");
+        LOG_INFO("========================");
     }
 }
 //<<----------------------

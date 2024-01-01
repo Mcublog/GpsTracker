@@ -25,7 +25,7 @@ include(config/desktop.cmake)
 include(config/utils.cmake)
 # endregion
 
-project(GpsTracker VERSION 0.3.0 LANGUAGES C CXX ASM)
+project(GpsTracker VERSION 0.3.1 LANGUAGES C CXX ASM)
 
 LOG_INFO("Version:.........." ${CMAKE_PROJECT_VERSION})
 LOG_INFO("Host system:......" ${CMAKE_SYSTEM_NAME})
@@ -40,6 +40,6 @@ add_subdirectory(hw_test)
 
 # region Tests
 # message("******* [Unit test list] *******")
-# enable_testing()
+enable_testing()
 add_subdirectory(test)
 # endregion

@@ -1,0 +1,7 @@
+pylogus==0.1.0
+twine>=4.0.2
+build>=0.10.0
+pyserial>=3.5
+prompt_toolkit>=3
+colorama>=0.4.6
+cobs>=1.2.0

@@ -8,6 +8,8 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
+#include <cstring>
+
 #include "app/proto/cobs/process.hpp"
 #include "app/io/gpio/gpio.h"
 #include "app/proto/cobs/Parser.hpp"
@@ -28,8 +30,8 @@ GnssParser *m_gnssp = nullptr;
 static bool m_command_handler(const command_t *command)
 {
     LOG_INFO("handle: id: %#x channel: %#x", command->id, command->channel);
-    // if (command->id == CMDID_SET_RTC)
-    //     tu_set_time((time_t *)command->data);
+    if (command->id == CMDID_SET_RTC)
+        tu_set_time((time_t *)command->data);
     // else if (command->id == CMDID_SET_SETTINGS)
     // {
     //     config_t *config = (config_t *)(command->data);
@@ -37,10 +39,10 @@ static bool m_command_handler(const command_t *command)
     //     config_save(config);
     // }
 
-    // uint32_t limit = 0;
-    // uint8_t *output = ios_get_output_buffer(&limit);
-    // memset(output, 0, sizeof(command_ack_t));
-    // ios_write_message((uint8_t *)output, sizeof(command_ack_t));
+    uint32_t limit = 0;
+    uint8_t *output = isystem()->cobs_parser()->get_output_buffer(&limit);
+    std::memset(output, 0, sizeof(command_ack_t));
+    isystem()->cobs_parser()->write_message((uint8_t *)output, sizeof(command_ack_t));
     return true;
 }
 
@@ -65,6 +67,7 @@ bool Cobs::process(void)
         {
             lwgps_t *gnss = m_gnssp->read_message();
             LOG_INFO("Valid status: %d: %s", gnss->is_valid, tu_print_current_time_only());
+            LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);

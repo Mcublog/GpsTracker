@@ -9,6 +9,7 @@
  *
  */
 #include "app/io/gpio/gpio.h"
+#include "platforms/emu/filelist.h"
 #include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME io_gpio
@@ -17,10 +18,6 @@
 //<<----------------------
 
 //>>---------------------- Local variables
-#define RED_LED_GPIO_FILE_NAME      "/tmp/io_led_gpio_red"
-#define GREEN_LED_GPIO_FILE_NAME    "/tmp/io_led_gpio_green"
-#define EXT_PWR_GPIO_FILE_NAME      "/tmp/io_ext_pwr_pin"
-#define ACCEL_IRQ_GPIO_FILE_NAME    "/tmp/io_accel_irq_pin"
 //<<----------------------
 
 void io_gpio_green_led(bool on)

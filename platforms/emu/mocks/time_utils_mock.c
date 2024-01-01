@@ -14,6 +14,7 @@
 
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
+#include "platforms/emu/filelist.h"
 #include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME tu_mock
@@ -26,9 +27,6 @@
 //<<----------------------
 
 //>>---------------------- Local variables and function ----------
-#define RTC_TIME_FILE_NAME              "/tmp/rtc_time"
-#define RTC_ALARM_0_TIME_FILE_NAME      "/tmp/rtc_alarm0"
-
 #define MAX_REG_ADR     (64)
 static const uint32_t   MAX_REG_DATA_SIZE = sizeof(uint32_t);
 

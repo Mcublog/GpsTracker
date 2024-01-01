@@ -14,6 +14,7 @@
 #include <math.h>
 
 #include "app/system/config.h"
+#include "platforms/emu/filelist.h"
 #include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME config
@@ -22,7 +23,6 @@
 //<<----------------------
 
 //>>---------------------- Local declaration
-#define CONFIG_FILE_NAME "/tmp/config"
 //<<----------------------
 
 config_error_t config_save(config_t *config)

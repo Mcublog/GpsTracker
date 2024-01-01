@@ -24,6 +24,8 @@ include_directories(${DESKTOP_INCLUDE_DIR}
 file(GLOB_RECURSE DESKTOP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/*.c
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+    ${PLATFORMS_DIR}/emu/*.c
+    ${PLATFORMS_DIR}/emu/*.cpp
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
 )

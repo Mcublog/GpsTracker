@@ -25,5 +25,11 @@
     "cmake.generator": "Unix Makefiles",
     "cmake.configureOnEdit": true,
     "cortex-debug.variableUseNaturalFormat": false,
+    "python.analysis.autoImportCompletions": true,
+    {
+        "python.pythonPath": "venv/bin/python",
+        "python.linting.pylintPath": "venv/bin/pylint"
+    }
+
     // "cmake.buildTask": true
 }

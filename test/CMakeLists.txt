@@ -1,1 +1,2 @@
 add_subdirectory(gps_serial_emu)
+add_subdirectory(wakeuping)

@@ -10,7 +10,7 @@ add_definitions(-D_WINDOWS_)
 add_definitions(-DDESKTOP)
 
 # Set target name
-set(TEST_TARGET "gps_serial_emu_test")
+set(TEST_TARGET "wake_up_emu_test")
 
 # Buid TEST_TARGET target
 add_executable(${TEST_TARGET}

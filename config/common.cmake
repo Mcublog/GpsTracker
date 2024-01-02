@@ -1,4 +1,4 @@
-set(DESKTOP_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
+set(EMU_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # Include utils
 # include(${PROJECT_SOURCE_DIR}/config/utils.cmake)
@@ -43,24 +43,13 @@ if(${RTT_ENABLE})
 endif()
 # endregion
 
-# Mocking sources
-file(GLOB_RECURSE DESKTOP_IMPL_SOURCES
-    ${TARGETS_DIR}/desktop/*.c
-    ${TARGETS_DIR}/desktop/*.cpp
-)
-
-# Removed unused files
-list(REMOVE_ITEM DESKTOP_IMPL_SOURCES ${TARGETS_DIR}/desktop/main.cpp)
+# # Removed unused files
+# list(REMOVE_ITEM DESKTOP_IMPL_SOURCES ${TARGETS_DIR}/desktop/main.cpp)
 
 # App sources
 file(GLOB_RECURSE APP_DIR_SOURCES
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
-)
-
-file(GLOB_RECURSE EMU_PLATFORM_SOURCES
-    ${PLATFORMS_DIR}/emu/*.c
-    ${PLATFORMS_DIR}/emu/*.cpp
 )
 
 

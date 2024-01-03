@@ -1,7 +1,6 @@
 include(${PROJECT_SOURCE_DIR}/config/common.cmake)
 include(${PROJECT_SOURCE_DIR}/config/mcu.cmake)
 include(${PROJECT_SOURCE_DIR}/config/utils.cmake)
-include(${PROJECT_SOURCE_DIR}/config/libs.cmake)
 
 set(CMAKE_C_COMPILER    arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
@@ -38,6 +37,7 @@ add_executable(${WS407_TARGET}
 
 # Include paths
 target_include_directories(${WS407_TARGET} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/platforms/stm32
     ${HAL_INCLUDE_DIRS}
     ${APP_DIRS}
@@ -46,9 +46,8 @@ target_include_directories(${WS407_TARGET} PRIVATE
     ${USB_INCLUDES}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/targets/desktop
-    ${lwgps_SOURCE_DIR}/lwgps/src/include
-    ${ring_buffer_SOURCE_DIR}
-    ${cobsc_SOURCE_DIR})
+    ${LIBS_COMMON_INCLUDES}
+)
 
 # Project symbols
 target_compile_definitions(${WS407_TARGET} PRIVATE ${symbols_SYMB})

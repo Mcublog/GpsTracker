@@ -12,8 +12,7 @@
 
 #include "app/proto/cobs/Parser.hpp"
 #include "app/system/system.h"
-// libs
-#include "cobsr.h"
+#include "libs/cobs-c-0.5.0/cobsr.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME cpars
 #define LOG_MODULE_LEVEL (3)

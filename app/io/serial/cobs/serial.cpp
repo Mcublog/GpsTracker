@@ -18,8 +18,7 @@
 #include "app/system/common.h"
 #include "app/io/serial/cobs/serial.h"
 #include "app/interfaces/Serial.hpp"
-// libs
-#include "cobsr.h"
+#include "libs/cobs-c-0.5.0/cobsr.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ios
 #define LOG_MODULE_LEVEL (3)

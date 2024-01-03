@@ -21,8 +21,7 @@
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 #include "app/version.h"
-// libs
-#include "lwgps/lwgps.h"
+#include "libs/lwgps-2.2.0/lwgps/src/include/lwgps/lwgps.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app
 #define LOG_MODULE_LEVEL (3)

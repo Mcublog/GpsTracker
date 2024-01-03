@@ -56,3 +56,12 @@ file(GLOB_RECURSE APP_DIR_SOURCES
 file(GLOB ADXL345_SOURCES
     ${PROJECT_SOURCE_DIR}/libs/adxl345/*.c
 )
+
+set(LIBS_COMMON_INCLUDES
+    ${LIBS_DIR}/lwgps-2.2.0/lwgps/src/include
+    ${LIBS_DIR}/Ring-Buffer-0.1.1
+    ${LIBS_DIR}/cobs-c-0.5.0)
+
+file(GLOB LWGPS_LIB_SOURCES         ${PROJECT_SOURCE_DIR}/libs/lwgps-2.2.0/lwgps/src/lwgps/*.c)
+file(GLOB RING_BUFFER_LIB_SOURCES   ${PROJECT_SOURCE_DIR}/libs/Ring-Buffer-0.1.1/ringbuffer.c)
+file(GLOB COBRSR_LIB_SOURCES        ${PROJECT_SOURCE_DIR}/libs/cobs-c-0.5.0/cobsr.c)

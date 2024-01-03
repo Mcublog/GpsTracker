@@ -1,5 +1,4 @@
 include(${PROJECT_SOURCE_DIR}/config/common.cmake)
-include(${PROJECT_SOURCE_DIR}/config/libs.cmake)
 
 set(EMU_TARGET                 tracker_emu)
 
@@ -8,7 +7,6 @@ file(GLOB_RECURSE DESKTOP_IMPL_SOURCES
     ${TARGETS_DIR}/desktop/*.c
     ${TARGETS_DIR}/desktop/*.cpp
 )
-
 
 file(GLOB_RECURSE EMU_PLATFORM_SOURCES
     ${PLATFORMS_DIR}/emu/*.c
@@ -20,9 +18,7 @@ set(EMU_INCLUDES
     ${DESKTOP_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/targets/desktop
-    ${lwgps_SOURCE_DIR}/lwgps/src/include
-    ${ring_buffer_SOURCE_DIR}
-    ${cobsc_SOURCE_DIR}
+    ${LIBS_COMMON_INCLUDES}
     ${PROJECT_SOURCE_DIR}
     ${APP_DIR}
     ${CONFIG_DIR}

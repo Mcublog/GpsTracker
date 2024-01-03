@@ -1,5 +1,4 @@
 include(${PROJECT_SOURCE_DIR}/config/common.cmake)
-include(${PROJECT_SOURCE_DIR}/config/libs.cmake)
 
 file(GLOB_RECURSE SOURCES
     ${PROJECT_SOURCE_DIR}/targets/ws407/*.s
@@ -34,9 +33,7 @@ set(HAL_WS407_USB_INCLUDE_DIRS
 
 set(LIBS_INCLUDES
     ${RTT_INCLUDE_DIRS}
-    ${lwgps_SOURCE_DIR}/lwgps/src/include
-    ${ring_buffer_SOURCE_DIR}
-    ${cobsc_SOURCE_DIR}
+    ${LIBS_COMMON_INCLUDES}
     ${PROJECT_SOURCE_DIR}/libs/lis3dsh
     ${PROJECT_SOURCE_DIR}/libs/adxl345)
 

@@ -52,7 +52,11 @@ static void *m_rtc_tick(void *callback)
     while(true)
     {
         iomock_read_data(RTC_TIME_FILE_NAME, &t, sizeof(t));
-        iomock_read_data(RTC_ALARM_0_TIME_FILE_NAME, &alarm, sizeof(t));
+        if (iomock_read_data(RTC_ALARM_0_TIME_FILE_NAME, &alarm, sizeof(alarm)) == -2)
+        {
+            alarm = 0;
+            iomock_write_data(RTC_ALARM_0_TIME_FILE_NAME, &alarm, sizeof(alarm));
+        }
         t++;
         iomock_write_data(RTC_TIME_FILE_NAME, &t, sizeof(time_t));
         if (t >= alarm && m_alarm_enabled)

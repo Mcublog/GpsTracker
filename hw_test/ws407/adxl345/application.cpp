@@ -13,7 +13,7 @@
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
 #include "app/utils/delay.h"
-#include "libs/adxl345/ADXL345.h"
+#include "libs/hw/adxl345/ADXL345.h"
 #include "main.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME acctst

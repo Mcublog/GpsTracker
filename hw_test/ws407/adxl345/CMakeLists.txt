@@ -1,7 +1,6 @@
 include(${PROJECT_SOURCE_DIR}/config/common.cmake)
 include(${PROJECT_SOURCE_DIR}/config/mcu.cmake)
 include(${PROJECT_SOURCE_DIR}/config/utils.cmake)
-include(${PROJECT_SOURCE_DIR}/hw_test/ws407/hw_test.cmake)
 
 set(CMAKE_C_COMPILER    arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
@@ -9,12 +8,13 @@ set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
 set(TEST_HW_TARGET "ws407_adxl345_test")
 #
 # Removed unused files
-list(REMOVE_ITEM SOURCES ${APP_DIR}/application.cpp)
+list(REMOVE_ITEM HW_SOURCES ${APP_DIR}/application.cpp)
 
 # App
 add_executable(${TEST_HW_TARGET}
     ${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
-    ${SOURCES}
+    ${HW_SOURCES}
+    ${WS407_SOURCES}
 )
 
 # Include paths
@@ -23,7 +23,7 @@ target_include_directories(${TEST_HW_TARGET}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/platforms/hw/stm32
     ${CONFIG_DIR}
-    ${LIBS_INCLUDES}
+    ${HW_LIBS_INCLUDES}
     ${HAL_WS407_INCLUDE_DIRS}
     ${HAL_WS407_USB_INCLUDE_DIRS})
 

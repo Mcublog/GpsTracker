@@ -97,8 +97,8 @@ void bkup_load_sysmode(uint32_t *mode)
  */
 void bkup_event_wdt_save(uint8_t counter, time_t mark)
 {
-    std::memcpy(&counter, &m_backup_map.map.event_cnt, sizeof(counter));
-    std::memcpy(&mark, &m_backup_map.map.event_mark, sizeof(mark));
+    std::memcpy(&m_backup_map.map.event_cnt, &counter, sizeof(uint8_t));
+    std::memcpy(&m_backup_map.map.event_mark, &mark, sizeof(time_t));
 }
 
 /**
@@ -109,6 +109,6 @@ void bkup_event_wdt_save(uint8_t counter, time_t mark)
  */
 void bkup_event_wdt_load(uint8_t *counter, time_t *mark)
 {
-    std::memcpy(&m_backup_map.map.event_cnt, counter, sizeof(uint8_t));
-    std::memcpy(&m_backup_map.map.event_mark, mark, sizeof(time_t));
+    std::memcpy(counter, &m_backup_map.map.event_cnt, sizeof(uint8_t));
+    std::memcpy(mark, &m_backup_map.map.event_mark, sizeof(time_t));
 }

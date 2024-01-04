@@ -77,18 +77,12 @@ wakeup_cause_t System::get_wakeup_cause()
 /**
  * @brief Request system startup type
  * Currently determined by the clock,
- * if RTC is reset, it means cold start DELAYED_START
+ * if RTC is IDLE
  *
  * @return sys_mode_t
  */
 sys_mode_t System::mode_get()
 {
-    if (tu_get_current_time() < TIME_FOR_CHECK_SYNC)
-    {
-        // RTC is resets
-        mode_set(sys_mode_t::DELAYED_START);
-        return sys_mode_t::DELAYED_START;
-    }
     uint32_t data = 0;
     bkup_load_sysmode(&data);
     return (sys_mode_t)data;
@@ -108,10 +102,24 @@ void System::mode_set(sys_mode_t mode)
 /**
  * @brief
  *
+ * @param m
+ * @return const char
+ */
+const char *System::mode_stringify(sys_mode_t m)
+{
+    if (m == IDLE)
+        return "IDLE";
+    // else if (m == NORMAL)
+    return "NORMAL";
+}
+
+/**
+ * @brief
+ *
  * @param perf
  * @return
  */
-void System::set_performance(sys_performance_t perf)
+void System::performance_set(sys_performance_t perf)
 {
 
 }
@@ -121,10 +129,24 @@ void System::set_performance(sys_performance_t perf)
  *
  * @return sys_performance_t
  */
-sys_performance_t System::get_performance()
+sys_performance_t System::performance_get()
 {
-    LOG_INFO("get_performance: dummy");
+    LOG_INFO("performance_get: dummy");
     return sys_performance_t::NOMINAL;
+}
+
+/**
+ * @brief
+ *
+ * @param p
+ * @return const char*
+ */
+const char *System::performance_stringify(sys_performance_t p)
+{
+    if (p == LOW_POWER)
+        return "LOW_POWER";
+    // else if (p == NOMINAL)
+    return "NOMINAL";
 }
 
 /**
@@ -146,14 +168,14 @@ bool System::is_wake_up_event()
 void System::infitite_loop()
 {
     LOG_ERROR("SYS INFINITE LOOP !!!");
+    io_gpio_green_led(false);
     while (1)
     {
-        io_gpio_green_led(false);
+        //LOG_ERROR("wakeup: %d", is_wake_up_event());
+        // LOG_ERROR("hclk: %s", performance_get() == sys_performance_t::LOW_POWER
+        //                           ? "LOW_POWER"
+        //                           : "NOMINAL");
         io_gpio_red_led(true);
-        LOG_ERROR("wakeup: %d", is_wake_up_event());
-        LOG_ERROR("hclk: %s", get_performance() == sys_performance_t::LOW_POWER
-                                  ? "LOW_POWER"
-                                  : "NOMINAL");
         delay_ms(500);
         io_gpio_red_led(false);
     }

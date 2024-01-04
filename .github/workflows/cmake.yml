@@ -14,12 +14,12 @@ jobs:
       image: mcublog/embedded_gcc_cmake:latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cmake version
-        run: cmake --version
-      - name: GCC version
-        run: arm-none-eabi-gcc --version
+      - name: Versions
+        run: cmake --version && arm-none-eabi-gcc --version && gcc --version
+      - name: Git config
+        run: git config --global --add safe.directory /__w/GpsTracker/GpsTracker
       - name: Configure
-        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=arm-none-eabi-gcc ..
+        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=arm-none-eabi-gcc -DCMAKE_CXX_COMPILER=arm-none-eabi-g++ ..
       - name: Build
         run: cd build && make all -j 4
       - name: Run Tests

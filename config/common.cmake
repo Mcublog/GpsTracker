@@ -1,3 +1,4 @@
+set(EMU_TARGET                  tracker_emu)
 set(EMU_TARGET_PATH             ${PROJECT_SOURCE_DIR}/targets/desktop)
 
 # Include utils

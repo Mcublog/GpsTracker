@@ -1,7 +1,5 @@
 include(${PROJECT_SOURCE_DIR}/config/common.cmake)
 
-set(EMU_TARGET                 tracker_emu)
-
 # Mocking sources
 file(GLOB_RECURSE DESKTOP_IMPL_SOURCES
     ${TARGETS_DIR}/desktop/*.c

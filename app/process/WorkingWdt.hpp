@@ -19,11 +19,13 @@ class WorkingWdt
     void event_getting();
     void reset();
 
-    bool is_expired();
-    bool is_treshold();
+    bool is_expired() const;
+    bool is_treshold() const;
 
     void save() const;
     void load();
+
+    void print_state() const;
 };
 
 #endif // APP_PROCESS_WORKING_WDT_H

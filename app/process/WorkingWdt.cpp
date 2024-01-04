@@ -44,7 +44,7 @@ void WorkingWdt::reset()
  * @return true
  * @return false
  */
-bool WorkingWdt::is_expired()
+bool WorkingWdt::is_expired() const
 {
     return tu_get_current_time() > (m_last_mark + kSleepPeriodS);
 }
@@ -55,7 +55,7 @@ bool WorkingWdt::is_expired()
  * @return true
  * @return false
  */
-bool WorkingWdt::is_treshold()
+bool WorkingWdt::is_treshold() const
 {
     return m_event_counter > kEventThreshold;
 }
@@ -78,4 +78,14 @@ void WorkingWdt::load()
     bkup_event_wdt_load(&m_event_counter, &m_last_mark);
     if (m_last_mark == 0)
         m_last_mark = tu_get_current_time();
+}
+
+/**
+ * @brief
+ *
+ */
+void WorkingWdt::print_state() const
+{
+    LOG_INFO("event cnt: %d", m_event_counter);
+    LOG_INFO("last event mark: %s", tu_print_time_only(&m_last_mark));
 }

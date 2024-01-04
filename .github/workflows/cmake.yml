@@ -18,7 +18,7 @@ jobs:
       - name: Git config
         run: git config --global --add safe.directory /__w/GpsTracker/GpsTracker
       - name: Configure
-        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc ..
+        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release
       - name: Build and Run Tests
         run: cd build && make all -j 4 && ctest --output-junit results.xml
       - name: Publish Test Report
@@ -41,7 +41,7 @@ jobs:
       - name: ARM GCC version
         run: arm-none-eabi-gcc --version
       - name: Configure
-        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=arm-none-eabi-gcc ..
+        run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release
       - name: Build
         run: cd build && make tracker_ws407_fw
       - name: Archive production artifacts

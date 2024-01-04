@@ -106,7 +106,7 @@ static void _get_rtc_time_and_date(RTC_TimeTypeDef *rtc_time, RTC_DateTypeDef *r
  * @brief
  *
  */
-void tu_init(uint32_t tick_ms);
+void tu_init(uint32_t tick_ms)
 {
 }
 

@@ -10,11 +10,11 @@
  */
 #include <cstdint>
 
+#include "app/process/WorkingWdt.hpp"
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 #include "platforms/emu/io_mock/io_mock.h"
-#include "app/system/WorkingWdt.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app
 #define LOG_MODULE_LEVEL (3)

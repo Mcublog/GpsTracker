@@ -10,8 +10,8 @@
  */
 #include <cstring>
 
-#include "app/proto/cobs/process.hpp"
 #include "app/io/gpio/gpio.h"
+#include "app/process/external_power/process.hpp"
 #include "app/proto/cobs/Parser.hpp"
 #include "app/proto/commands.h"
 #include "app/system/system.h"

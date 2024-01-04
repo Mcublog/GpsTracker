@@ -14,7 +14,7 @@
 
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
-#include "app/proto/cobs/process.hpp"
+#include "app/process/external_power/process.hpp"
 #include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/data_print.h"

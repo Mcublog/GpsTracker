@@ -1,9 +1,10 @@
 
-#ifndef APP_SYSTEM_WORKING_WDT_H
-#define APP_SYSTEM_WORKING_WDT_H
+#ifndef APP_PROCESS_WORKING_WDT_H
+#define APP_PROCESS_WORKING_WDT_H
 
-#include <cstdint>
 #include <cstdbool>
+#include <cstdint>
+#include <ctime>
 
 class WorkingWdt
 {
@@ -25,4 +26,4 @@ class WorkingWdt
     void load();
 };
 
-#endif // APP_SYSTEM_WORKING_WDT_H
+#endif // APP_PROCESS_WORKING_WDT_H

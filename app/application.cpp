@@ -78,7 +78,7 @@ void application(void)
 
         if (cause.field.by_external_power)
         {
-            Cobs::process();
+            ExtPower::process();
         }
         cause = sys->get_wakeup_cause();
     }

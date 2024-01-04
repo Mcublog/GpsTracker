@@ -54,7 +54,7 @@ static const command_list_item_t m_command_list[CMDID_LAST] = {
 
 //<<----------------------
 
-bool Cobs::process(void)
+bool ExtPower::process(void)
 {
     m_parser = isystem()->cobs_parser();
     m_gnssp = isystem()->gnss_parser();

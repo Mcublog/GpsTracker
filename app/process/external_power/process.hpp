@@ -1,12 +1,12 @@
 
-#ifndef APP_PROTO_COBS_PROCESS_HPP
-#define APP_PROTO_COBS_PROCESS_HPP
+#ifndef APP_PROCESS_EXTERNAL_POWER_PROCESS_HPP
+#define APP_PROCESS_EXTERNAL_POWER_PROCESS_HPP
 
 #include <stdbool.h>
 
-namespace Cobs
+namespace ExtPower
 {
 bool process(void);
 }
 
-#endif // APP_PROTO_COBS_PROCESS_HPP
+#endif // APP_PROCESS_EXTERNAL_POWER_PROCESS_HPP

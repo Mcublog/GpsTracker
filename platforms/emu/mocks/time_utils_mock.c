@@ -28,7 +28,8 @@
 
 //>>---------------------- Local variables and function ----------
 #define MAX_REG_ADR     (64)
-static const uint32_t   MAX_REG_DATA_SIZE = sizeof(uint32_t);
+static const uint32_t MAX_REG_DATA_SIZE = sizeof(uint32_t);
+static const uint32_t kDefaultTickMs = 1000;
 
 static uint8_t backup_mem[MAX_REG_ADR] = { 0 };
 
@@ -37,6 +38,8 @@ static const tu_alarm_t *m_alarms = NULL;
 static bool m_alarm_enabled = false;
 
 static bool m_rtc_alarm_flag = false;
+
+static uint32_t m_tick_delay_ms = kDefaultTickMs;
 //<<----------------------
 
 //>>---------------------- Local function definition
@@ -64,7 +67,7 @@ static void *m_rtc_tick(void *callback)
             m_rtc_alarm_flag = true;
             tu_alarm_irq_handler(TU_ALARM_0);
         }
-        delay_ms(1000);
+        delay_ms(m_tick_delay_ms);
     }
 }
 //<<----------------------
@@ -74,8 +77,11 @@ static void *m_rtc_tick(void *callback)
  * @brief
  *
  */
-void tu_init(void)
+void tu_init(uint32_t tick_ms)
 {
+    if (tick_ms)
+        m_tick_delay_ms = tick_ms;
+
     time_t reset = TIME_ON_RESET_STATE;
     if (iomock_file_is_exist(RTC_TIME_FILE_NAME) == false)
     {

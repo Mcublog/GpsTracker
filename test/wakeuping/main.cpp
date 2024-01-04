@@ -21,34 +21,75 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
-static void m_alarm_a_handler(void);
-static const tu_alarm_t m_alarms[TU_ALARM_LAST] = {{TU_ALARM_0, m_alarm_a_handler}};
-//<<----------------------
-
-//>>---------------------- Local function definition
-void m_alarm_a_handler(void)
-{
-    LOG_INFO("alarm: %s", tu_print_current_time_only());
-    tu_reset_alarm();
-}
+//>>---------------------- Locals
+static const uint32_t kTimeScaleMs = 1;
 //<<----------------------
 
 int main(void)
 {
     iomock_init();
-    tu_init();
+    tu_init(kTimeScaleMs);
 
     WorkingWdt wwdt = WorkingWdt();
 
-    for (uint32_t i = 0; i < 10; i++)
-        wwdt.event_getting();
+    wwdt.load();
 
-    if (wwdt.is_treshold())
+    bool condition = wwdt.is_expired();
+    if (condition)
     {
-        LOG_INFO("is_treshold == True");
+        LOG_ERROR("is_expired == True");
+        return -1;
     }
-    while (1)
+
+    for (uint32_t i = 0; i < 10; i++)
     {
+        wwdt.event_getting();
+        condition = wwdt.is_treshold();
+        if (condition)
+        {
+            LOG_INFO("on %d is_treshold == True", i);
+            break;
+        }
+    }
+    if (!condition)
+    {
+        LOG_ERROR("!condition");
+        return -1;
+    }
+
+    for (uint32_t i = 0; i < 20; i++)
+    {
+        condition = wwdt.is_expired();
+        if (condition)
+        {
+            LOG_INFO("on %d is_expired == True", i);
+            wwdt.reset();
+            wwdt.save();
+            break;
+        }
+        LOG_INFO("%s: tick...", tu_print_current_time_only());
         delay_ms(1);
     }
+
+    if (!condition)
+    {
+        LOG_ERROR("!condition");
+        return -1;
+    }
+
+    wwdt.load();
+    if (wwdt.is_treshold())
+    {
+        LOG_ERROR("is_treshold");
+        return -1;
+    }
+
+    if (wwdt.is_expired() == false)
+    {
+        LOG_ERROR("!is_expired");
+        return -1;
+    }
+
+    LOG_INFO("all ok");
+    return 0;
 }

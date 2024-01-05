@@ -47,6 +47,11 @@ int main(void)
 
     log.usage(&current, &capacity);
     LOG_INFO("state: %d/%d", current, capacity);
+    if (current != kMaxDataSize)
+    {
+        LOG_ERROR("current != kMaxDataSize");
+        return -1;
+    }
 
     for (auto i = 0; i < (kMaxDataSize >> 1); i++)
     {
@@ -54,6 +59,15 @@ int main(void)
         log.pop(&dummy_data);
         LOG_INFO("pop: %d", dummy_data.tm);
     }
+
+    log.usage(&current, &capacity);
+    LOG_INFO("state: %d/%d", current, capacity);
+    if (current != kMaxDataSize)
+    {
+        LOG_ERROR("current != kMaxDataSize");
+        return -1;
+    }
+
     LOG_INFO("----------- second part reading ----------");
     for (auto i = 0; i < (kMaxDataSize >> 1); i++)
     {
@@ -61,13 +75,16 @@ int main(void)
         log.pop(&dummy_data);
         LOG_INFO("pop: %d", dummy_data.tm);
     }
-    log.discard();
-    log.usage(&current, &capacity);
-    LOG_INFO("state after discard: %d/%d", current, capacity);
 
     log.rewing();
     log.usage(&current, &capacity);
     LOG_INFO("state after rewind: %d/%d", current, capacity);
+    if (current != kMaxDataSize)
+    {
+        LOG_ERROR("current != kMaxDataSize");
+        return -1;
+    }
+
     for (auto i = 0; i < kMaxDataSize; i++)
     {
         gnss_record_t dummy_data;
@@ -75,6 +92,12 @@ int main(void)
         LOG_INFO("pop: %d", dummy_data.tm);
     }
     log.discard();
+    log.usage(&current, &capacity);
+    if (current != 0)
+    {
+        LOG_ERROR("current != 0");
+        return -1;
+    }
 
     return 0;
 }

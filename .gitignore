@@ -5,3 +5,4 @@ targets/ws407/Makefile
 targets/ws407/.mxproject
 env/
 __pycache__/
+ringfs.sim

@@ -10,7 +10,7 @@ add_definitions(-D_WINDOWS_)
 add_definitions(-DDESKTOP)
 
 # Set target name
-set(TEST_TARGET "ringfs_log_test")
+set(TEST_TARGET "ringfs_log_unit")
 
 # Buid TEST_TARGET target
 add_executable(${TEST_TARGET}

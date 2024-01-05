@@ -20,7 +20,7 @@
 static struct flashsim *sim;
 
 static constexpr int kSectorSize = 4096;
-static constexpr int kNumberSectorInOneChip = 16;
+static constexpr int kNumberSectorInOneChip = 16 * 128;
 static constexpr int kMaxMemoryChips = 1;
 
 static busy_callback_t m_busy_callback = NULL;

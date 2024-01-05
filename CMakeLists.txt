@@ -24,7 +24,7 @@ include(config/mcu.cmake)
 include(config/utils.cmake)
 # endregion
 
-project(GpsTracker VERSION 0.3.1 LANGUAGES C CXX ASM)
+project(GpsTracker VERSION 0.3.2 LANGUAGES C CXX ASM)
 
 LOG_INFO("Version:.........." ${CMAKE_PROJECT_VERSION})
 LOG_INFO("Host system:......" ${CMAKE_SYSTEM_NAME})

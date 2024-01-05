@@ -61,11 +61,14 @@ file(GLOB ADXL345_SOURCES
 set(LIBS_COMMON_INCLUDES
     ${LIBS_DIR}/lwgps-2.2.0/lwgps/src/include
     ${LIBS_DIR}/Ring-Buffer-0.1.1
-    ${LIBS_DIR}/cobs-c-0.5.0)
+    ${LIBS_DIR}/cobs-c-0.5.0
+    ${LIBS_DIR}/ringfs-0.2.0
+)
 
 file(GLOB LWGPS_LIB_SOURCES         ${PROJECT_SOURCE_DIR}/libs/lwgps-2.2.0/lwgps/src/lwgps/*.c)
 file(GLOB RING_BUFFER_LIB_SOURCES   ${PROJECT_SOURCE_DIR}/libs/Ring-Buffer-0.1.1/ringbuffer.c)
 file(GLOB COBRSR_LIB_SOURCES        ${PROJECT_SOURCE_DIR}/libs/cobs-c-0.5.0/cobsr.c)
+file(GLOB RINGFS_LIB_SOURCES        ${PROJECT_SOURCE_DIR}/libs/ringfs-0.2.0/ringfs.c)
 
 #
 set(HAL_WS407_INCLUDE_DIRS
@@ -101,6 +104,7 @@ file(GLOB_RECURSE HW_SOURCES
     ${RING_BUFFER_LIB_SOURCES}
     ${COBRSR_LIB_SOURCES}
     ${RTT_SOURCES}
+    ${RINGFS_LIB_SOURCES}
 )
 
 file(GLOB_RECURSE WS407_SOURCES

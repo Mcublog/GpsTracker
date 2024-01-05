@@ -21,7 +21,7 @@ static struct flashsim *sim;
 
 static constexpr int kSectorSize = 4096;
 static constexpr int kNumberSectorInOneChip = 16;
-static constexpr int kMaxMemoryChips = 4;
+static constexpr int kMaxMemoryChips = 1;
 
 static busy_callback_t m_busy_callback = NULL;
 
@@ -48,21 +48,7 @@ static ssize_t op_read(uint32_t address, void *data, size_t size)
 }
 
 // clang-format off
-const static ringfs_flash_partition_t m_acc_partition =
-{
-    /**< Sector size, in bytes. */
-    .sector_size = kSectorSize,
-    /**< Partition offset, in sectors. */
-    .sector_offset = 0,
-    /**< Partition size, in sectors. */
-    .sector_count = (kNumberSectorInOneChip * kMaxMemoryChips / 2 ),
-
-    .sector_erase = op_sector_erase,
-    .program = op_program,
-    .read = op_read,
-};
-
-const static ringfs_flash_partition_t m_sensor_partition =
+const static ringfs_flash_partition_t m_gnss_partition =
 {
     /**< Sector size, in bytes. */
     .sector_size = kSectorSize,
@@ -104,19 +90,9 @@ void log_partition_init(void)
  *
  * @return ringfs_flash_partition_t
  */
-const ringfs_flash_partition_t *log_acc_partition(void)
+const ringfs_flash_partition_t *log_gnss_partition(void)
 {
-    return &m_acc_partition;
-}
-
-/**
- * @brief
- *
- * @return ringfs_flash_partition_t
- */
-const ringfs_flash_partition_t *log_sensor_partition(void)
-{
-    return &m_sensor_partition;
+    return &m_gnss_partition;
 }
 
 /**

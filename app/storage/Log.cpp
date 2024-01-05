@@ -35,7 +35,8 @@ void Log::ring_fs_init(const ringfs_flash_partition_t *partition,
     if (bkup_is_active())
     {
         LOG_INFO("restore from backup");
-        load_from_backup(fs);
+        if (load_from_backup)
+            load_from_backup(fs);
         fs->flash = partition;
         if (validate_fs(fs))
             return;

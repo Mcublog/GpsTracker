@@ -12,8 +12,7 @@ extern "C"
 #endif
 
     void log_partition_init(void);
-    const ringfs_flash_partition_t *log_acc_partition(void);
-    const ringfs_flash_partition_t *log_sensor_partition(void);
+    const ringfs_flash_partition_t *log_gnss_partition(void);
 
     void log_partition_set_busy_callback(busy_callback_t busy_callback);
 

@@ -55,6 +55,8 @@ bool Autonomous::process(void)
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
+            // Save data to memory
+
             // break;
         }
 

@@ -8,6 +8,8 @@
  * @copyright Viacheslav mcublog (c) 2022
  *
  */
+#include <pthread.h>
+
 #include "app/io/gpio/gpio.h"
 #include "platforms/emu/filelist.h"
 #include "platforms/emu/io_mock/io_mock.h"
@@ -18,6 +20,21 @@
 //<<----------------------
 
 //>>---------------------- Local variables
+static pthread_t m_acc_irq_process_id = 0;
+static acc_irq_callback_t m_acc_handler = NULL;
+
+
+static void acc_mock_edge_handler(iomock_irq_edge_t e)
+{
+    if (e == IOMOCK_IRQ_RISING && m_acc_handler != NULL)
+    {
+        m_acc_handler();
+    }
+}
+
+static iomock_handlers_t m_acc_mock_handler = {acc_mock_edge_handler,
+                                               io_read_accel_irq_pin};
+
 //<<----------------------
 
 void io_gpio_green_led(bool on)
@@ -77,7 +94,12 @@ bool io_read_accel_irq_pin(void)
 
 void io_acc_irq_set_handler(acc_irq_callback_t handler)
 {
-    (void)handler;
+    m_acc_handler = handler;
+    if (m_acc_irq_process_id != 0)
+        pthread_cancel(m_acc_irq_process_id);
+
+    pthread_create(&m_acc_irq_process_id, NULL, iomock_edge_detecting,
+                   &m_acc_mock_handler);
 }
 
 void io_acc_handler(void)

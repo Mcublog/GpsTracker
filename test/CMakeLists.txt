@@ -1,3 +1,3 @@
 add_subdirectory(gps_serial_emu)
 add_subdirectory(wakeuping)
-add_subdirectory(ringfs)
+add_subdirectory(logging)

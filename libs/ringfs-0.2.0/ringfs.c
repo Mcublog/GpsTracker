@@ -194,7 +194,7 @@ int ringfs_scan(struct ringfs *fs)
 
         /* Detect partially-formatted partitions. */
         if (header.status == SECTOR_FORMATTING) {
-            printf("ringfs_scan: sector: %d addr: %d\r\n", sector, addr);
+            printf("ringfs_scan: sector: 0x%04x addr: 0x%08x\r\n", sector, addr);
             printf("ringfs_scan: partially formatted partition\r\n");
             return -1;
         }

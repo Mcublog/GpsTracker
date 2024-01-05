@@ -108,6 +108,7 @@ void application(void)
         if (mode == sys_mode_t::NORMAL)
         {
             Autonomous::process();
+            mode = sys->mode_get();
         }
 
         cause = sys->get_wakeup_cause();

@@ -14,15 +14,16 @@
 
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
-#include "app/proto/cobs/process.hpp"
+#include "app/process/WorkingWdt.hpp"
+#include "app/process/autonomous/process.hpp"
+#include "app/process/external_power/process.hpp"
 #include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/data_print.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 #include "app/version.h"
-// libs
-#include "lwgps/lwgps.h"
+#include "libs/lwgps-2.2.0/lwgps/src/include/lwgps/lwgps.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app
 #define LOG_MODULE_LEVEL (3)
@@ -47,19 +48,19 @@ void application(void)
     if (sys == nullptr)
     {
         LOG_ERROR("sys is not ready");
-        while (1)
-        {
-            /* code */
-        }
+        System::infitite_loop();
 
     }
     sys->what();
     sys->init();
 
+
     wakeup_cause_t cause = sys->get_wakeup_cause();
     dprint_wakeup_cause(&cause);
+    sys_mode_t mode = sys->mode_get();
 
-    LOG_INFO("current time: %s", tu_print_current_time_full());
+    LOG_INFO("%s: mode: %s", tu_print_current_time_full(), sys->mode_stringify(mode));
+
     if (cause.d32 == 0)
     {
         LOG_ERROR("EMPTY CAUSE, do nothing");
@@ -67,6 +68,28 @@ void application(void)
             return;
         // sys_infitite_loop();
     }
+
+    WorkingWdt wwdt = WorkingWdt();
+    wwdt.load();
+
+    if (wwdt.is_expired())
+    {
+        LOG_INFO("wwdt is expired: reset it");
+        wwdt.reset();
+        sys->mode_set(sys_mode_t::IDLE);
+    }
+
+    if (cause.field.by_accel)
+        wwdt.event_getting();
+
+    if (wwdt.is_treshold())
+    {
+        LOG_INFO("wwdt is treshold: TRUE");
+        sys->mode_set(sys_mode_t::NORMAL);
+    }
+
+    wwdt.save();
+    wwdt.print_state();
 
     while (1)
     {
@@ -79,8 +102,15 @@ void application(void)
 
         if (cause.field.by_external_power)
         {
-            Cobs::process();
+            ExtPower::process();
         }
+
+        if (mode == sys_mode_t::NORMAL)
+        {
+            Autonomous::process();
+            mode = sys->mode_get();
+        }
+
         cause = sys->get_wakeup_cause();
     }
 }

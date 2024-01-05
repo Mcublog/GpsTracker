@@ -21,7 +21,6 @@ set_property(GLOBAL PROPERTY RULE_MESSAGES OFF)
 
 include(config/common.cmake)
 include(config/mcu.cmake)
-include(config/desktop.cmake)
 include(config/utils.cmake)
 # endregion
 
@@ -30,11 +29,10 @@ project(GpsTracker VERSION 0.3.1 LANGUAGES C CXX ASM)
 LOG_INFO("Version:.........." ${CMAKE_PROJECT_VERSION})
 LOG_INFO("Host system:......" ${CMAKE_SYSTEM_NAME})
 LOG_INFO("Build type:......." ${CMAKE_BUILD_TYPE})
-LOG_INFO("Desktop target:..." ${DESKTOP_TARGET})
+LOG_INFO("Desktop target:..." ${EMU_TARGET})
 LOG_INFO("MCU target:......." ${MCU_TARGET})
 
 add_subdirectory(config)
-add_subdirectory(libs)
 add_subdirectory(targets)
 add_subdirectory(hw_test)
 

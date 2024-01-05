@@ -7,8 +7,7 @@
 
 #include "app/interfaces/Serial.hpp"
 #include "app/io/serial/types.h"
-// libs
-#include "lwgps/lwgps.h"
+#include "libs/lwgps-2.2.0/lwgps/src/include/lwgps/lwgps.h"
 
 class GnssParser
 {

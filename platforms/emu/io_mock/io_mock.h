@@ -30,7 +30,7 @@ extern "C"
     bool iomock_read_bool(const char *filename);
     void iomock_write_bool(const char *filename, bool value);
     void iomock_write_data(const char *filename, const void *data, uint32_t size);
-    void iomock_read_data(const char *filename, void *data, uint32_t size);
+    int iomock_read_data(const char *filename, void *data, uint32_t size);
 
     void *iomock_edge_detecting(void *vargp);
 

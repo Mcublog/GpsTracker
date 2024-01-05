@@ -13,7 +13,7 @@
 #include "app/application.h"
 #include "app/io/gpio/gpio.h"
 #include "app/utils/delay.h"
-#include "libs/lis3dsh/lis3dsh.h"
+#include "libs/hw/lis3dsh/lis3dsh.h"
 #include "main.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME acctst

@@ -45,8 +45,8 @@ function(get_git_hash hash_value)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     set(${hash_value} ${GIT_HASH} PARENT_SCOPE)
-    if(GIT_HASH STREQUAL "")
-        set(GIT_HASH "unknown")
+    if(hash_value STREQUAL "")
+        set(hash_value "unknown")
     endif()
 endfunction()
 

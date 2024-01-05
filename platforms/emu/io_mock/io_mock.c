@@ -120,26 +120,33 @@ void iomock_write_data(const char *filename, const void *data, uint32_t size)
  * @param data
  * @param size
  */
-void iomock_read_data(const char *filename, void *data, uint32_t size)
+int iomock_read_data(const char *filename, void *data, uint32_t size)
 {
+    int err = 0;
     sem_wait(&m_mutex);
     FILE *fp = fopen(filename, "rb");
     if (fp == NULL)
     {
         sem_post(&m_mutex);
         LOG_ERROR("Error while opening: %s", filename);
-        return;
+        return -1;
     }
     if (fread(data, size, 1, fp) != 1)
     {
         if (feof(fp))
+        {
             LOG_ERROR("Premature end of file: %s", filename);
+            err = -2;
+        }
         else
+        {
             LOG_ERROR("File %s read error", filename);
+            err = -1;
+        }
     }
     fclose(fp);
     sem_post(&m_mutex);
-    return;
+    return err;
 }
 
 /**

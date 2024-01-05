@@ -25,10 +25,8 @@ typedef union
 
 typedef enum
 {
-    DELAYED_START = 0,
-    FIRST_RUN,
-    NORMAL,
-    IDLE
+    IDLE,
+    NORMAL
 } sys_mode_t;
 
 typedef enum
@@ -52,16 +50,19 @@ public:
 
     void mode_set(sys_mode_t mode);
     sys_mode_t mode_get();
+    const char *mode_stringify(sys_mode_t m);
 
     virtual Serial *communication_serial() = 0;
     virtual Parser *cobs_parser() = 0;
     virtual GnssParser *gnss_parser() = 0;
 
-    virtual void set_performance(sys_performance_t perf);
-    virtual sys_performance_t get_performance();
+    virtual void performance_set(sys_performance_t perf);
+    virtual sys_performance_t performance_get();
+    const char *performance_stringify(sys_performance_t m);
+
     virtual void reinit_peripheral();
 
-    void infitite_loop();
+    static void infitite_loop();
 };
 
 #endif // APP_SYSTEM_INTERFACES_SYSTEM_H

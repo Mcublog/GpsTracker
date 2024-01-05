@@ -24,6 +24,8 @@ typedef struct
 {
     uint32_t active_mark;
     uint32_t sys_mode;
+    uint8_t event_cnt;
+    time_t event_mark;
 } bakup_map_t;
 
 typedef union {
@@ -85,4 +87,28 @@ void bkup_load_sysmode(uint32_t *mode)
 {
     LOG_INFO("bkup_load_sysmode");
     std::memcpy(mode, &m_backup_map.map.sys_mode, sizeof(uint32_t));
+}
+
+/**
+ * @brief
+ *
+ * @param counter
+ * @param mark
+ */
+void bkup_event_wdt_save(uint8_t counter, time_t mark)
+{
+    std::memcpy(&m_backup_map.map.event_cnt, &counter, sizeof(uint8_t));
+    std::memcpy(&m_backup_map.map.event_mark, &mark, sizeof(time_t));
+}
+
+/**
+ * @brief
+ *
+ * @param counter
+ * @param mark
+ */
+void bkup_event_wdt_load(uint8_t *counter, time_t *mark)
+{
+    std::memcpy(counter, &m_backup_map.map.event_cnt, sizeof(uint8_t));
+    std::memcpy(mark, &m_backup_map.map.event_mark, sizeof(time_t));
 }

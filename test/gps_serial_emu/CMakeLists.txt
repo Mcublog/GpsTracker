@@ -1,4 +1,4 @@
-include(${PROJECT_SOURCE_DIR}/config/tests.cmake)
+include(${PROJECT_SOURCE_DIR}/config/emu.cmake)
 
 # For testing using desktop gcc compiler
 set(CMAKE_C_COMPILER gcc)
@@ -15,13 +15,12 @@ set(TEST_TARGET "gps_serial_emu_test")
 # Buid TEST_TARGET target
 add_executable(${TEST_TARGET}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    ${TEST_SOURCES_FILES}
+    ${EMU_SOURCES}
 )
 
 # Include paths
 target_include_directories(${TEST_TARGET} PRIVATE
-    ${CONFIG_DIR}
-    ${TEST_INCLUDE_FILES}
+    ${EMU_INCLUDES}
 )
 
 # Add pthread

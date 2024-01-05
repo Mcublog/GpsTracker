@@ -25,7 +25,7 @@
 int main(void)
 {
     iomock_init();
-    tu_init();
+    tu_init(0);
     LOG_INFO("Emu started...");
     while (1)
     {

@@ -25,7 +25,7 @@ extern "C" {
 #define TIME_FOR_CHECK_SYNC (1577836800U) // 01/01/2020 @ 00:00
 //--------------------------------------------------------------
 
-void tu_init(void);
+void tu_init(uint32_t tick_ms);
 void tu_set_time(const time_t *timestamp);
 time_t tu_get_current_time(void);
 time_t tu_get_current_time_with_fraction(uint32_t *ms);

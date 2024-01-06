@@ -63,7 +63,7 @@ bool ExtPower::process(void)
 
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 
-    while (1)
+    while (io_read_external_power_pin())
     {
         if (m_gnssp->is_message_received())
         {
@@ -78,21 +78,13 @@ bool ExtPower::process(void)
         if (m_parser->is_message_received() == false)
         {
             delay_ms(1);
-            if (io_read_external_power_pin())
-                continue;
-        }
-
-        if (io_read_external_power_pin() == false)
-        {
-            // sys_get_acc()->set_mode(acc_mode_t::ACC_LOW_POWER);
-            // tu_reset_alarm();
-            // sys_mode_set(sys_mode_t::DELAYED_START);
-            return false;
+            continue;
         }
 
         ios_message_t *msg = m_parser->read_message();
         command_parser((const command_t *)msg->data);
-        continue;
     }
+
+    isystem()->mode_set(sys_mode_t::IDLE);
     return false;
 }

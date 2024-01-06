@@ -85,7 +85,8 @@ void application(void)
     if (wwdt.is_treshold())
     {
         LOG_INFO("wwdt is treshold: TRUE");
-        sys->mode_set(sys_mode_t::NORMAL);
+        mode = sys_mode_t::NORMAL;
+        sys->mode_set(mode);
     }
 
     wwdt.save();
@@ -103,6 +104,9 @@ void application(void)
         if (cause.field.by_external_power)
         {
             ExtPower::process();
+            mode = sys->mode_get();
+            wwdt.reset();
+            wwdt.save();
         }
 
         if (mode == sys_mode_t::NORMAL)

@@ -77,9 +77,12 @@ lwgps_t *GnssParser::read_message(void)
  */
 uint32_t GnssParser::irq_handler(ios_chunk_t *chunk)
 {
-    m_msg_ready = (bool)lwgps_process(&m_hgps, chunk->data, chunk->size);
-    if (m_msg_ready)
+    bool result = (bool)lwgps_process(&m_hgps, chunk->data, chunk->size);
+    if (result && m_msg_ready == false)
+    {
         std::memcpy(&m_hgps_ready, &m_hgps, sizeof(lwgps_t));
+        m_msg_ready = true;
+    }
     return chunk->size;
 }
 //<<----------------------

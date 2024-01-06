@@ -51,10 +51,14 @@ bool Autonomous::process(void)
 
         if (m_gnssp->is_message_received())
         {
-            lwgps_t *gnss = m_gnssp->read_message();
-            if ((tu_get_current_time() - last_time > kTimeDiff) == false)
+            if ((tu_get_current_time() - last_time >= kTimeDiff) == false)
                 continue;
-            last_time = tu_get_current_time();
+            lwgps_t *gnss = m_gnssp->read_message();
+            if (gnss->is_valid)
+                last_time = tu_get_current_time();
+            else
+                continue;
+
             LOG_INFO("Valid status: %d: %s", gnss->is_valid,
                      tu_print_current_time_only());
             LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
@@ -76,7 +80,7 @@ bool Autonomous::process(void)
 
         if (wwdt.is_treshold())
         {
-            LOG_INFO("reset wdt, continue working");
+            LOG_INFO("%s: continue working", tu_print_current_time_only());
             wwdt.reset();
         }
     }

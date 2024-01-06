@@ -26,7 +26,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
+// #include <stdio.h>
+#include "app/proto/cobs/wrapper.h"
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -221,7 +222,10 @@ void EXTI9_5_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
-
+  uint8_t byte = huart2.Instance->DR;
+  // printf("%c", byte);
+  ios_chunk_t chunk = {&byte, 1};
+  gnssw_irq_handler(&chunk);
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */

@@ -21,3 +21,8 @@ uint32_t cobsw_irq_handler(ios_chunk_t *chunk)
 {
     return isystem()->cobs_parser()->irq_handler(chunk);
 }
+
+uint32_t gnssw_irq_handler(ios_chunk_t *chunk)
+{
+    return isystem()->gnss_parser()->irq_handler(chunk);
+}

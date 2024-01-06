@@ -30,7 +30,9 @@
 #include "usbd_cdc.h"
 
 /* USER CODE BEGIN INCLUDE */
+#include <stdbool.h>
 
+#include "app/io/serial/types.h"
 /* USER CODE END INCLUDE */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -108,7 +110,7 @@ extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
-
+bool CDC_Get_Ctl(ios_ctl_t *ctl);
 /* USER CODE END EXPORTED_FUNCTIONS */
 
 /**

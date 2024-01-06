@@ -41,7 +41,7 @@ extern UART_HandleTypeDef huart2;
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+UART_HandleTypeDef *USART_Get_Gnss_handle(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

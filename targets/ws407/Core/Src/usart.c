@@ -21,7 +21,7 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "targets/ws407/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usart.h"
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -84,7 +84,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspInit 1 */
-
+    LL_USART_EnableIT_RXNE(uartHandle->Instance);
   /* USER CODE END USART2_MspInit 1 */
   }
 }
@@ -115,5 +115,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
+UART_HandleTypeDef *USART_Get_Gnss_handle(void)
+{
+  return &huart2;
+}
 /* USER CODE END 1 */

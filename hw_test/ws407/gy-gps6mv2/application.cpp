@@ -52,8 +52,12 @@ void application(void)
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
+
+            io_gpio_red_led(true);
+            delay_ms(250);
+            io_gpio_red_led(false);
         }
         else
-            delay_ms(100);
+            delay_ms(1);
     }
 }

@@ -13,7 +13,7 @@ extern "C" {
 
     bool cobsw_is_message_received(void);
     uint32_t cobsw_irq_handler(ios_chunk_t *chunk);
-
+    uint32_t gnssw_irq_handler(ios_chunk_t *chunk);
 
 #ifdef __cplusplus
 }

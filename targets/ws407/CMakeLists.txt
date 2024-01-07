@@ -14,8 +14,9 @@ add_executable(${WS407_TARGET}
 # Include paths
 target_include_directories(${WS407_TARGET}
     PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/platforms/hw/stm32
+    ${PLATFORMS_DIR}/hw/stm32
     ${CONFIG_DIR}
     ${HW_LIBS_INCLUDES}
     ${HAL_WS407_INCLUDE_DIRS}

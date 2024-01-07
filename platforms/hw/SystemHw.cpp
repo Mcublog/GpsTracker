@@ -8,68 +8,26 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-
+#include "app/gps/GnssParser.hpp"
+#include "app/proto/cobs/Parser.hpp"
 #include "app/utils/delay.h"
 #include "platforms/hw/SystemHw.hpp"
-#include "app/proto/cobs/Parser.hpp"
-// #include "targets/desktop/impl/Sdev.hpp"
-// #include "targets/desktop/mocks/AccEmu.hpp"
-// #include "targets/desktop/mocks/SensorEmu.hpp"
-// #include "targets/desktop/mocks/EmuVoltage.hpp"
-
+#include "platforms/hw/stm32/UartSerial.hpp"
+#include "platforms/hw/stm32/UsbSerial.hpp"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME esys
+#define LOG_MODULE_NAME hwsys
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
-//<<----------------------
-
 //>>---------------------- Locals
-#define INPUT_BUFFER_SIZE   (256)
-#define OUTPUT_BUFFER_SIZE  (256)
-
-// static void *m_receiving_data(void*);
-
-// static SDevice m_sdev = SDevice("/dev/ttyS11", m_receiving_data);
-// static SDevice m_gps_sdev = SDevice();
+static USBSerial m_sdev = USBSerial();
+static UartSerial m_gps_sdev = UartSerial();
 static Parser m_cobsp = Parser();
-// static AccEmu m_acc = AccEmu();
-// static SensorEmu m_sensor = SensorEmu();
-// static EmuVoltage m_voltage = EmuVoltage();
-
-
-// static uint8_t m_input_buffer[INPUT_BUFFER_SIZE];
-// static uint8_t m_output_buffer[OUTPUT_BUFFER_SIZE];
-
-// static ios_ctl_t m_ctl = {
-//     {m_input_buffer,    INPUT_BUFFER_SIZE},
-//     {m_output_buffer,   OUTPUT_BUFFER_SIZE},
-//     nullptr
-// };
-
-// static void *m_receiving_data(void*)
-// {
-    // while (1)
-    // {
-    //     uint8_t byte = 0;
-    //     long size = read(m_sdev.m_io_stream, &byte, 1);
-    //     if (size <= 0)
-    //     {
-    //         delay_ms(1);
-    //         continue;
-    //     }
-    //     ios_chunk_t data = {&byte, 1};
-    //     m_sdev.IrqHandler(&data);
-    // }
-// }
+static GnssParser m_gnssp = GnssParser();
 //<<----------------------
 void SystemHW::init()
 {
-
-    // m_cobsp.init(&m_sdev);
-    // m_gps_sdev.Init(&m_ctl);
+    m_cobsp.init(&m_sdev);
+    m_gnssp.init(&m_gps_sdev);
 }
 /**
  * @brief Print system type in log
@@ -82,9 +40,7 @@ void SystemHW::what(void)
 
 Serial *SystemHW::communication_serial()
 {
-    //return &m_sdev;
-    LOG_ERROR("not implement");
-    return nullptr;
+    return (Serial *)&m_sdev;
 }
 /**
  * @brief
@@ -93,9 +49,7 @@ Serial *SystemHW::communication_serial()
  */
 Parser *SystemHW::cobs_parser()
 {
-    // return &m_cobsp;
-    LOG_ERROR("not implement");
-    return nullptr;
+    return &m_cobsp;
 }
 
 /**
@@ -105,6 +59,5 @@ Parser *SystemHW::cobs_parser()
  */
 GnssParser *SystemHW::gnss_parser()
 {
-    LOG_ERROR("not implement");
-    return nullptr;
+    return &m_gnssp;
 }

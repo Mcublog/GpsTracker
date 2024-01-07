@@ -36,11 +36,11 @@
             "cwd": "${workspaceRoot}",
             "executable": "${command:cmake.launchTargetPath}",
             "servertype": "jlink",
-            "device": "STM32F205RG",
+            "device": "STM32F407VE",
             "interface": "swd",
             "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
             "runToEntryPoint": "main",
-            "svdFile": "${workspaceRoot}/scripts/STM32F20x.svd",
+            "svdFile": "${workspaceRoot}/resources/svd/STM32F407.svd",
             "breakAfterReset": true,
             "serverArgs": [
                 "-gui"
@@ -62,11 +62,11 @@
             "cwd": "${workspaceRoot}",
             "executable": "${command:cmake.launchTargetPath}",
             "servertype": "jlink",
-            "device": "STM32F205RG",
+            "device": "STM32F407VE",
             "interface": "swd",
             "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
             "runToEntryPoint": "main",
-            "svdFile": "${workspaceRoot}/scripts/STM32F20x.svd",
+            "svdFile": "${workspaceRoot}/resources/svd/STM32F407.svd",
             "breakAfterReset": true,
             "serverArgs": [
                 "-gui"

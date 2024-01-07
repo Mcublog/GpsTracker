@@ -16,6 +16,5 @@ static SystemHW m_system = SystemHW();
 
 System *isystem()
 {
-    // return (System *)&m_system;
-    return nullptr;
+    return (System *)&m_system;
 }

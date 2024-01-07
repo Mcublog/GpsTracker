@@ -13,6 +13,7 @@
 #include "app/io/gpio/agpio.h"
 #include "app/io/serial/aspi.h"
 #include "main.h"
+#include "spi.h"
 #include "platforms/hw/libs/W25Q/w25calculator.hpp"
 #include "platforms/hw/libs/W25Q/w25q.h"
 //>>---------------------- Log control
@@ -27,7 +28,6 @@
 
 
 //>>---------------------- Global variable
-extern SPI_HandleTypeDef hspi2;
 //<<----------------------
 
 //>>---------------------- Locals
@@ -114,8 +114,10 @@ const static ringfs_flash_partition_t m_gnss_partition =
 
 static void w25_init(const gpio_pin_t *cs_pin, w25q_t *flash)
 {
-    spi_device_t spi_dev_flash = {.spi = &hspi2, .pin = *cs_pin};
-    flash->page_count = page_count_from_model(W25Q64);
+    SPI_HandleTypeDef *hspi = SPI_Get_Memory_Handle();
+    spi_device_t spi_dev_flash = {.spi = hspi, .pin = *cs_pin};
+    // TODO: move W25Q32 to config
+    flash->page_count = page_count_from_model(W25Q32);
     flash->dev = spi_dev_flash;
 
     cerror_t err = 0;

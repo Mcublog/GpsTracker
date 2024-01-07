@@ -9,7 +9,7 @@
 #include "w25q.h"
 
 // TODO: move it to config
-#define NUMBER_SECTORS_IN_ONE_W25 ((16 * 128) / 2)
+#define NUMBER_SECTORS_IN_ONE_W25 (16 * 64)
 
 #ifdef __cplusplus
 extern "C" {

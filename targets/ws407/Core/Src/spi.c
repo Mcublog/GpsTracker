@@ -115,5 +115,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
+SPI_HandleTypeDef *SPI_Get_Memory_Handle(void)
+{
+  return &hspi1;
+}
 /* USER CODE END 1 */

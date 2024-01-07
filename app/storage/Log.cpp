@@ -32,7 +32,8 @@ void Log::ring_fs_init(const ringfs_flash_partition_t *partition,
                        const uint32_t chunk_size, ringfs_t *fs,
                        backup_load_t load_from_backup)
 {
-    if (bkup_is_active())
+    // if (bkup_is_active())
+    if (false) // NOTE: disable saving to backup
     {
         LOG_INFO("restore from backup");
         if (load_from_backup)

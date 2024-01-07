@@ -22,10 +22,6 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
-void byte_readed(char byte)
-{
-    LOG_RAW_INFO("%c", byte);
-}
 /**
  * @brief Test application
  *

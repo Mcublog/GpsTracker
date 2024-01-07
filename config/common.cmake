@@ -53,11 +53,6 @@ file(GLOB_RECURSE APP_DIR_SOURCES
     ${APP_DIR}/*.cpp
 )
 
-
-file(GLOB ADXL345_SOURCES
-    ${PROJECT_SOURCE_DIR}/libs/adxl345/*.c
-)
-
 set(LIBS_COMMON_INCLUDES
     ${LIBS_DIR}/lwgps-2.2.0/lwgps/src/include
     ${LIBS_DIR}/Ring-Buffer-0.1.1
@@ -84,22 +79,32 @@ set(HAL_WS407_USB_INCLUDE_DIRS
     ${PROJECT_SOURCE_DIR}/targets/ws407/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
     ${PROJECT_SOURCE_DIR}/targets/ws407/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     ${PROJECT_SOURCE_DIR}/targets/ws407/USB_DEVICE/App
-    ${PROJECT_SOURCE_DIR}/targets/ws407/USB_DEVICE/Target)
+    ${PROJECT_SOURCE_DIR}/targets/ws407/USB_DEVICE/Target
+)
 
 set(HW_LIBS_INCLUDES
     ${RTT_INCLUDE_DIRS}
     ${LIBS_COMMON_INCLUDES}
-    ${PROJECT_SOURCE_DIR}/libs/hw/lis3dsh
-    ${PROJECT_SOURCE_DIR}/libs/hw/adxl345)
-
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/lis3dsh
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/adxl345
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/W25Q
+)
 #
-file(GLOB_RECURSE HW_SOURCES
+file(GLOB HW_PLATFORM_SOURCES
     ${PROJECT_SOURCE_DIR}/platforms/hw/*.c
     ${PROJECT_SOURCE_DIR}/platforms/hw/*.cpp
-    ${PROJECT_SOURCE_DIR}/libs/hw/lis3dsh/*.c
-    ${PROJECT_SOURCE_DIR}/libs/hw/adxl345/ADXL345.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/stm32/*.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/stm32/*.cpp
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/lis3dsh/*.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/adxl345/ADXL345.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/W25Q/w25q.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/libs/W25Q/w25calculator.cpp
+)
+#
+file(GLOB_RECURSE HW_SOURCES
     ${APP_DIR}/*.c
     ${APP_DIR}/*.cpp
+    ${HW_PLATFORM_SOURCES}
     ${LWGPS_LIB_SOURCES}
     ${RING_BUFFER_LIB_SOURCES}
     ${COBRSR_LIB_SOURCES}

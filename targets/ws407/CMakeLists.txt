@@ -5,15 +5,9 @@ include(${PROJECT_SOURCE_DIR}/config/utils.cmake)
 set(CMAKE_C_COMPILER    arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
 
-file(GLOB_RECURSE STM32PLATFORM_SOURCE
-    ${PLATFORMS_DIR}/hw/*.c
-    ${PLATFORMS_DIR}/hw/*.cpp
-)
-
 # Build lib
 add_executable(${WS407_TARGET}
     ${HW_SOURCES}
-    ${STM32PLATFORM_SOURCE}
     ${WS407_SOURCES}
 )
 

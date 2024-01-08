@@ -10,9 +10,11 @@
  */
 #include <ctime>
 
-#include "app/process/autonomous/process.hpp"
+#include "app/gps/data_types.h"
 #include "app/io/gpio/gpio.h"
 #include "app/process/WorkingWdt.hpp"
+#include "app/process/autonomous/process.hpp"
+#include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
@@ -34,6 +36,10 @@ static void acc_handler(void)
 bool Autonomous::process(void)
 {
     LOG_INFO("Autonomous::process: run");
+
+    GnssLog log = GnssLog();
+    log.init();
+    log.set_long_busy_callback(NULL);
 
     GnssParser *m_gnssp = isystem()->gnss_parser();
     WorkingWdt wwdt = WorkingWdt();
@@ -66,8 +72,12 @@ bool Autonomous::process(void)
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
             // Save data to memory
-
-            // break;
+            gnss_record_t gpsdata = {};
+            gpsdata.tm = tu_get_current_time();
+            gpsdata.latitude = gnss->latitude;
+            gpsdata.longitude = gnss->longitude;
+            gpsdata.altitude = gnss->altitude;
+            log.append(&gpsdata);
         }
 
         if (m_acc_irq)

@@ -8,12 +8,12 @@
 typedef struct
 {
     time_t tm;
-    int32_t latitude;  /*!< Latitude in units of degrees */
-    int32_t longitude; /*!< Longitude in units of degrees */
-    int32_t altitude;  /*!< Altitude in units of meters */
-    int32_t speed;     /*!< Ground speed in knots */
-    int32_t course;    /*!< Ground coarse */
-    int32_t variation; /*!< Magnetic variation */
+    double latitude;  /*!< Latitude in units of degrees */
+    double longitude; /*!< Longitude in units of degrees */
+    double altitude;  /*!< Altitude in units of meters */
+    // double speed;     /*!< Ground speed in knots */
+    // int32_t course;    /*!< Ground coarse */
+    // int32_t variation; /*!< Magnetic variation */
 } gnss_record_t;
 
 

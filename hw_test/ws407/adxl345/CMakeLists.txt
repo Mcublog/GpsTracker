@@ -5,7 +5,7 @@ include(${PROJECT_SOURCE_DIR}/config/utils.cmake)
 set(CMAKE_C_COMPILER    arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER  arm-none-eabi-g++)
 #
-set(TEST_HW_TARGET "ws407_adxl345_test")
+set(TEST_HW_TARGET "hwtest_ws407_adxl345")
 #
 # Removed unused files
 list(REMOVE_ITEM HW_SOURCES ${APP_DIR}/application.cpp)

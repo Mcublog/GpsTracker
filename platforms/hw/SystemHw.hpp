@@ -15,6 +15,8 @@ class SystemHW final : public System
     Serial *communication_serial();
     Parser *cobs_parser();
     GnssParser *gnss_parser();
+
+    bool go_to_stanby() override;
 };
 
 #endif // TARGETS_DESKTOP_IMPL_SYSTEM_EMU_HPP

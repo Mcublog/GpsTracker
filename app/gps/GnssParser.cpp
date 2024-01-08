@@ -41,10 +41,11 @@ static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
  */
 bool GnssParser::init(Serial *dev)
 {
+    ring_buffer_init(&m_rb, (char *)m_ring_buffer_pool, kRingBufferSize);
     lwgps_init(&m_hgps);
-    m_ctl.irq_handler = wrapper_irq_handler;
     m_sdev = dev;
-    return m_sdev->Init(&m_ctl);
+    m_ctl.irq_handler = wrapper_irq_handler;
+    return m_sdev->Init(&m_ctl);;
 }
 
 /**
@@ -53,9 +54,23 @@ bool GnssParser::init(Serial *dev)
  * @return true
  * @return false
  */
-bool GnssParser::is_message_received(void) const
+bool GnssParser::is_message_received(void)
 {
-    return m_msg_ready;
+    while(ring_buffer_is_empty(&m_rb) == false)
+    {
+        char data = 0;
+        ring_buffer_dequeue(&m_rb, &data);
+        uint8_t state = lwgps_process(&m_hgps, &data, 1);
+
+        if (state && m_hgps.is_valid && m_hgps.sats_in_use)
+        {
+            std::memcpy(&m_hgps_ready, &m_hgps, sizeof(lwgps_t));
+            lwgps_init(&m_hgps);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -65,7 +80,6 @@ bool GnssParser::is_message_received(void) const
  */
 lwgps_t *GnssParser::read_message(void)
 {
-    m_msg_ready = false;
     return &m_hgps_ready;
 }
 
@@ -77,13 +91,7 @@ lwgps_t *GnssParser::read_message(void)
  */
 uint32_t GnssParser::irq_handler(ios_chunk_t *chunk)
 {
-    lwgps_process(&m_hgps, chunk->data, chunk->size);
-    if ((m_msg_ready == false) && m_hgps.is_valid)
-    {
-        std::memcpy(&m_hgps_ready, &m_hgps, sizeof(lwgps_t));
-        lwgps_init(&m_hgps);
-        m_msg_ready = true;
-    }
+    ring_buffer_queue_arr(&m_rb, (const char*)chunk->data, chunk->size);
     return chunk->size;
 }
 //<<----------------------

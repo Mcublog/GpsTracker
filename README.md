@@ -18,3 +18,4 @@ export PYTHONPATH="${PYTHONPATH}:utils"
 
 * [Motion Detection Alogrithm](/doc/MotionDetectionAlgo.md)
 * [Emulator Readme](/platforms/emu/README.md)
+* [Open407V-C](https://www.waveshare.com/wiki/Open407V-C)

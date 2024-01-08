@@ -44,6 +44,15 @@ void application(void)
     LOG_INFO("Git hash: %s", bm_get_fw_hash());
     LOG_INFO("Build time: %s", bm_get_fw_build_timestamp());
 
+    io_gpio_red_led(true);
+
+    if (tu_get_current_time() < (time_t)TIME_FOR_CHECK_SYNC)
+    {
+        const time_t kDefualtTime = TIME_FOR_CHECK_SYNC;
+        tu_set_time(&kDefualtTime);
+    }
+
+
     System *sys = isystem();
     if (sys == nullptr)
     {

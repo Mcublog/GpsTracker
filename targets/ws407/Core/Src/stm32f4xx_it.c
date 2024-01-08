@@ -27,8 +27,11 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
 #include <stdio.h>
+
 #include "stm32f4xx_ll_usart.h"
+
 #include "app/proto/cobs/wrapper.h"
+#include "app/io/gpio/gpio.h"
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -58,7 +61,6 @@
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
-extern RTC_HandleTypeDef hrtc;
 extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
 
@@ -203,6 +205,21 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(ACC_INT_1_Pin);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+  if (io_read_accel_irq_pin())
+    io_acc_handler();
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
 void EXTI9_5_IRQHandler(void)
@@ -210,7 +227,6 @@ void EXTI9_5_IRQHandler(void)
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
   /* USER CODE END EXTI9_5_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(ACC_INT_1_Pin);
   HAL_GPIO_EXTI_IRQHandler(USB_ext_power_Pin);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
@@ -237,20 +253,6 @@ void USART2_IRQHandler(void)
   LL_USART_ClearFlag_ORE(huart2.Instance);
   // LL_USART_ClearFlag_IDLE(huart2.Instance);
   /* USER CODE END USART2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles RTC alarms A and B interrupt through EXTI line 17.
-  */
-void RTC_Alarm_IRQHandler(void)
-{
-  /* USER CODE BEGIN RTC_Alarm_IRQn 0 */
-
-  /* USER CODE END RTC_Alarm_IRQn 0 */
-  HAL_RTC_AlarmIRQHandler(&hrtc);
-  /* USER CODE BEGIN RTC_Alarm_IRQn 1 */
-
-  /* USER CODE END RTC_Alarm_IRQn 1 */
 }
 
 /**

@@ -14,6 +14,8 @@
 #include "platforms/hw/SystemHw.hpp"
 #include "platforms/hw/stm32/UartSerial.hpp"
 #include "platforms/hw/stm32/UsbSerial.hpp"
+#include "stm32f4xx_ll_pwr.h"
+#include "stm32f4xx_ll_rtc.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME hwsys
 #define LOG_MODULE_LEVEL (3)
@@ -60,4 +62,27 @@ Parser *SystemHW::cobs_parser()
 GnssParser *SystemHW::gnss_parser()
 {
     return &m_gnssp;
+}
+
+bool SystemHW::go_to_stanby()
+{
+    LOG_INFO("go to stanby mode");
+
+    // LL_RTC_ClearFlag_WUT(hrtc.Instance);
+    // LL_RTC_ClearFlag_ALRA(hrtc.Instance);
+    // LL_RTC_ClearFlag_ALRB(hrtc.Instance);
+
+    LL_PWR_ClearFlag_WU();
+    LL_PWR_ClearFlag_SB();
+    // TODO: разобраться почему с этой строчкой виснет в релизе
+#ifdef NDEBUG
+    HAL_DBGMCU_DisableDBGStandbyMode();
+    // HAL_DBGMCU_EnableDBGStandbyMode();
+#else
+    HAL_DBGMCU_EnableDBGStandbyMode();
+#endif
+
+    HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+    HAL_PWR_EnterSTANDBYMode();
+    return false;
 }

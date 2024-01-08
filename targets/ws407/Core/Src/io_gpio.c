@@ -20,6 +20,8 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
+static acc_irq_callback_t m_acc_handler = NULL;
+
 /**
  * @brief
  *
@@ -59,19 +61,19 @@ bool io_read_external_power_pin(void)
  */
 bool io_read_accel_irq_pin(void)
 {
-    // return !((bool)HAL_GPIO_ReadPin(JOYSTICK_B_GPIO_Port, JOYSTICK_B_Pin));
-    return false;
+    return (bool)HAL_GPIO_ReadPin(ACC_INT_1_GPIO_Port, ACC_INT_1_Pin);
 }
 
 
 void io_acc_irq_set_handler(acc_irq_callback_t handler)
 {
-    (void)handler;
+    m_acc_handler = handler;
 }
 
 void io_acc_handler(void)
 {
-
+    if (m_acc_handler)
+        m_acc_handler();
 }
 
 /**

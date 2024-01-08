@@ -61,14 +61,14 @@ void Error_Handler(void);
 #define GPS_TX_GPIO_Port GPIOA
 #define GPS_RX_Pin GPIO_PIN_3
 #define GPS_RX_GPIO_Port GPIOA
+#define ACC_INT_1_Pin GPIO_PIN_1
+#define ACC_INT_1_GPIO_Port GPIOB
+#define ACC_INT_1_EXTI_IRQn EXTI1_IRQn
 #define LED_Pin GPIO_PIN_12
 #define LED_GPIO_Port GPIOD
 #define USB_ext_power_Pin GPIO_PIN_9
 #define USB_ext_power_GPIO_Port GPIOA
 #define USB_ext_power_EXTI_IRQn EXTI9_5_IRQn
-#define ACC_INT_1_Pin GPIO_PIN_7
-#define ACC_INT_1_GPIO_Port GPIOD
-#define ACC_INT_1_EXTI_IRQn EXTI9_5_IRQn
 #define ACC_SCLK_SCL_Pin GPIO_PIN_3
 #define ACC_SCLK_SCL_GPIO_Port GPIOB
 #define ACC_MISO_SDO_Pin GPIO_PIN_4

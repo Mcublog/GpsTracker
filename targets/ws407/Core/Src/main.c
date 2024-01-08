@@ -28,6 +28,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 //>>---------------------- Log control
+#include "stm32f4xx_ll_pwr.h"
+
 #include "app/application.h"
 
 #define LOG_MODULE_NAME main
@@ -106,6 +108,11 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  /* Enable backup SRAM Clock */
+  __HAL_RCC_BKPSRAM_CLK_ENABLE();
+  HAL_PWR_EnableBkUpAccess();
+  if (LL_PWR_IsActiveFlag_BRR() == 0)
+    HAL_PWREx_EnableBkUpReg();
   application();
   /* USER CODE END 2 */
 

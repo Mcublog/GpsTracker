@@ -14,8 +14,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "app/proto/cobs/wrapper.h"
 #include "app/system/system.h"
+#include "app/system/wrapper.h"
 #include "app/utils/delay.h"
 #include "platforms/emu/impl/Sdev.hpp"
 //>>---------------------- Log control

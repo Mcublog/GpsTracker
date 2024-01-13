@@ -31,6 +31,8 @@
 #include "stm32f4xx_ll_pwr.h"
 
 #include "app/application.h"
+#include "app/io/gpio/gpio.h"
+#include "app/system/wrapper.h"
 
 #define LOG_MODULE_NAME main
 #if defined(NDEBUG)
@@ -39,8 +41,6 @@
 #define LOG_MODULE_LEVEL (3)
 #endif
 #include "app/debug/log_libs.h"
-//<<----------------------
-/* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -71,7 +71,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if (GPIO_Pin == ACC_INT_1_Pin)
+    io_acc_handler();
+}
 /* USER CODE END 0 */
 
 /**
@@ -113,6 +117,7 @@ int main(void)
   HAL_PWR_EnableBkUpAccess();
   if (LL_PWR_IsActiveFlag_BRR() == 0)
     HAL_PWREx_EnableBkUpReg();
+   __HAL_GPIO_EXTI_CLEAR_IT(ACC_INT_1_Pin);
   application();
   /* USER CODE END 2 */
 

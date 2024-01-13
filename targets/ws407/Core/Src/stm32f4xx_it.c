@@ -30,7 +30,6 @@
 
 #include "stm32f4xx_ll_usart.h"
 
-#include "app/io/gpio/gpio.h"
 #include "app/system/wrapper.h"
 /* USER CODE END TD */
 
@@ -214,8 +213,7 @@ void EXTI1_IRQHandler(void)
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(ACC_INT_1_Pin);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
-  if (io_read_accel_irq_pin())
-    io_acc_handler();
+
   /* USER CODE END EXTI1_IRQn 1 */
 }
 

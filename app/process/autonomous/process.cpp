@@ -103,7 +103,7 @@ bool Autonomous::process(void)
 
     if (wwdt.is_expired())
     {
-        LOG_INFO("wwdt is experied");
+        LOG_INFO("%s: wwdt is experied", tu_print_current_time_only());
         wwdt.reset();
         wwdt.print_state();
         isystem()->mode_set(sys_mode_t::IDLE);

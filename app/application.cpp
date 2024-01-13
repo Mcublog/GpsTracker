@@ -63,20 +63,24 @@ void application(void)
     sys->what();
     sys->init();
 
-
     wakeup_cause_t cause = sys->get_wakeup_cause();
-    dprint_wakeup_cause(&cause);
     sys_mode_t mode = sys->mode_get();
 
     LOG_INFO("%s: mode: %s", tu_print_current_time_full(), sys->mode_stringify(mode));
 
-    if (cause.d32 == 0)
+    // Query the reason kТаitingCauseTimeS time while the reason is empty
+    time_t current = tu_get_current_time();
+    static const uint32_t kWaitingCauseTimeS = 2;
+    while (cause.d32 == 0)
     {
-        LOG_ERROR("EMPTY CAUSE, do nothing");
+        cause = sys->get_wakeup_cause();
+        if (tu_get_current_time() - current <= kWaitingCauseTimeS)
+            continue;
         if (sys->go_to_stanby())
             return;
-        // sys_infitite_loop();
     }
+
+    dprint_wakeup_cause(&cause);
 
     WorkingWdt wwdt = WorkingWdt();
     wwdt.load();

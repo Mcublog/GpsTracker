@@ -42,6 +42,8 @@
 #endif
 #include "app/debug/log_libs.h"
 
+/* USER CODE END Includes */
+
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 

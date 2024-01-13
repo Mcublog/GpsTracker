@@ -49,8 +49,9 @@ bool Autonomous::process(void)
 
     bool run = true;
     time_t last_time = tu_get_current_time();
+    time_t debug_log_mark = tu_get_current_time();
     static const uint32_t kTimeDiff = 5;
-
+    static const uint32_t kDebugLogDiff = 10;
     while (run)
     {
         run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
@@ -90,8 +91,13 @@ bool Autonomous::process(void)
 
         if (wwdt.is_treshold())
         {
-            LOG_INFO("%s: continue working", tu_print_current_time_only());
             wwdt.reset();
+        }
+
+        if (tu_get_current_time() - debug_log_mark >= kDebugLogDiff)
+        {
+            LOG_INFO("%s: continue working", tu_print_current_time_only());
+            debug_log_mark = tu_get_current_time();
         }
     }
 

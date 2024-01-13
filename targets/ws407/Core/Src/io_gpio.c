@@ -61,7 +61,7 @@ bool io_read_external_power_pin(void)
  */
 bool io_read_accel_irq_pin(void)
 {
-    return (bool)HAL_GPIO_ReadPin(ACC_INT_1_GPIO_Port, ACC_INT_1_Pin);
+    return HAL_GPIO_ReadPin(ACC_INT_1_GPIO_Port, ACC_INT_1_Pin) == GPIO_PIN_RESET;
 }
 
 

@@ -1,6 +1,6 @@
 
-#ifndef APP_PROTO_COBS_WRAPPER_H
-#define APP_PROTO_COBS_WRAPPER_H
+#ifndef APP_SYSTEM_WRAPPER_H
+#define APP_SYSTEM_WRAPPER_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -19,4 +19,4 @@ extern "C" {
 }
 #endif
 
-#endif // APP_PROTO_COBS_WRAPPER_H
+#endif // APP_SYSTEM_WRAPPER_H

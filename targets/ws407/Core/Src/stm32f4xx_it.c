@@ -30,8 +30,8 @@
 
 #include "stm32f4xx_ll_usart.h"
 
-#include "app/proto/cobs/wrapper.h"
 #include "app/io/gpio/gpio.h"
+#include "app/system/wrapper.h"
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/

@@ -8,7 +8,7 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
-#include "app/proto/cobs/wrapper.h"
+#include "app/system/wrapper.h"
 #include "app/proto/cobs/Parser.hpp"
 #include "app/system/system.h"
 

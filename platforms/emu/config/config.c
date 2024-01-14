@@ -14,7 +14,7 @@
 #include <math.h>
 
 #include "app/config/config.h"
-#include "platforms/emu/filelist.h"
+#include "platforms/emu/config/filelist.h"
 #include "platforms/emu/io/gpio/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME config

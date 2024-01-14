@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "app/system/config.h"
+#include "app/config/config.h"
 #include "platforms/emu/filelist.h"
 #include "platforms/emu/io_mock/io_mock.h"
 //>>---------------------- Log control

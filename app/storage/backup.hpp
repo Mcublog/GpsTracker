@@ -6,7 +6,7 @@
 #include <cstdbool>
 #include <ctime>
 
-#include "app/system/config.h"
+#include "app/config/config.h"
 
 #ifdef __cplusplus
 extern "C"

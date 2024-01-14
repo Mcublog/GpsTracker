@@ -2,13 +2,13 @@
 #ifndef APP_PROTO_PARSER_H
 #define APP_PROTO_PARSER_H
 
-#include <cstdint>
 #include <cstdbool>
+#include <cstdint>
 
 #include "app/interfaces/Serial.hpp"
 #include "app/io/serial/types.h"
 
-class Parser
+class CobsParser
 {
   private:
     bool m_msg_ready = false;

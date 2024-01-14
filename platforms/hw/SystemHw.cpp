@@ -23,7 +23,7 @@
 //>>---------------------- Locals
 static USBSerial m_sdev = USBSerial();
 static UartSerial m_gps_sdev = UartSerial();
-static Parser m_cobsp = Parser();
+static CobsParser m_cobsp = CobsParser();
 static GnssParser m_gnssp = GnssParser();
 //<<----------------------
 void SystemHW::init()
@@ -47,9 +47,9 @@ Serial *SystemHW::communication_serial()
 /**
  * @brief
  *
- * @return Parser*
+ * @return CobsParser*
  */
-Parser *SystemHW::cobs_parser()
+CobsParser *SystemHW::cobs_parser()
 {
     return &m_cobsp;
 }

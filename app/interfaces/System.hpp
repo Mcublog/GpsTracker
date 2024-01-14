@@ -53,7 +53,7 @@ public:
     const char *mode_stringify(sys_mode_t m);
 
     virtual Serial *communication_serial() = 0;
-    virtual Parser *cobs_parser() = 0;
+    virtual CobsParser *cobs_parser() = 0;
     virtual GnssParser *gnss_parser() = 0;
 
     virtual void performance_set(sys_performance_t perf);

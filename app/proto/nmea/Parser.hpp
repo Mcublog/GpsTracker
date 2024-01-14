@@ -2,8 +2,8 @@
 #ifndef APP_GPS_GNSSPARSER_H
 #define APP_GPS_GNSSPARSER_H
 
-#include <cstdint>
 #include <cstdbool>
+#include <cstdint>
 
 #include "app/interfaces/Serial.hpp"
 #include "app/io/serial/types.h"

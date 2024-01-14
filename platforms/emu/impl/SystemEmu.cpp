@@ -36,7 +36,7 @@ static void *gnss_reading(void*);
 
 static SDevice m_sdev = SDevice("/dev/ttyS11", communication_reading);
 static SDevice m_gps_sdev = SDevice("/dev/ttyS13", gnss_reading);
-static Parser m_cobsp = Parser();
+static CobsParser m_cobsp = CobsParser();
 static GnssParser m_gnssp = GnssParser();
 // static AccEmu m_acc = AccEmu();
 // static SensorEmu m_sensor = SensorEmu();
@@ -92,9 +92,9 @@ Serial *SystemEmu::communication_serial()
 /**
  * @brief
  *
- * @return Parser*
+ * @return CobsParser*
  */
-Parser *SystemEmu::cobs_parser()
+CobsParser *SystemEmu::cobs_parser()
 {
     return &m_cobsp;
 }

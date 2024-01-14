@@ -13,7 +13,7 @@ class SystemEmu final : public System
     void what(void);
 
     Serial *communication_serial();
-    Parser *cobs_parser();
+    CobsParser *cobs_parser();
     GnssParser *gnss_parser();
 };
 

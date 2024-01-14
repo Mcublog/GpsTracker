@@ -67,7 +67,10 @@ bool Autonomous::process(void)
     while (run)
     {
         if (cfg.log.manual_mode)
+        {
             wwdt.reset();
+            wwdt.event_getting();
+        }
 
         run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
 

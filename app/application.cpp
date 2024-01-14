@@ -53,7 +53,6 @@ void application(void)
         tu_set_time(&kDefualtTime);
     }
 
-
     System *sys = isystem();
     if (sys == nullptr)
     {
@@ -65,7 +64,6 @@ void application(void)
     sys->init();
 
     wakeup_cause_t cause = sys->get_wakeup_cause();
-    sys_mode_t mode = sys->mode_get();
 
     config_t cfg = {};
     if (config_load(&cfg) == CONFIG_ERROR)
@@ -73,9 +71,6 @@ void application(void)
         LOG_INFO("config is empty, using defalult");
         cfg = config_get_default();
     }
-
-    LOG_INFO("%s: mode: %s", tu_print_current_time_full(), sys->mode_stringify(mode));
-
 
     // Query the reason kТаitingCauseTimeS time while the reason is empty
     time_t current = tu_get_current_time();
@@ -89,10 +84,18 @@ void application(void)
             return;
     }
 
-    dprint_wakeup_cause(&cause);
-
     WorkingWdt wwdt = WorkingWdt();
     wwdt.load();
+
+    if (cfg.log.manual_mode)
+    {
+        LOG_INFO("manual mode: TRUE");
+        wwdt.reset();
+        wwdt.event_getting();
+        sys->mode_set(sys_mode_t::NORMAL);
+    }
+    else
+        dprint_wakeup_cause(&cause);
 
     if (wwdt.is_expired())
     {
@@ -104,15 +107,17 @@ void application(void)
     if (cause.field.by_accel)
         wwdt.event_getting();
 
-    if (wwdt.is_treshold() || cfg.log.manual_mode)
+    if (wwdt.is_treshold())
     {
         LOG_INFO("wwdt is treshold: TRUE or manual mode: TRUE");
-        mode = sys_mode_t::NORMAL;
-        sys->mode_set(mode);
+        sys->mode_set(sys_mode_t::NORMAL);
     }
 
     wwdt.save();
     wwdt.print_state();
+
+    sys_mode_t mode = sys->mode_get();
+    LOG_INFO("%s: mode: %s", tu_print_current_time_full(), sys->mode_stringify(mode));
 
     while (1)
     {

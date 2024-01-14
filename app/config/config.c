@@ -38,6 +38,7 @@ config_t config_get_default(void)
                                     .log.to_stanby_time_s = 15, // NOTE: not used
                                     .log.threshold = 32, // NOTE: not used
                                     .log.manual_mode = 0,
+                                    .log.tz = 3,
                                     // wwdt_config_t
                                     .wwdt.version = 1,
                                     .wwdt.experied_time_s = 15, // NOTE: not used

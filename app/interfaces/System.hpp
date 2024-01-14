@@ -5,9 +5,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "app/gps/GnssParser.hpp"
 #include "app/interfaces/Serial.hpp"
 #include "app/proto/cobs/Parser.hpp"
+#include "app/proto/nmea/Parser.hpp"
 #include "app/system/common.h"
 
 typedef union
@@ -53,7 +53,7 @@ public:
     const char *mode_stringify(sys_mode_t m);
 
     virtual Serial *communication_serial() = 0;
-    virtual Parser *cobs_parser() = 0;
+    virtual CobsParser *cobs_parser() = 0;
     virtual GnssParser *gnss_parser() = 0;
 
     virtual void performance_set(sys_performance_t perf);

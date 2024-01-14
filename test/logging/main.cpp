@@ -9,11 +9,11 @@
  *
  */
 #include "app/application.h"
-#include "app/gps/data_types.h"
+#include "app/proto/nmea/types.h"
 #include "app/storage/GnssLog.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
-#include "platforms/emu/io_mock/io_mock.h"
+#include "platforms/emu/io/gpio/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ringfs
 #define LOG_MODULE_LEVEL (3)

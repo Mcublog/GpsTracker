@@ -11,8 +11,8 @@
 #include <cstdint>
 
 #include "app/application.h"
-#include "app/gps/data_types.h"
 #include "app/io/gpio/gpio.h"
+#include "app/proto/nmea/types.h"
 #include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/build_marks.h"

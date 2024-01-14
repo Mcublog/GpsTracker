@@ -28,16 +28,14 @@ extern I2C_HandleTypeDef hi2c1;
 
 static volatile bool data_ready = true;
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void acc_handler(void)
 {
     static bool red = true;
-    if (GPIO_Pin == ACC_INT_1_Pin)
-    {
-        data_ready = true;
-        io_gpio_red_led(red);
-        red ^= true;
-        LOG_DEBUG("acc irq");
-    }
+
+    data_ready = true;
+    io_gpio_red_led(red);
+    red ^= true;
+    LOG_DEBUG("acc irq");
 }
 
 static int8_t init(void)
@@ -78,6 +76,8 @@ static ADXL345_Handler_t adxl345h = {};
  */
 void application(void)
 {
+    io_acc_irq_set_handler(acc_handler);
+
     adxl345h.AddressI2C = 0;
     adxl345h.PlatformI2CInit = init;
     adxl345h.PlatformI2CDeInit = deinit;

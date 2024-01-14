@@ -24,7 +24,7 @@
 //<<----------------------
 
 //>>---------------------- Locals
-Parser *m_parser = nullptr;
+CobsParser *m_parser = nullptr;
 GnssParser *m_gnssp = nullptr;
 
 static bool m_command_handler(const command_t *command)

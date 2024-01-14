@@ -11,8 +11,8 @@
 #include <cstdint>
 
 #include "app/application.h"
-#include "app/gps/GnssParser.hpp"
 #include "app/io/gpio/gpio.h"
+#include "app/proto/nmea/Parser.hpp"
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"

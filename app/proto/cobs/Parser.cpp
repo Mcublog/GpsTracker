@@ -1,5 +1,5 @@
 /**
- * @file Parser.cpp
+ * @file CobsParser.cpp
  * @author Viacheslav (viacheslav@mcublog.ru)
  * @brief Cobs parser
  * @version 0.1
@@ -51,7 +51,7 @@ static uint8_t m_output_buffer[OUTPUT_BUFFER_SIZE];
  * @return true
  * @return false
  */
-bool Parser::init(Serial *dev)
+bool CobsParser::init(Serial *dev)
 {
     m_ctl = {{m_input_buffer, INPUT_BUFFER_SIZE},
              {m_output_buffer, OUTPUT_BUFFER_SIZE},
@@ -66,7 +66,7 @@ bool Parser::init(Serial *dev)
  * @return true
  * @return false
  */
-bool Parser::is_message_received(void) const
+bool CobsParser::is_message_received(void) const
 {
     return m_msg_ready;
 }
@@ -78,7 +78,7 @@ bool Parser::is_message_received(void) const
  * @return true
  * @return false
  */
-ios_message_t *Parser::read_message(void)
+ios_message_t *CobsParser::read_message(void)
 {
     m_msg_ready = false;
 
@@ -101,7 +101,7 @@ ios_message_t *Parser::read_message(void)
  * @param limit
  * @return uint8_t*
  */
-uint8_t *Parser::get_output_buffer(uint32_t *limit)
+uint8_t *CobsParser::get_output_buffer(uint32_t *limit)
 {
     *limit = m_ctl.in.limit;
     return (uint8_t *)m_ctl.in.data;
@@ -114,7 +114,7 @@ uint8_t *Parser::get_output_buffer(uint32_t *limit)
  * @return true
  * @return false
  */
-bool Parser::write_message(uint8_t *message, uint32_t size)
+bool CobsParser::write_message(uint8_t *message, uint32_t size)
 {
     ios_message_t *msg = (ios_message_t *)m_ctl.in.data;
     msg->size = size;
@@ -138,7 +138,7 @@ bool Parser::write_message(uint8_t *message, uint32_t size)
  * @brief
  *
  */
-uint32_t Parser::irq_handler(ios_chunk_t *chunk)
+uint32_t CobsParser::irq_handler(ios_chunk_t *chunk)
 {
     if (m_msg_ready)
         return m_pos;

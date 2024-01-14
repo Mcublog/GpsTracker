@@ -10,9 +10,12 @@
  */
 #include <ctime>
 
-#include "app/process/autonomous/process.hpp"
+#include "app/config/config.h"
 #include "app/io/gpio/gpio.h"
 #include "app/process/WorkingWdt.hpp"
+#include "app/process/autonomous/process.hpp"
+#include "app/proto/nmea/types.h"
+#include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
@@ -35,19 +38,39 @@ bool Autonomous::process(void)
 {
     LOG_INFO("Autonomous::process: run");
 
+    config_t cfg = {};
+    if (config_load(&cfg) == CONFIG_ERROR)
+    {
+        LOG_INFO("config is empty, using defalult");
+        cfg = config_get_default();
+    }
+
+    GnssLog log = GnssLog();
+    log.init();
+    log.set_long_busy_callback(NULL);
+
     GnssParser *m_gnssp = isystem()->gnss_parser();
+    m_gnssp->reset();
+
     WorkingWdt wwdt = WorkingWdt();
     wwdt.load();
 
     io_acc_irq_set_handler(acc_handler);
 
+    static const uint32_t kTimeDiff = cfg.log.event_diff_time_s;
+    static const uint32_t kDebugLogDiff = 10;
+
     bool run = true;
-    time_t last_time = tu_get_current_time();
-    static const uint32_t kTimeDiff = 5;
+    time_t last_time = tu_get_current_time() - kTimeDiff;
+    time_t debug_log_mark = tu_get_current_time();
 
     while (run)
     {
         run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
+        run = io_read_external_power_pin() || cfg.log.manual_mode == 0 ? false : true;
+
+        if (cfg.log.manual_mode)
+            wwdt.reset();
 
         if (m_gnssp->is_message_received())
         {
@@ -66,8 +89,12 @@ bool Autonomous::process(void)
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
             // Save data to memory
-
-            // break;
+            gnss_record_t gpsdata = {};
+            gpsdata.tm = tu_get_current_time();
+            gpsdata.latitude = gnss->latitude;
+            gpsdata.longitude = gnss->longitude;
+            gpsdata.altitude = gnss->altitude;
+            log.append(&gpsdata);
         }
 
         if (m_acc_irq)
@@ -80,14 +107,22 @@ bool Autonomous::process(void)
 
         if (wwdt.is_treshold())
         {
-            LOG_INFO("%s: continue working", tu_print_current_time_only());
             wwdt.reset();
+        }
+
+        if (tu_get_current_time() - debug_log_mark >= kDebugLogDiff)
+        {
+            uint32_t current, capacity;
+            log.usage(&current, &capacity);
+            LOG_INFO("%s: still working: storage: %d/%d", tu_print_current_time_only(),
+                     current, capacity);
+            debug_log_mark = tu_get_current_time();
         }
     }
 
     if (wwdt.is_expired())
     {
-        LOG_INFO("wwdt is experied");
+        LOG_INFO("%s: wwdt is experied", tu_print_current_time_only());
         wwdt.reset();
         wwdt.print_state();
         isystem()->mode_set(sys_mode_t::IDLE);

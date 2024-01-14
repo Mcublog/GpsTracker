@@ -297,6 +297,21 @@ void tu_reset_alarm(void)
 }
 
 /**
+ * @brief Return size of all backup register size in bytes
+ *
+ * @return uint32_t
+ */
+uint32_t tu_get_backup_reg_size_max(void)
+{
+    return (RTC_BKP_NUMBER * MAX_REG_DATA_SIZE);
+}
+
+typedef union
+{
+    uint32_t d;
+    uint8_t a[4];
+} bkupreg_t;
+/**
  * @brief Write to RTC backup registers
  *
  * @param data -- pointer to data, NOTE: data must be aligned (4)
@@ -309,21 +324,17 @@ void tu_write_to_backup_reg(void *data, uint32_t size)
     if (data == NULL)
         return;
 
-    uint32_t temp = 0, i = 0;
+    bkupreg_t bkupreg;
     HAL_PWR_EnableBkUpAccess();
-    for (i = 0; i < size; i += sizeof(uint32_t))
+    for (uint32_t i = 0; i < size; i++)
     {
-        memcpy(&temp, (uint32_t*)data + i, sizeof(uint32_t));
-        if (i < 4)
-            HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR0, temp);
-        else if (i < 8)
-            HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, temp);
-        else if (i < 12)
-            HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR2, temp);
-        else if (i < 16)
-            HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR3, temp);
-        else if (i < 20)
-            HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR4, temp);
+        // read all reg
+        uint8_t reg = i / sizeof(uint32_t);
+        bkupreg.d = HAL_RTCEx_BKUPRead(&hrtc, reg);
+        // write data byte
+        memcpy(&bkupreg.a[i % sizeof(uint32_t)], &((uint8_t*)data)[i], 1);
+        // wrtie all reg == 4 bytes
+        HAL_RTCEx_BKUPWrite(&hrtc, reg, bkupreg.d);
     }
     // HAL_PWR_DisableBkUpAccess();
 }

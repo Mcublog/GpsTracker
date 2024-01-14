@@ -23,16 +23,14 @@
 
 static volatile bool data_ready = true;
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void acc_handler(void)
 {
     static bool red = true;
-    if (GPIO_Pin == ACC_INT_1_Pin)
-    {
-        data_ready = true;
-        io_gpio_red_led(red);
-        red ^= true;
-        LOG_DEBUG("acc irq");
-    }
+
+    data_ready = true;
+    io_gpio_red_led(red);
+    red ^= true;
+    LOG_DEBUG("acc irq");
 }
 /**
  * @brief Test application
@@ -40,6 +38,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  */
 void application(void)
 {
+    io_acc_irq_set_handler(acc_handler);
+
     uint8_t id = LIS3DSH_ReadID();
     LOG_INFO("id: 0x%02x", id);
 

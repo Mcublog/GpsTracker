@@ -9,6 +9,7 @@ class USBSerial final : public Serial
     /* data */
   public:
     bool Init(ios_ctl_t *ctl) override;
+    bool Helth(){return true;};
     bool Write(uint8_t *data, uint32_t size);
 };
 

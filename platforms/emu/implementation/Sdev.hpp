@@ -19,6 +19,7 @@ class SDevice : public Serial
     int m_io_stream;
 
     bool Init(ios_ctl_t *ctl);
+    bool Helth(){return true};
     bool Write(uint8_t *data, uint32_t size);
 };
 

@@ -9,7 +9,9 @@
  *
  */
 #include "platforms/hw/stm32/UartSerial.hpp"
+
 #include "main.h"
+#include "stm32f4xx_ll_usart.h"
 #include "stm32f4xx_hal_uart.h"
 #include "usart.h"
 //>>---------------------- Log control
@@ -21,9 +23,20 @@
 bool UartSerial::Init(ios_ctl_t *ctl)
 {
     Serial::Init(ctl);
-    // return CDC_Get_Ctl(ctl);
+    Helth();
     return true;
 }
+
+bool UartSerial::Helth()
+{
+    UART_HandleTypeDef *huart = USART_Get_Gnss_handle();
+    LL_USART_ClearFlag_PE(huart->Instance);
+    LL_USART_ClearFlag_FE(huart->Instance);
+    LL_USART_ClearFlag_NE(huart->Instance);
+    LL_USART_ClearFlag_ORE(huart->Instance);
+    LL_USART_ClearFlag_IDLE(huart->Instance);
+    return true;
+};
 
 bool UartSerial::Write(uint8_t *data, uint32_t size)
 {

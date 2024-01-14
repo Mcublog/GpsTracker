@@ -78,7 +78,8 @@ bool GnssParser::is_message_received(void)
             return true;
         }
     }
-    m_sdev->Helth();
+    if (m_sdev->Helth() == false)
+        reset();
     return false;
 }
 

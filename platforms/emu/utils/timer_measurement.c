@@ -15,7 +15,7 @@
 #include "app/utils/delay.h"
 #include "app/utils/timer_measurement.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME tme
+#define LOG_MODULE_NAME etm
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------

@@ -10,7 +10,7 @@
  */
 #include "app/system/common.h"
 #include "app/system/system.h"
-#include "platforms/emu/impl/SystemEmu.hpp"
+#include "platforms/emu/implementation/SystemEmu.hpp"
 
 static SystemEmu m_system = SystemEmu();
 

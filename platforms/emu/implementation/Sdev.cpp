@@ -17,7 +17,7 @@
 #include "app/system/system.h"
 #include "app/system/wrapper.h"
 #include "app/utils/delay.h"
-#include "platforms/emu/impl/Sdev.hpp"
+#include "platforms/emu/implementation/Sdev.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME     sdev
 #define LOG_MODULE_LEVEL    (3)

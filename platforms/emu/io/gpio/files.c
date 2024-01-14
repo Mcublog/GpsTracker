@@ -1,7 +1,7 @@
 /**
- * @file io_mock.c
+ * @file files.c
  * @author Viacheslav (Viacheslav@mcublog.ru)
- * @brief IO mocking module
+ * @brief GPIO emulation with files
  * @version 0.1
  * @date 2022-09-26
  *
@@ -14,9 +14,9 @@
 #include <semaphore.h>
 
 #include "app/utils/delay.h"
-#include "platforms/emu/io_mock/io_mock.h"
+#include "platforms/emu/io/gpio/files.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME iomock
+#define LOG_MODULE_NAME fio
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------

@@ -14,7 +14,7 @@
 #include "app/utils/timer.h"
 #include "app/utils/delay.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME timer_mock
+#define LOG_MODULE_NAME etimer
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------

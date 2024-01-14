@@ -1,6 +1,6 @@
 
-#ifndef IO_MOCK_H
-#define IO_MOCK_H
+#ifndef PLATFORMS_EMU_IO_GPIO_FILES_H
+#define PLATFORMS_EMU_IO_GPIO_FILES_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -44,4 +44,4 @@ extern "C"
 }
 #endif
 
-#endif // IO_MOCK_H
+#endif // PLATFORMS_EMU_IO_GPIO_FILES_H

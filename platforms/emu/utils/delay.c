@@ -12,7 +12,7 @@
 
 #include "app/utils/delay.h"
 //>>---------------------- Log control
-#define LOG_MODULE_NAME delay_mock
+#define LOG_MODULE_NAME edelay
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 //<<----------------------

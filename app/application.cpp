@@ -13,6 +13,7 @@
 #include <string>
 
 #include "app/application.h"
+#include "app/config/config.h"
 #include "app/io/gpio/gpio.h"
 #include "app/process/WorkingWdt.hpp"
 #include "app/process/autonomous/process.hpp"
@@ -66,12 +67,20 @@ void application(void)
     wakeup_cause_t cause = sys->get_wakeup_cause();
     sys_mode_t mode = sys->mode_get();
 
+    config_t cfg = {};
+    if (config_load(&cfg) == CONFIG_ERROR)
+    {
+        LOG_INFO("config is empty, using defalult");
+        cfg = config_get_default();
+    }
+
     LOG_INFO("%s: mode: %s", tu_print_current_time_full(), sys->mode_stringify(mode));
+
 
     // Query the reason kТаitingCauseTimeS time while the reason is empty
     time_t current = tu_get_current_time();
     static const uint32_t kWaitingCauseTimeS = 2;
-    while (cause.d32 == 0)
+    while (cause.d32 == 0 && cfg.log.manual_mode == 0)
     {
         cause = sys->get_wakeup_cause();
         if (tu_get_current_time() - current <= kWaitingCauseTimeS)
@@ -95,9 +104,9 @@ void application(void)
     if (cause.field.by_accel)
         wwdt.event_getting();
 
-    if (wwdt.is_treshold())
+    if (wwdt.is_treshold() || cfg.log.manual_mode)
     {
-        LOG_INFO("wwdt is treshold: TRUE");
+        LOG_INFO("wwdt is treshold: TRUE or manual mode: TRUE");
         mode = sys_mode_t::NORMAL;
         sys->mode_set(mode);
     }
@@ -107,7 +116,7 @@ void application(void)
 
     while (1)
     {
-        if (cause.d32 == 0)
+        if (cause.d32 == 0 && cfg.log.manual_mode == 0)
         {
             LOG_INFO("all work done -> go to sleep");
             if (sys->go_to_stanby())

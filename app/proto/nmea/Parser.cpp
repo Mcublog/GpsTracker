@@ -41,11 +41,20 @@ static uint32_t wrapper_irq_handler(ios_chunk_t *chunk)
  */
 bool GnssParser::init(Serial *dev)
 {
-    ring_buffer_init(&m_rb, (char *)m_ring_buffer_pool, kRingBufferSize);
-    lwgps_init(&m_hgps);
+    reset();
     m_sdev = dev;
     m_ctl.irq_handler = wrapper_irq_handler;
-    return m_sdev->Init(&m_ctl);;
+    return m_sdev->Init(&m_ctl);
+}
+
+/**
+ * @brief
+ *
+ */
+void GnssParser::reset()
+{
+    ring_buffer_init(&m_rb, (char *)m_ring_buffer_pool, kRingBufferSize);
+    lwgps_init(&m_hgps);
 }
 
 /**

@@ -25,6 +25,7 @@ class GnssParser
 
   public:
     bool init(Serial *dev);
+    void reset();
     bool is_message_received(void);
 
     lwgps_t *read_message(void);

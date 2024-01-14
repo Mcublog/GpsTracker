@@ -7,11 +7,11 @@
 // wwdt - Working WatchDog Timer
 typedef struct
 {
-    uint32_t version;          // version of config
-    uint32_t period_s_min;     // log event time diff
-    uint32_t to_stanby_time_s; // time when no events are received
-    uint32_t threshold;        // number of events in period for the change work mode
-    uint32_t manual_mode;      // working by switch
+    uint32_t version;           // version of config
+    uint32_t event_diff_time_s; // log event time diff
+    uint32_t to_stanby_time_s;  // time when no events are received
+    uint32_t threshold;         // number of events in period for the change work mode
+    uint32_t manual_mode;       // working by switch
     uint8_t reserved[44];
 } log_config_t; // Data logging configuration
 
@@ -33,10 +33,11 @@ typedef struct
 
 typedef struct
 {
-    uint32_t version; // version of config
-    log_config_t log; // log configuration
+    uint32_t last;      // inner mark for config detection
+    uint32_t version;   // version of config
+    log_config_t log;   // log configuration
     wwdt_config_t wwdt; // wwdt config
-    serial_num_t s; // serial number
+    serial_num_t s;     // serial number
     uint32_t crc32;
 } config_t __attribute__((aligned(4)));
 

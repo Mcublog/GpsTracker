@@ -93,6 +93,8 @@ bool Autonomous::process(void)
             LOG_RAW_INFO("----- GPS data begin -------\r\n");
             LOG_INFO("GPS time: %02d:%02d:%02d", gnss->hours, gnss->minutes,
                      gnss->seconds);
+            LOG_INFO("Fix mode: %d", gnss->fix_mode);
+            LOG_INFO("Sat number: %d", gnss->sats_in_use);
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);

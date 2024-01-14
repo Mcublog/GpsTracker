@@ -17,12 +17,12 @@
 #include "app/proto/nmea/types.h"
 #include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
+#include "app/utils/nmea.hpp"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME auto
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
-//<<----------------------
 
 //>>---------------------- Locals
 static bool m_acc_irq = false;
@@ -83,6 +83,13 @@ bool Autonomous::process(void)
                 last_time = tu_get_current_time();
             else
                 continue;
+            time_t gpstime = nmea::parse_time(gnss, cfg.log.tz);
+            if (gpstime != tu_get_current_time())
+            {
+                LOG_INFO("set rtc with GPS");
+                tu_set_time(&gpstime);
+                last_time = gpstime;
+            }
 
             LOG_INFO("Valid status: %d: %s", gnss->is_valid,
                      tu_print_current_time_only());

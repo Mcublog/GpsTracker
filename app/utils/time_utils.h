@@ -32,6 +32,8 @@ time_t tu_get_current_time_with_fraction(uint32_t *ms);
 void tu_set_alarm(const time_t *time);
 time_t tu_get_alarm_time(void);
 void tu_reset_alarm(void);
+
+uint32_t tu_get_backup_reg_size_max(void);
 void tu_write_to_backup_reg(void *data, uint32_t size);
 void tu_read_from_backup_reg(void *data, uint32_t size);
 

@@ -14,6 +14,7 @@
 
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
+#include "platforms/emu/config/backup.h"
 #include "platforms/emu/config/filelist.h"
 #include "platforms/emu/io/gpio/files.h"
 //>>---------------------- Log control
@@ -27,7 +28,7 @@
 //<<----------------------
 
 //>>---------------------- Local variables and function ----------
-#define MAX_REG_ADR     (64)
+
 static const uint32_t MAX_REG_DATA_SIZE = sizeof(uint32_t);
 static const uint32_t kDefaultTickMs = 1000;
 
@@ -231,6 +232,16 @@ void tu_reset_alarm(void)
 {
     LOG_INFO("RTC reset alarm");
     m_alarm_enabled = false;
+}
+
+/**
+ * @brief Return size of all backup register size in bytes
+ *
+ * @return uint32_t
+ */
+uint32_t tu_get_backup_reg_size_max(void)
+{
+    return sizeof(backup_mem);
 }
 
 /**

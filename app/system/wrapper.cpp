@@ -1,7 +1,7 @@
 /**
  * @file wrapper.cpp
  * @author Viacheslav (viacheslav@mcublog.ru)
- * @brief
+ * @brief C wrappers for cpp some cpp code
  * @version 0.1
  * @date 2023-12-17
  *

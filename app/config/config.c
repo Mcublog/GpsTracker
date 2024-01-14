@@ -37,7 +37,7 @@ config_t config_get_default(void)
                                     .log.event_diff_time_s = 10,
                                     .log.to_stanby_time_s = 15, // NOTE: not used
                                     .log.threshold = 32, // NOTE: not used
-                                    .log.manual_mode = 1,
+                                    .log.manual_mode = 0,
                                     // wwdt_config_t
                                     .wwdt.version = 1,
                                     .wwdt.experied_time_s = 15, // NOTE: not used
@@ -66,7 +66,7 @@ __weak config_error_t config_save(config_t *config)
  */
 __weak config_error_t config_load(config_t *config)
 {
-    return CONFIG_OK;
+    return CONFIG_ERROR;
 }
 
 /**

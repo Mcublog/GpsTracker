@@ -66,11 +66,10 @@ bool Autonomous::process(void)
 
     while (run)
     {
-        run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
-        run = io_read_external_power_pin() || cfg.log.manual_mode == 0 ? false : true;
-
         if (cfg.log.manual_mode)
             wwdt.reset();
+
+        run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
 
         if (m_gnssp->is_message_received())
         {

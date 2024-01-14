@@ -93,6 +93,10 @@ set(HW_LIBS_INCLUDES
 file(GLOB HW_PLATFORM_SOURCES
     ${PROJECT_SOURCE_DIR}/platforms/hw/*.c
     ${PROJECT_SOURCE_DIR}/platforms/hw/*.cpp
+    ${PROJECT_SOURCE_DIR}/platforms/hw/implementation/*.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/implementation/*.cpp
+    ${PROJECT_SOURCE_DIR}/platforms/hw/system/*.c
+    ${PROJECT_SOURCE_DIR}/platforms/hw/system/*.cpp
     ${PROJECT_SOURCE_DIR}/platforms/hw/stm32/*.c
     ${PROJECT_SOURCE_DIR}/platforms/hw/stm32/*.cpp
     ${PROJECT_SOURCE_DIR}/platforms/hw/libs/lis3dsh/*.c

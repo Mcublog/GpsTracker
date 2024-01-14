@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "app/gps/GnssParser.hpp"
 #include "app/proto/cobs/Parser.hpp"
+#include "app/proto/nmea/Parser.hpp"
 #include "app/utils/delay.h"
 #include "platforms/emu/impl/Sdev.hpp"
 #include "platforms/emu/impl/SystemEmu.hpp"

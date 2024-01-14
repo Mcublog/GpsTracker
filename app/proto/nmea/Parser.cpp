@@ -10,7 +10,7 @@
  */
 #include <cstring>
 
-#include "app/gps/GnssParser.hpp"
+#include "app/proto/nmea/Parser.hpp"
 #include "app/system/system.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME gnss

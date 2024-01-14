@@ -8,10 +8,10 @@
  * @copyright Mcublog Copyright (c) 2023
  *
  */
-#include "app/gps/GnssParser.hpp"
-#include "app/proto/cobs/Parser.hpp"
-#include "app/utils/delay.h"
 #include "platforms/hw/SystemHw.hpp"
+#include "app/proto/cobs/Parser.hpp"
+#include "app/proto/nmea/Parser.hpp"
+#include "app/utils/delay.h"
 #include "platforms/hw/stm32/UartSerial.hpp"
 #include "platforms/hw/stm32/UsbSerial.hpp"
 #include "stm32f4xx_ll_pwr.h"

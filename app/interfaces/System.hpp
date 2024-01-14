@@ -5,9 +5,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "app/gps/GnssParser.hpp"
 #include "app/interfaces/Serial.hpp"
 #include "app/proto/cobs/Parser.hpp"
+#include "app/proto/nmea/Parser.hpp"
 #include "app/system/common.h"
 
 typedef union

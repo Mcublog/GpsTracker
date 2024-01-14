@@ -9,7 +9,7 @@
  *
  */
 #include "app/storage/GnssLog.hpp"
-#include "app/gps/data_types.h"
+#include "app/proto/nmea/types.h"
 #include "app/storage/backup.hpp"
 #include "app/storage/log_partition.hpp"
 //>>---------------------- Log control

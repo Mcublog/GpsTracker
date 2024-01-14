@@ -10,10 +10,10 @@
  */
 #include <ctime>
 
-#include "app/gps/data_types.h"
 #include "app/io/gpio/gpio.h"
 #include "app/process/WorkingWdt.hpp"
 #include "app/process/autonomous/process.hpp"
+#include "app/proto/nmea/types.h"
 #include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/time_utils.h"

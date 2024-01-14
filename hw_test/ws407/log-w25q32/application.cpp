@@ -11,10 +11,10 @@
 #include <cstdint>
 
 #include "app/application.h"
-#include "app/gps/data_types.h"
-#include "app/io/gpio/gpio.h"
-#include "app/storage/GnssLog.hpp"
 #include "app/interfaces/System.hpp"
+#include "app/io/gpio/gpio.h"
+#include "app/proto/nmea/types.h"
+#include "app/storage/GnssLog.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control

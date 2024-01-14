@@ -9,6 +9,7 @@ class UartSerial final : public Serial
     /* data */
   public:
     bool Init(ios_ctl_t *ctl) override;
+    bool Helth();
     bool Write(uint8_t *data, uint32_t size);
 };
 

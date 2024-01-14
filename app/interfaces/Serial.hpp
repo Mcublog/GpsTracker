@@ -16,6 +16,7 @@ class Serial
         return true;
     };
 
+    virtual bool Helth() = 0;
     virtual bool Write(uint8_t *data, uint32_t size) { return false; };
     virtual bool Read(ios_message_t *message) { return false; };
 

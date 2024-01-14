@@ -11,8 +11,9 @@ typedef struct
     uint32_t event_diff_time_s; // log event time diff
     uint32_t to_stanby_time_s;  // time when no events are received
     uint32_t threshold;         // number of events in period for the change work mode
-    uint32_t manual_mode;       // working by switch
-    uint8_t reserved[44];
+    uint8_t manual_mode;        // working by switch
+    int8_t tz;                  // time zone
+    uint8_t reserved[46];
 } log_config_t; // Data logging configuration
 
 typedef struct

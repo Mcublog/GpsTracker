@@ -17,12 +17,12 @@
 #include "app/proto/nmea/types.h"
 #include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
+#include "app/utils/nmea.hpp"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME auto
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
-//<<----------------------
 
 //>>---------------------- Locals
 static bool m_acc_irq = false;
@@ -66,11 +66,13 @@ bool Autonomous::process(void)
 
     while (run)
     {
-        run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
-        run = io_read_external_power_pin() || cfg.log.manual_mode == 0 ? false : true;
-
         if (cfg.log.manual_mode)
+        {
             wwdt.reset();
+            wwdt.event_getting();
+        }
+
+        run = io_read_external_power_pin() || wwdt.is_expired() ? false : true;
 
         if (m_gnssp->is_message_received())
         {
@@ -81,13 +83,20 @@ bool Autonomous::process(void)
                 last_time = tu_get_current_time();
             else
                 continue;
-
-            LOG_INFO("Valid status: %d: %s", gnss->is_valid,
-                     tu_print_current_time_only());
-            LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
+            time_t gpstime = nmea::parse_time(gnss, cfg.log.tz);
+            if (gpstime != tu_get_current_time())
+            {
+                LOG_INFO("set rtc with GPS");
+                tu_set_time(&gpstime);
+                last_time = gpstime;
+            }
+            LOG_RAW_INFO("----- GPS data begin -------\r\n");
+            LOG_INFO("GPS time: %02d:%02d:%02d", gnss->hours, gnss->minutes,
+                     gnss->seconds);
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
+            LOG_RAW_INFO("----- GPS data end -------\r\n");
             // Save data to memory
             gnss_record_t gpsdata = {};
             gpsdata.tm = tu_get_current_time();

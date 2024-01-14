@@ -245,11 +245,6 @@ void USART2_IRQHandler(void)
   // printf("%c", byte);
   ios_chunk_t chunk = {&byte, 1};
   gnssw_irq_handler(&chunk);
-  // LL_USART_ClearFlag_PE(huart2.Instance);
-  // LL_USART_ClearFlag_FE(huart2.Instance);
-  // LL_USART_ClearFlag_NE(huart2.Instance);
-  LL_USART_ClearFlag_ORE(huart2.Instance);
-  // LL_USART_ClearFlag_IDLE(huart2.Instance);
   /* USER CODE END USART2_IRQn 1 */
 }
 

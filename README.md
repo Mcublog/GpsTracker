@@ -1,6 +1,12 @@
 # GpsTracker
 
-GPS tracker on MCU and GPS module
+GPS tracker based on a MCU and GPS module.
+
+## App
+
+Platform independent code with the business logic and headers.
+Common implementations are located in the platform directory, located depending on the platform type.
+Specific implementation are located in the target directory, depending on the target type.
 
 ## Scripts
 

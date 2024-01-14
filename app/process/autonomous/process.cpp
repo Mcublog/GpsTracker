@@ -90,13 +90,13 @@ bool Autonomous::process(void)
                 tu_set_time(&gpstime);
                 last_time = gpstime;
             }
-
-            LOG_INFO("Valid status: %d: %s", gnss->is_valid,
-                     tu_print_current_time_only());
-            LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
+            LOG_RAW_INFO("----- GPS data begin -------\r\n");
+            LOG_INFO("GPS time: %02d:%02d:%02d", gnss->hours, gnss->minutes,
+                     gnss->seconds);
             LOG_INFO("Latitude: %f degrees", gnss->latitude);
             LOG_INFO("Longitude: %f degrees", gnss->longitude);
             LOG_INFO("Altitude: %f meters", gnss->altitude);
+            LOG_RAW_INFO("----- GPS data end -------\r\n");
             // Save data to memory
             gnss_record_t gpsdata = {};
             gpsdata.tm = tu_get_current_time();

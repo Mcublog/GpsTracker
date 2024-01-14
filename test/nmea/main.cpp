@@ -25,18 +25,26 @@ int main(void)
 {
     LOG_INFO("NMEA unit");
 
-    const lwgps_t gnss = {.hours = 0x0b,
-                    .minutes = 0x15,
-                    .seconds = 0x1b,
-                    .date = 0x0e,
-                    .month = 0x01,
-                    .year = 0x18};
+    lwgps_t gnss = {0};
 
-    time_t t = nmea::parse_time(&gnss, 3);
+    gnss.hours = 0x0b;
+    gnss.minutes = 0x15;
+    gnss.seconds = 0x1b;
+    gnss.date = 0x0e;
+    gnss.month = 0x01;
+    gnss.year = 0x18;
 
-    if (t != 1705231287)
-        return -1;
+    int8_t tz = 3;
+    time_t t = nmea::parse_time(&gnss, tz);
 
-    LOG_INFO("%s", tu_print_time_full(&t));
-    return 0;
+    // 14 2024 11:21:27 GMT+0000
+    if (t == 1705231287)
+        return 0;
+
+    // 14 2024 14:21:27 GMT+0000
+    if (t == (1705242087))
+        return 0;
+
+    printf("t != (time_t)1705231287 || t != (time_t)(1705242087)\r\n");
+    return -1;
 }

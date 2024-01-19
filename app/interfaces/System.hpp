@@ -45,7 +45,7 @@ public:
     virtual void what() = 0;
 
     virtual bool go_to_stanby();
-    wakeup_cause_t get_wakeup_cause();
+    wakeup_cause_t get_wakeup_cause() const;
     bool is_wake_up_event();
 
     void mode_set(sys_mode_t mode);

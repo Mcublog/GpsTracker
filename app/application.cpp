@@ -32,6 +32,39 @@
 //<<----------------------
 
 //>>---------------------- Private
+static auto config() -> config_t
+{
+    config_t cfg = {};
+    if (config_load(&cfg) == CONFIG_ERROR)
+    {
+        LOG_INFO("config is empty, using defalult");
+        cfg = config_get_default();
+    }
+    return cfg;
+}
+
+/**
+ * @brief
+ * Query the reason kТаitingCauseTimeS time while the reason is empty
+ *
+ * @param cause
+ */
+static auto anti_bounce(wakeup_cause_t &cause, const config_t &cfg, const System *sys)
+    -> bool
+{
+    time_t current = tu_get_current_time();
+    static const uint32_t kWaitingCauseTimeS = 2;
+    while (cause.d32 == 0 && cfg.log.manual_mode == 0)
+    {
+        cause = sys->get_wakeup_cause();
+        if (tu_get_current_time() - current <= kWaitingCauseTimeS)
+            continue;
+        return false;
+    }
+
+    return true;
+}
+
 //<<----------------------
 
 /**
@@ -63,23 +96,11 @@ void application(void)
     sys->what();
     sys->init();
 
+    config_t cfg = config();
+
     wakeup_cause_t cause = sys->get_wakeup_cause();
-
-    config_t cfg = {};
-    if (config_load(&cfg) == CONFIG_ERROR)
+    if (anti_bounce(cause, cfg, sys) == false)
     {
-        LOG_INFO("config is empty, using defalult");
-        cfg = config_get_default();
-    }
-
-    // Query the reason kТаitingCauseTimeS time while the reason is empty
-    time_t current = tu_get_current_time();
-    static const uint32_t kWaitingCauseTimeS = 2;
-    while (cause.d32 == 0 && cfg.log.manual_mode == 0)
-    {
-        cause = sys->get_wakeup_cause();
-        if (tu_get_current_time() - current <= kWaitingCauseTimeS)
-            continue;
         if (sys->go_to_stanby())
             return;
     }

@@ -53,7 +53,7 @@ bool System::go_to_stanby()
  *
  * @return wakeup cause bits
  */
-wakeup_cause_t System::get_wakeup_cause()
+wakeup_cause_t System::get_wakeup_cause() const
 {
     wakeup_cause_t cause = {};
     if (io_read_accel_irq_pin())

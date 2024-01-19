@@ -49,8 +49,9 @@ void io_init_external_power_pin(void)
  */
 bool io_read_external_power_pin(void)
 {
-    // return !((bool)HAL_GPIO_ReadPin(JOYSTICK_A_GPIO_Port, JOYSTICK_A_Pin));
-    return false;
+    return HAL_GPIO_ReadPin(USB_ext_power_GPIO_Port, USB_ext_power_Pin) == GPIO_PIN_SET
+               ? true
+               : false;
 }
 
 /**

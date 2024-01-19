@@ -33,7 +33,7 @@ void GnssLog::init()
 {
     Log::init();
     const ringfs_flash_partition_t *partition = log_gnss_partition();
-    Log::ring_fs_init(partition, sizeof(gnss_record_t), &m_fs, nullptr);
+    Log::ring_fs_init(partition, sizeof(gnss_record_v1_t), &m_fs, nullptr);
 }
 
 /**

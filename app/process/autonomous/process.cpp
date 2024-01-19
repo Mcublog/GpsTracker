@@ -96,7 +96,7 @@ bool Autonomous::process(void)
             LOG_INFO("Altitude: %f meters", gnss->altitude);
             LOG_RAW_INFO("----- GPS data end -------\r\n");
             // Save data to memory
-            gnss_record_t gpsdata = {};
+            gnss_record_v1_t gpsdata = {};
             gpsdata.tm = tu_get_current_time();
             gpsdata.latitude = gnss->latitude;
             gpsdata.longitude = gnss->longitude;

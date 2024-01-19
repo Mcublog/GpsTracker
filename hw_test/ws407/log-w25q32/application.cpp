@@ -38,7 +38,7 @@ void application(void)
     static constexpr uint8_t kMaxDataSize = 10;
     for (auto i = 0; i < kMaxDataSize; i++)
     {
-        gnss_record_t dummy_data;
+        gnss_record_v1_t dummy_data;
         dummy_data.tm = i;
         log.append(&dummy_data);
     }
@@ -54,7 +54,7 @@ void application(void)
 
     for (auto i = 0; i < (kMaxDataSize >> 1); i++)
     {
-        gnss_record_t dummy_data;
+        gnss_record_v1_t dummy_data;
         log.pop(&dummy_data);
         uint32_t v = dummy_data.tm;
         LOG_INFO("pop: %d", v);
@@ -71,7 +71,7 @@ void application(void)
     LOG_INFO("----------- second part reading ----------");
     for (auto i = 0; i < (kMaxDataSize >> 1); i++)
     {
-        gnss_record_t dummy_data;
+        gnss_record_v1_t dummy_data;
         log.pop(&dummy_data);
         uint32_t v = dummy_data.tm;
         LOG_INFO("pop: %d", v);
@@ -88,7 +88,7 @@ void application(void)
 
     for (auto i = 0; i < kMaxDataSize; i++)
     {
-        gnss_record_t dummy_data;
+        gnss_record_v1_t dummy_data;
         log.pop(&dummy_data);
         uint32_t v = dummy_data.tm;
         LOG_INFO("pop: %d", v);

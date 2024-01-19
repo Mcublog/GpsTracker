@@ -101,7 +101,7 @@ COMMANDS = ConsoleCommands(
      ConsoleCmd('set_time', CommandId.CMDID_SET_RTC, set_rtc_time,
                 lambda _: _),
      ConsoleCmd('set_settings', CommandId.CMDID_SET_SETTINGS, set_settings,
-                lambda _: _)))
+                lambda _: _),
      ConsoleCmd('get_reports', CommandId.CMDID_GET_REPORTS, get_reports,
                 lambda _: _)))
 

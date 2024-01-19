@@ -18,6 +18,7 @@
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
+#include "app/storage/GnssLog.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME comm
 #define LOG_MODULE_LEVEL (3)
@@ -26,6 +27,7 @@
 //>>---------------------- Locals
 CobsParser *m_parser = nullptr;
 GnssParser *m_gnssp = nullptr;
+GnssLog m_log;
 
 static bool m_command_handler(const command_t *command)
 {
@@ -38,10 +40,6 @@ static bool m_command_handler(const command_t *command)
     //     dprint_config(config);
     //     config_save(config);
     // }
-    else if (command->id == CMDID_GET_REPORTS)
-    {
-
-    }
 
     uint32_t limit = 0;
     uint8_t *output = isystem()->cobs_parser()->get_output_buffer(&limit);
@@ -52,7 +50,6 @@ static bool m_command_handler(const command_t *command)
 
 static bool m_get_report_handler(const command_t *command)
 {
-
     uint32_t limit = 0;
     command_t *output = (command_t *)isystem()->cobs_parser()->get_output_buffer(&limit);
 
@@ -64,12 +61,18 @@ static bool m_get_report_handler(const command_t *command)
 
     uint32_t kMaxRecordsBytes = (limit - sizeof(command_t));
     LOG_INFO("Max record in packet: %d", kMaxRecordsBytes / sizeof(gnss_record_v1_t));
-    gnss_record_v1_t dummy = {};
-    dummy.tm = tu_get_current_time();
 
     for (uint32_t i = 0; i < kMaxRecordsBytes; i += sizeof(gnss_record_v1_t))
     {
-        memcpy(&output->data[i], &dummy, sizeof(gnss_record_v1_t));
+        gnss_record_v1_t data = {};
+        if (m_log.pop(&data) != 0)
+            break;
+        if (m_log.is_last_record())
+        {
+            m_log.rewing();
+            break;
+        }
+        memcpy(&output->data[i], &data, sizeof(gnss_record_v1_t));
     }
 
     isystem()->cobs_parser()->write_message((uint8_t *)output, kMaxRecordsBytes);
@@ -91,6 +94,10 @@ bool ExtPower::process(void)
 
     m_parser = isystem()->cobs_parser();
     m_gnssp = isystem()->gnss_parser();
+
+    m_log.init();
+    m_log.set_long_busy_callback(NULL);
+    m_log.rewing();
 
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 

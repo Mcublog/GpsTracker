@@ -38,6 +38,21 @@ static bool m_command_handler(const command_t *command)
     //     dprint_config(config);
     //     config_save(config);
     // }
+    else if (command->id == CMDID_GET_REPORTS)
+    {
+
+    }
+
+    uint32_t limit = 0;
+    uint8_t *output = isystem()->cobs_parser()->get_output_buffer(&limit);
+    std::memset(output, 0, sizeof(command_ack_t));
+    isystem()->cobs_parser()->write_message((uint8_t *)output, sizeof(command_ack_t));
+    return true;
+}
+
+static bool m_get_report_handler(const command_t *command)
+{
+    LOG_INFO("handle: id: %#x channel: %#x", command->id, command->channel);
 
     uint32_t limit = 0;
     uint8_t *output = isystem()->cobs_parser()->get_output_buffer(&limit);
@@ -50,7 +65,8 @@ static const command_list_item_t m_command_list[CMDID_LAST] = {
     {CMDID_SET_SETTINGS, m_command_handler},
     {CMDID_GET_SETTINGS, m_command_handler},
     {CMDID_SET_RTC, m_command_handler},
-    {CMDID_GET_RTC, m_command_handler}};
+    {CMDID_GET_RTC, m_command_handler},
+    {CMDID_GET_REPORTS, m_get_report_handler}};
 
 //<<----------------------
 

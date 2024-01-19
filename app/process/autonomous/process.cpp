@@ -15,6 +15,7 @@
 #include "app/process/WorkingWdt.hpp"
 #include "app/process/autonomous/process.hpp"
 #include "app/proto/nmea/types.h"
+#include "app/storage/common.hpp"
 #include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/nmea.hpp"
@@ -38,12 +39,7 @@ bool Autonomous::process(void)
 {
     LOG_INFO("Autonomous::process: run");
 
-    config_t cfg = {};
-    if (config_load(&cfg) == CONFIG_ERROR)
-    {
-        LOG_INFO("config is empty, using defalult");
-        cfg = config_get_default();
-    }
+    config_t cfg = config();
 
     GnssLog log = GnssLog();
     log.init();

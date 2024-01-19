@@ -109,8 +109,8 @@ const char *System::mode_stringify(sys_mode_t m)
 {
     if (m == IDLE)
         return "IDLE";
-    // else if (m == NORMAL)
-    return "NORMAL";
+    // else if (m == AUTONOMOUS)
+    return "AUTONOMOUS";
 }
 
 /**

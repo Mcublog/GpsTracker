@@ -26,7 +26,7 @@ typedef union
 typedef enum
 {
     IDLE,
-    NORMAL
+    AUTONOMOUS
 } sys_mode_t;
 
 typedef enum

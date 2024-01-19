@@ -18,6 +18,7 @@
 #include "app/process/WorkingWdt.hpp"
 #include "app/process/autonomous/process.hpp"
 #include "app/process/external_power/process.hpp"
+#include "app/storage/common.hpp"
 #include "app/system/system.h"
 #include "app/utils/build_marks.h"
 #include "app/utils/data_print.h"
@@ -32,17 +33,6 @@
 //<<----------------------
 
 //>>---------------------- Private
-static auto config() -> config_t
-{
-    config_t cfg = {};
-    if (config_load(&cfg) == CONFIG_ERROR)
-    {
-        LOG_INFO("config is empty, using defalult");
-        cfg = config_get_default();
-    }
-    return cfg;
-}
-
 /**
  * @brief
  * Query the reason kТаitingCauseTimeS time while the reason is empty
@@ -113,7 +103,7 @@ void application(void)
         LOG_INFO("manual mode: TRUE");
         wwdt.reset();
         wwdt.event_getting();
-        sys->mode_set(sys_mode_t::NORMAL);
+        sys->mode_set(sys_mode_t::AUTONOMOUS);
     }
     else
         dprint_wakeup_cause(&cause);
@@ -131,7 +121,7 @@ void application(void)
     if (wwdt.is_treshold())
     {
         LOG_INFO("wwdt is treshold: TRUE or manual mode: TRUE");
-        sys->mode_set(sys_mode_t::NORMAL);
+        sys->mode_set(sys_mode_t::AUTONOMOUS);
     }
 
     wwdt.save();
@@ -157,7 +147,7 @@ void application(void)
             wwdt.save();
         }
 
-        if (mode == sys_mode_t::NORMAL)
+        if (mode == sys_mode_t::AUTONOMOUS)
         {
             Autonomous::process();
             mode = sys->mode_get();

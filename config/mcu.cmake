@@ -54,14 +54,15 @@ set(STM32F407_LINKER_OPTION
     -specs=nano.specs
     -specs=nosys.specs
     # STDIO float formatting support
-    -u_printf_float
-    -u_scanf_float
+    -u _printf_float
+    # -u_scanf_float
     -Wl,--start-group
+    -lc
+    -lm
     -fno-exceptions
     -fno-rtti
     -Wl,--end-group
     -Wl,--gc-sections # removed unused functions
     -Wl,--print-memory-usage
-    -lm
 )
 # endregion

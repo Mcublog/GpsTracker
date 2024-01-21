@@ -127,17 +127,6 @@ void System::performance_set(sys_performance_t perf)
 /**
  * @brief
  *
- * @return sys_performance_t
- */
-sys_performance_t System::performance_get()
-{
-    LOG_INFO("performance_get: dummy");
-    return sys_performance_t::NOMINAL;
-}
-
-/**
- * @brief
- *
  * @param p
  * @return const char*
  */
@@ -145,18 +134,8 @@ const char *System::performance_stringify(sys_performance_t p)
 {
     if (p == LOW_POWER)
         return "LOW_POWER";
-    // else if (p == NOMINAL)
-    return "NOMINAL";
-}
-
-/**
- * @brief
- *
- * @return
- */
-void System::reinit_peripheral()
-{
-    LOG_INFO("reinit_peripheral: dummy");
+    // else if (p == PERFORMANCE)
+    return "PERFORMANCE";
 }
 
 bool System::is_wake_up_event()

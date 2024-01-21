@@ -85,7 +85,10 @@ static const command_list_item_t m_command_list[CMDID_LAST] = {
 
 bool ExtPower::process(void)
 {
+    sys_performance_t performance = isystem()->performance_get();
+
     LOG_INFO("ExtPower::process: run");
+    LOG_INFO("Performance: %s", System::performance_stringify(performance));
 
     m_parser = isystem()->cobs_parser();
     m_gnssp = isystem()->gnss_parser();

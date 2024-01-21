@@ -32,7 +32,7 @@ typedef enum
 typedef enum
 {
     LOW_POWER,
-    NOMINAL
+    PERFORMANCE
 } sys_performance_t;
 
 class System
@@ -56,11 +56,11 @@ public:
     virtual CobsParser *cobs_parser() = 0;
     virtual GnssParser *gnss_parser() = 0;
 
-    virtual void performance_set(sys_performance_t perf);
-    virtual sys_performance_t performance_get();
-    const char *performance_stringify(sys_performance_t m);
+    virtual void performance_set(sys_performance_t perf) = 0;
+    virtual sys_performance_t performance_get() const = 0;
+    static const char *performance_stringify(sys_performance_t m);
 
-    virtual void reinit_peripheral();
+    virtual void peripheral_reinit() = 0;
 
     static void infitite_loop();
 };

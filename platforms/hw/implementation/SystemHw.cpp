@@ -15,6 +15,7 @@
 #include "platforms/hw/stm32/UartSerial.hpp"
 #include "platforms/hw/stm32/UsbSerial.hpp"
 
+#include "main.h"
 #include "stm32f4xx_ll_pwr.h"
 #include "stm32f4xx_ll_rtc.h"
 //>>---------------------- Log control
@@ -86,4 +87,41 @@ bool SystemHW::go_to_stanby()
     HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
     HAL_PWR_EnterSTANDBYMode();
     return false;
+}
+
+/**
+ * @brief
+ *
+ * @param perf
+ */
+void SystemHW::performance_set(sys_performance_t perf)
+{
+    HAL_RCC_DeInit();
+    if (perf == sys_performance_t::PERFORMANCE)
+        SystemClockConfigHighSpeed();
+    else
+        SystemClockConfigLowPower();
+    SystemCoreClockUpdate();
+}
+
+/**
+ * @brief
+ *
+ * @return
+ */
+sys_performance_t SystemHW::performance_get() const
+{
+    if (HAL_RCC_GetHCLKFreq() == 168'000'000)
+        return sys_performance_t::PERFORMANCE;
+    return sys_performance_t::LOW_POWER;
+}
+
+/**
+ * @brief
+ *
+ * @return
+ */
+void SystemHW::peripheral_reinit()
+{
+    SystemInitPeripheral();
 }

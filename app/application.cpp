@@ -141,6 +141,7 @@ void application(void)
 
         if (cause.field.by_external_power)
         {
+            sys->performance_set(sys_performance_t::PERFORMANCE);
             ExtPower::process();
             mode = sys->mode_get();
             wwdt.reset();
@@ -149,6 +150,7 @@ void application(void)
 
         if (mode == sys_mode_t::AUTONOMOUS)
         {
+            sys->performance_set(sys_performance_t::LOW_POWER);
             Autonomous::process();
             mode = sys->mode_get();
         }

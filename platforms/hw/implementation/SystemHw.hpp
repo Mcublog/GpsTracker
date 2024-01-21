@@ -17,6 +17,11 @@ class SystemHW final : public System
     GnssParser *gnss_parser();
 
     bool go_to_stanby() override;
+
+    void performance_set(sys_performance_t perf);
+    sys_performance_t performance_get() const;
+
+    void peripheral_reinit();
 };
 
 #endif // TARGETS_DESKTOP_IMPL_SYSTEM_EMU_HPP

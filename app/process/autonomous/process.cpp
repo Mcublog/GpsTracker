@@ -37,7 +37,10 @@ static void acc_handler(void)
 //>>---------------------- Exported
 bool Autonomous::process(void)
 {
+    sys_performance_t performance = isystem()->performance_get();
+
     LOG_INFO("Autonomous::process: run");
+    LOG_INFO("Performance: %s", System::performance_stringify(performance));
 
     config_t cfg = config();
 

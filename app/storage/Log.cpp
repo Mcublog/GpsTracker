@@ -156,20 +156,22 @@ int Log::pop(void *records, uint32_t number_records)
  * @brief
  *
  */
-void Log::discard(void)
+int Log::discard()
 {
     int e = ringfs_discard(&m_fs);
     Log::idle_waiting();
     if (e != 0)
         LOG_ERROR("discard: %d", e);
+    return e;
 }
 
-void Log::format(void)
+int Log::format()
 {
     int e = ringfs_format(&m_fs);
     Log::idle_waiting();
     if (e != 0)
         LOG_ERROR("ringfs_format: %d", e);
+    return e;
 }
 
 /**
@@ -188,12 +190,13 @@ void Log::usage(uint32_t *current, uint32_t *capacity)
  * @brief
  *
  */
-void Log::rewing(void)
+int Log::rewing()
 {
     int e = ringfs_rewind(&m_fs);
     Log::idle_waiting();
     if (e != 0)
         LOG_ERROR("rewind: %d", e);
+    return e;
 }
 
 /**
@@ -202,7 +205,7 @@ void Log::rewing(void)
  * @return true
  * @return false
  */
-bool Log::is_last_record(void)
+bool Log::is_last_record()
 {
     uint32_t current = ringfs_count_estimate(&m_fs);
     uint32_t capacity = ringfs_capacity(&m_fs);

@@ -35,6 +35,19 @@ static bool m_command_handler(const command_t *command)
     LOG_INFO("handle: id: %#x channel: %#x", command->id, command->channel);
     if (command->id == CMDID_SET_RTC)
         tu_set_time((time_t *)command->data);
+    else if (command->id == CMDID_STORAGE_CLEAR)
+    {
+        gnss_record_v1_t dummy = {};
+        m_log->rewing();
+        do
+        {
+            m_log->pop(&dummy);
+            m_log->discard();
+        } while (!m_log->is_empty());
+        uint32_t current, capacity;
+        m_log->usage(&current, &capacity);
+        LOG_INFO("usage: %d/%d", current, capacity);
+    }
     // else if (command->id == CMDID_SET_SETTINGS)
     // {
     //     config_t *config = (config_t *)(command->data);
@@ -79,6 +92,7 @@ static const command_list_item_t m_command_list[CMDID_LAST] = {
     {CMDID_GET_SETTINGS, m_command_handler},
     {CMDID_SET_RTC, m_command_handler},
     {CMDID_GET_RTC, m_command_handler},
+    {CMDID_STORAGE_CLEAR, m_command_handler},
     {CMDID_GET_REPORTS, m_get_report_handler}};
 
 //<<----------------------
@@ -92,9 +106,12 @@ bool ExtPower::process(void)
 
     m_parser = isystem()->cobs_parser();
     m_gnssp = isystem()->gnss_parser();
-    m_log = isystem()->gnss_log();
 
-    m_log->rewing();
+    uint32_t current, capacity;
+    m_log = isystem()->gnss_log();
+    // m_log->rewing();
+    m_log->usage(&current, &capacity);
+    LOG_INFO("storage: %d/%d", current, capacity);
 
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 

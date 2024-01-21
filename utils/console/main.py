@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import ctypes as ct
 import logging
 import time
 from dataclasses import dataclass
@@ -10,16 +11,17 @@ from typing import TypeAlias
 
 import serial
 from colorama import Fore as Clr
-# Local application imports
-from console.commands import ConsoleCmd
-from console.proto.config import Config
-from console.proto.proto import CommandId, Message, Reports, RtcTime
-from console.version import VERSION
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.patch_stdout import patch_stdout
 from pylogus import logger_init
+
+# Local application imports
+from console.commands import ConsoleCmd
+from console.proto.config import Config
+from console.proto.proto import CommandId, Message, Reports, RtcTime
+from console.version import VERSION
 
 log = logger_init(__name__, logging.DEBUG)
 
@@ -81,9 +83,6 @@ def set_settings(_) -> bytes:
     return Message.serialize(CommandId.CMDID_SET_SETTINGS, 1,
                              config.serialize())
 
-def get_reports(_) -> bytes:
-    return Message.serialize(CommandId.CMDID_GET_REPORTS, 1, Reports())
-
 
 def get_command_and_args(
         cmd_raw: str, commands: ConsoleCommands) -> ConsoleCommandParseResult:
@@ -102,8 +101,14 @@ COMMANDS = ConsoleCommands(
                 lambda _: _),
      ConsoleCmd('set_settings', CommandId.CMDID_SET_SETTINGS, set_settings,
                 lambda _: _),
-     ConsoleCmd('get_reports', CommandId.CMDID_GET_REPORTS, get_reports,
-                lambda _: _)))
+     ConsoleCmd(
+         'storage_clear', CommandId.CMDID_STORAGE_CLEAR,
+         lambda _: Message.serialize(CommandId.CMDID_STORAGE_CLEAR, 1, None),
+         lambda _: _),
+     ConsoleCmd(
+         'get_reports', CommandId.CMDID_GET_REPORTS,
+         lambda _: Message.serialize(CommandId.CMDID_GET_REPORTS, 1, None),
+         lambda _: _)))
 
 
 def console(sport: str):

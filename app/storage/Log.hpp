@@ -28,11 +28,11 @@ class Log
     void append(const void *record);
     int pop(void *record);
     int pop(void *records, uint32_t number_records);
-    void discard(void);
-    void format(void);
-    void rewing(void);
+    int discard();
+    int format();
+    int rewing();
     void usage(uint32_t *current, uint32_t *capacity);
-    bool is_last_record(void);
+    bool is_last_record();
     bool is_empty();
 
 };

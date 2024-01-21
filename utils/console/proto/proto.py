@@ -11,6 +11,7 @@ class CommandId(Enum):
     CMDID_SET_RTC = 0x02
     CMDID_GET_RTC = 0x03
     CMDID_GET_REPORTS = 0x04
+    CMDID_STORAGE_CLEAR = 0x05
     CMDID_LAST = auto()
 
 
@@ -42,11 +43,13 @@ class Message:
         return ct.sizeof(MessageLowLevel) - ct.sizeof(DataPointer)
 
     @staticmethod
-    def serialize(id: Enum, channel: int, data: ct.Structure) -> bytes:
-        size = ct.sizeof(data) + Message.len()
-        msg = MessageLowLevel(size=size, id=id.value, channel=channel)
+    def serialize(cmd: Enum, channel: int, data: ct.Structure | None) -> bytes:
+        size = Message.len() if data is None else ct.sizeof(data) + Message.len()
+        msg = MessageLowLevel(size=size, id=cmd.value, channel=channel)
         buffer = (ct.c_uint8 * size)()
         ct.memmove(ct.addressof(buffer), ct.addressof(msg), Message.len())
-        ct.memmove(
-            ct.addressof(buffer) + Message.len(), ct.addressof(data), ct.sizeof(data))
+        if data is not None:
+            ct.memmove(
+                ct.addressof(buffer) + Message.len(), ct.addressof(data),
+                ct.sizeof(data))
         return cobsr.encode(bytes(buffer)) + b'\x00'

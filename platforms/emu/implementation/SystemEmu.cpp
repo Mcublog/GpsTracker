@@ -72,7 +72,7 @@ static void *gnss_reading(void*)
 //<<----------------------
 void SystemEmu::init()
 {
-
+    System::init();
     m_cobsp.init(&m_sdev);
     m_gnssp.init(&m_gps_sdev);
 }

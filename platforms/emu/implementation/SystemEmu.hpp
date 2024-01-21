@@ -10,7 +10,7 @@ class SystemEmu final : public System
     sys_performance_t m_perfomance = sys_performance_t::LOW_POWER;
 
   public:
-    void init();
+    void init() override;
     void what(void);
 
     Serial *communication_serial();

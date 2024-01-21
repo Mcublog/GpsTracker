@@ -15,11 +15,11 @@
 #include "app/proto/cobs/Parser.hpp"
 #include "app/proto/commands.h"
 #include "app/proto/nmea/types.h"
+#include "app/storage/Log.hpp"
+#include "app/storage/common.hpp"
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
-#include "app/storage/common.hpp"
-#include "app/storage/GnssLog.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME comm
 #define LOG_MODULE_LEVEL (3)
@@ -28,7 +28,7 @@
  //>>---------------------- Locals
 CobsParser *m_parser = nullptr;
 GnssParser *m_gnssp = nullptr;
-GnssLog m_log;
+Log *m_log = nullptr;
 
 static bool m_command_handler(const command_t *command)
 {
@@ -64,11 +64,11 @@ static bool m_get_report_handler(const command_t *command)
 
     uint32_t kMaxRecords = (limit - sizeof(command_t)) / sizeof(gnss_record_v1_t);
 
-    int readed = m_log.pop(output->data, kMaxRecords);
+    int readed = m_log->pop(output->data, kMaxRecords);
     int size = readed == 0 ? sizeof(command_ack_t) : readed * sizeof(gnss_record_v1_t);
     LOG_INFO("Read/ max record in packet: %d/%d", readed, kMaxRecords);
     if (readed == 0)
-        m_log.rewing();
+        m_log->rewing();
 
     isystem()->cobs_parser()->write_message((uint8_t *)output, size);
     return true;
@@ -92,10 +92,9 @@ bool ExtPower::process(void)
 
     m_parser = isystem()->cobs_parser();
     m_gnssp = isystem()->gnss_parser();
+    m_log = isystem()->gnss_log();
 
-    m_log.init();
-    m_log.set_long_busy_callback(NULL);
-    m_log.rewing();
+    m_log->rewing();
 
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 

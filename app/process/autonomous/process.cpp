@@ -15,8 +15,8 @@
 #include "app/process/WorkingWdt.hpp"
 #include "app/process/autonomous/process.hpp"
 #include "app/proto/nmea/types.h"
+#include "app/storage/Log.hpp"
 #include "app/storage/common.hpp"
-#include "app/storage/GnssLog.hpp"
 #include "app/system/system.h"
 #include "app/utils/nmea.hpp"
 #include "app/utils/time_utils.h"
@@ -43,13 +43,10 @@ bool Autonomous::process(void)
     LOG_INFO("Performance: %s", System::performance_stringify(performance));
 
     config_t cfg = config();
-
-    GnssLog log = GnssLog();
-    log.init();
-    log.set_long_busy_callback(NULL);
-
     GnssParser *m_gnssp = isystem()->gnss_parser();
     m_gnssp->reset();
+
+    Log *log = isystem()->gnss_log();
 
     WorkingWdt wwdt = WorkingWdt();
     wwdt.load();
@@ -104,7 +101,7 @@ bool Autonomous::process(void)
             gpsdata.latitude = gnss->latitude;
             gpsdata.longitude = gnss->longitude;
             gpsdata.altitude = gnss->altitude;
-            log.append(&gpsdata);
+            log->append(&gpsdata);
         }
 
         if (m_acc_irq)
@@ -123,7 +120,7 @@ bool Autonomous::process(void)
         if (tu_get_current_time() - debug_log_mark >= kDebugLogDiff)
         {
             uint32_t current, capacity;
-            log.usage(&current, &capacity);
+            log->usage(&current, &capacity);
             LOG_INFO("%s: still working: storage: %d/%d", tu_print_current_time_only(),
                      current, capacity);
             debug_log_mark = tu_get_current_time();

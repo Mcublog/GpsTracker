@@ -8,6 +8,7 @@
 #include "app/interfaces/Serial.hpp"
 #include "app/proto/cobs/Parser.hpp"
 #include "app/proto/nmea/Parser.hpp"
+#include "app/storage/Log.hpp"
 #include "app/system/common.h"
 
 typedef union
@@ -40,7 +41,7 @@ class System
 private:
 
 public:
-    virtual void init() = 0;
+    virtual void init();
 
     virtual void what() = 0;
 
@@ -55,6 +56,7 @@ public:
     virtual Serial *communication_serial() = 0;
     virtual CobsParser *cobs_parser() = 0;
     virtual GnssParser *gnss_parser() = 0;
+    Log *gnss_log();
 
     virtual void performance_set(sys_performance_t perf) = 0;
     virtual sys_performance_t performance_get() const = 0;

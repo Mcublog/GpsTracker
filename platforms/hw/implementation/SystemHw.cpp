@@ -30,6 +30,7 @@ static GnssParser m_gnssp = GnssParser();
 //<<----------------------
 void SystemHW::init()
 {
+    System::init();
     m_cobsp.init(&m_sdev);
     m_gnssp.init(&m_gps_sdev);
 }

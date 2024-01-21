@@ -24,6 +24,7 @@
 #include "app/interfaces/System.hpp"
 #include "app/io/gpio/gpio.h"
 #include "app/storage/backup.hpp"
+#include "app/storage/GnssLog.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 //>>---------------------- Log control
@@ -33,7 +34,14 @@
 //<<----------------------
 
 //>>---------------------- Locals
+static GnssLog m_gnss_log = GnssLog();
 //<<----------------------
+
+void System::init()
+{
+    m_gnss_log.init();
+    m_gnss_log.set_long_busy_callback(NULL);
+}
 
 /**
  * @brief Go to stanby mode
@@ -91,6 +99,16 @@ sys_mode_t System::mode_get()
 /**
  * @brief
  *
+ * @return Log*
+ */
+Log *System::gnss_log()
+{
+    return reinterpret_cast<Log*>(&m_gnss_log);
+}
+
+/**
+ * @brief
+ *
  * @param mode
  */
 void System::mode_set(sys_mode_t mode)
@@ -111,17 +129,6 @@ const char *System::mode_stringify(sys_mode_t m)
         return "IDLE";
     // else if (m == AUTONOMOUS)
     return "AUTONOMOUS";
-}
-
-/**
- * @brief
- *
- * @param perf
- * @return
- */
-void System::performance_set(sys_performance_t perf)
-{
-
 }
 
 /**

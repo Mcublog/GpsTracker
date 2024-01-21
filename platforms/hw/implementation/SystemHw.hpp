@@ -9,7 +9,8 @@ class SystemHW final : public System
   private:
 
   public:
-    void init();
+
+    void init() override;
     void what(void);
 
     Serial *communication_serial();

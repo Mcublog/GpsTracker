@@ -27,6 +27,7 @@ class Log
     void set_long_busy_callback(busy_callback_t busy_callback);
     void append(const void *record);
     int pop(void *record);
+    int pop(void *records, uint32_t number_records);
     void discard(void);
     void format(void);
     void rewing(void);

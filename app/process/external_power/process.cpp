@@ -18,13 +18,14 @@
 #include "app/system/system.h"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
+#include "app/storage/common.hpp"
 #include "app/storage/GnssLog.hpp"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME comm
 #define LOG_MODULE_LEVEL (3)
 #include "app/debug/log_libs.h"
 
-//>>---------------------- Locals
+ //>>---------------------- Locals
 CobsParser *m_parser = nullptr;
 GnssParser *m_gnssp = nullptr;
 GnssLog m_log;
@@ -51,31 +52,25 @@ static bool m_command_handler(const command_t *command)
 static bool m_get_report_handler(const command_t *command)
 {
     uint32_t limit = 0;
-    command_t *output = (command_t *)isystem()->cobs_parser()->get_output_buffer(&limit);
+    command_t *output = reinterpret_cast<command_t *>(
+        isystem()->cobs_parser()->get_output_buffer(&limit));
 
-    LOG_INFO("handle: id: %#x channel: %#x max size: %d", command->id, command->channel, limit);
+    LOG_INFO("handle: id: %#x channel: %#x max size: %d", command->id, command->channel,
+             limit);
     std::memset(output, 0, limit);
 
     output->id = command->id;
     output->channel = command->channel;
 
-    uint32_t kMaxRecordsBytes = (limit - sizeof(command_t));
-    LOG_INFO("Max record in packet: %d", kMaxRecordsBytes / sizeof(gnss_record_v1_t));
+    uint32_t kMaxRecords = (limit - sizeof(command_t)) / sizeof(gnss_record_v1_t);
 
-    for (uint32_t i = 0; i < kMaxRecordsBytes; i += sizeof(gnss_record_v1_t))
-    {
-        gnss_record_v1_t data = {};
-        if (m_log.pop(&data) != 0)
-            break;
-        if (m_log.is_last_record())
-        {
-            m_log.rewing();
-            break;
-        }
-        memcpy(&output->data[i], &data, sizeof(gnss_record_v1_t));
-    }
+    int readed = m_log.pop(output->data, kMaxRecords);
+    int size = readed == 0 ? sizeof(command_ack_t) : readed * sizeof(gnss_record_v1_t);
+    LOG_INFO("Read/ max record in packet: %d/%d", readed, kMaxRecords);
+    if (readed == 0)
+        m_log.rewing();
 
-    isystem()->cobs_parser()->write_message((uint8_t *)output, kMaxRecordsBytes);
+    isystem()->cobs_parser()->write_message((uint8_t *)output, size);
     return true;
 }
 
@@ -106,11 +101,11 @@ bool ExtPower::process(void)
         if (m_gnssp->is_message_received())
         {
             lwgps_t *gnss = m_gnssp->read_message();
-            LOG_INFO("Valid status: %d: %s", gnss->is_valid, tu_print_current_time_only());
-            LOG_INFO("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
-            LOG_INFO("Latitude: %f degrees", gnss->latitude);
-            LOG_INFO("Longitude: %f degrees", gnss->longitude);
-            LOG_INFO("Altitude: %f meters", gnss->altitude);
+            LOG_DEBUG("Valid status: %d: %s", gnss->is_valid, tu_print_current_time_only());
+            LOG_DEBUG("Time: %02d:%02d:%02d", gnss->hours, gnss->minutes, gnss->seconds);
+            LOG_DEBUG("Latitude: %f degrees", gnss->latitude);
+            LOG_DEBUG("Longitude: %f degrees", gnss->longitude);
+            LOG_DEBUG("Altitude: %f meters", gnss->altitude);
         }
 
         if (m_parser->is_message_received() == false)
@@ -122,7 +117,8 @@ bool ExtPower::process(void)
         ios_message_t *msg = m_parser->read_message();
         command_parser((const command_t *)msg->data);
     }
-
-    isystem()->mode_set(sys_mode_t::IDLE);
+    sys_mode_t mode =
+        config().log.manual_mode ? sys_mode_t::AUTONOMOUS : sys_mode_t::IDLE;
+    isystem()->mode_set(mode);
     return false;
 }

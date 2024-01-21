@@ -136,6 +136,25 @@ int Log::pop(void *record)
 /**
  * @brief
  *
+ * @param record
+ * @param number_records
+ * @return int, returned number of readed records
+ */
+int Log::pop(void *records, uint32_t number_records)
+{
+    uint32_t readed = 0;
+    uint8_t *buffer = reinterpret_cast<uint8_t*>(records);
+    for (readed = 0; readed < number_records; readed++)
+    {
+        if (pop(&buffer[readed * m_fs.object_size]) != 0)
+            break;
+    }
+    return static_cast<int>(readed);
+}
+
+/**
+ * @brief
+ *
  */
 void Log::discard(void)
 {

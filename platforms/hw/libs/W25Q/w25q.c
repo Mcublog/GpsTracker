@@ -293,3 +293,19 @@ bool w25q_is_busy(w25q_t flash)
     return (status & 0x01) == 0x01;
     // return false;
 }
+
+cerror_t w25q_wrp_disable(w25q_t flash)
+{
+    wait_busy(flash);
+
+    uint8_t instr_buffer[2] = {W25Q_WR_STATUS1, 0};
+    buffer_view_t instr = {.data = instr_buffer, .size = 2};
+    cerror_t error = 0;
+
+    enable_write(flash);
+    gpio_low(flash.dev.pin);
+    error |= spi_transmit(flash.dev, instr);
+    gpio_high(flash.dev.pin);
+    wait_busy(flash);
+    return error;
+}

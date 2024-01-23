@@ -104,14 +104,13 @@ bool ExtPower::process(void)
     LOG_INFO("ExtPower::process: run");
     LOG_INFO("Performance: %s", System::performance_stringify(performance));
 
-    m_parser = isystem()->cobs_parser();
-    m_gnssp = isystem()->gnss_parser();
-
     uint32_t current, capacity;
     m_log = isystem()->gnss_log();
     // m_log->rewing();
     m_log->usage(&current, &capacity);
     LOG_INFO("storage: %d/%d", current, capacity);
+    m_parser = isystem()->cobs_parser();
+    m_gnssp = isystem()->gnss_parser();
 
     command_parser_list_init((const command_list_item_t *)&m_command_list);
 

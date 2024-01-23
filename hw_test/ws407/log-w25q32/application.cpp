@@ -31,9 +31,18 @@ void application(void)
 {
     LOG_INFO("LOG test");
 
+    uint32_t current = 0, capacity = 0;
     GnssLog log = GnssLog();
     log.init();
     log.set_long_busy_callback(NULL);
+    // log.format();
+
+    log.usage(&current, &capacity);
+    if (current != 0)
+    {
+        LOG_ERROR("current != 0");
+        System::infitite_loop();
+    }
 
     static constexpr uint8_t kMaxDataSize = 10;
     for (auto i = 0; i < kMaxDataSize; i++)
@@ -42,7 +51,6 @@ void application(void)
         dummy_data.tm = i;
         log.append(&dummy_data);
     }
-    uint32_t current = 0, capacity = 0;
 
     log.usage(&current, &capacity);
     LOG_INFO("state: %d/%d", current, capacity);
@@ -100,6 +108,7 @@ void application(void)
         LOG_ERROR("current != 0");
         System::infitite_loop();
     }
+    LOG_INFO("state: %d/%d", current, capacity);
 
     while (1)
     {

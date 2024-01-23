@@ -123,6 +123,11 @@ uint32_t page_count_from_model(w25q_model_e model);
  */
 bool w25q_is_busy(w25q_t flash);
 
+/**
+ * Disable WRP in STATUS 1
+ */
+cerror_t w25q_wrp_disable(w25q_t flash);
+
 
 #ifdef __cplusplus
 }

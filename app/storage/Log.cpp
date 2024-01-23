@@ -144,6 +144,7 @@ int Log::pop(void *records, uint32_t number_records)
 {
     uint32_t readed = 0;
     uint8_t *buffer = reinterpret_cast<uint8_t*>(records);
+    LOG_DEBUG("m_fs.object_size: %d", m_fs.object_size);
     for (readed = 0; readed < number_records; readed++)
     {
         if (pop(&buffer[readed * m_fs.object_size]) != 0)

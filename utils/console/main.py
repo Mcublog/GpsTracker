@@ -18,9 +18,10 @@ from prompt_toolkit.patch_stdout import patch_stdout
 from pylogus import logger_init
 
 # Local application imports
+import console.proto.reports as reports
 from console.commands import ConsoleCmd
 from console.proto.config import Config
-from console.proto.proto import CommandId, Message, Reports, RtcTime
+from console.proto.proto import CommandId, Message, RtcTime
 from console.version import VERSION
 
 log = logger_init(__name__, logging.DEBUG)
@@ -108,7 +109,7 @@ COMMANDS = ConsoleCommands(
      ConsoleCmd(
          'get_reports', CommandId.CMDID_GET_REPORTS,
          lambda _: Message.serialize(CommandId.CMDID_GET_REPORTS, 1, None),
-         lambda _: _)))
+         reports.receive_handler)))
 
 
 def console(sport: str):
@@ -150,6 +151,7 @@ def console(sport: str):
                         continue
                     if rx := ser.read_until(expected=b'\x00'):
                         log.info(f"PC <== RX: {rx}")
+                        cmd.receive_hander(rx)
             except Exception as e:
                 log.error(e)
 

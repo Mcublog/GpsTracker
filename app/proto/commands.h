@@ -18,8 +18,8 @@ typedef enum
 
 typedef struct
 {
-    uint32_t id;
     uint32_t channel;
+    uint32_t id;
     uint8_t  data[];
 } command_t;
 

@@ -30,8 +30,8 @@ class MessageLowLevel(ct.Structure):
     _pack_ = 1
     _fields_ = [
         ('size', ct.c_uint32),
-        ('id', ct.c_uint32),
         ('channel', ct.c_uint32),
+        ('id', ct.c_uint32),
         ('data', DataPointer),
     ]
 

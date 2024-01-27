@@ -32,7 +32,7 @@ Log *m_log = nullptr;
 
 static bool m_command_handler(const command_t *command)
 {
-    LOG_INFO("handle: id: %#x channel: %#x", command->id, command->channel);
+    LOG_INFO("handle: id: %#x", command->id);
     if (command->id == CMDID_SET_RTC)
         tu_set_time((time_t *)command->data);
     else if (command->id == CMDID_STORAGE_CLEAR)
@@ -55,25 +55,24 @@ static bool m_command_handler(const command_t *command)
     //     config_save(config);
     // }
 
-    uint32_t limit = 0;
+    uint32_t limit = 0, version = 0, channel = 0;
     uint8_t *output = isystem()->cobs_parser()->get_output_buffer(&limit);
     std::memset(output, 0, sizeof(command_ack_t));
-    isystem()->cobs_parser()->write_message((uint8_t *)output, sizeof(command_ack_t));
+    isystem()->cobs_parser()->write_message(
+        version, channel, reinterpret_cast<uint8_t *>(output), sizeof(command_ack_t));
     return true;
 }
 
 static bool m_get_report_handler(const command_t *command)
 {
-    uint32_t limit = 0;
+    uint32_t limit = 0, version = 0, channel = 0;
     command_t *output = reinterpret_cast<command_t *>(
         isystem()->cobs_parser()->get_output_buffer(&limit));
 
-    LOG_INFO("handle: id: %#x channel: %#x max size: %d", command->id, command->channel,
-             limit);
+    LOG_INFO("handle: id: %#x version: %#x", command->id);
     std::memset(output, 0, limit);
 
     output->id = command->id;
-    output->channel = command->channel;
 
     uint32_t kMaxRecords = (limit - sizeof(command_t)) / sizeof(gnss_record_v1_t);
 
@@ -81,9 +80,13 @@ static bool m_get_report_handler(const command_t *command)
     int size = readed == 0 ? sizeof(command_ack_t) : readed * sizeof(gnss_record_v1_t);
     LOG_INFO("Read/ max record in packet: %d/%d", readed, kMaxRecords);
     if (readed == 0)
+    {
+        std::memset(output, 0, sizeof(command_ack_t));
         m_log->rewing();
+    }
 
-    isystem()->cobs_parser()->write_message((uint8_t *)output, size);
+    isystem()->cobs_parser()->write_message(
+        version, channel, reinterpret_cast<uint8_t *>(output), sizeof(command_ack_t));
     return true;
 }
 

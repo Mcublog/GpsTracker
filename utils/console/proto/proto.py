@@ -26,11 +26,17 @@ class Reports(ct.Structure):
 
 DataPointer = ct.POINTER(ct.c_uint8)
 
-class MessageLowLevel(ct.Structure):
-    _pack_ = 1
+class MessageLowLevelHeader(ct.Structure):
     _fields_ = [
-        ('size', ct.c_uint32),
         ('channel', ct.c_uint32),
+        ('size', ct.c_uint32),
+        ('vesion', ct.c_uint32),
+    ]
+class MessageLowLevel(ct.Structure):
+    _fields_ = [
+        ('channel', ct.c_uint32),
+        ('size', ct.c_uint32),
+        ('vesion', ct.c_uint32),
         ('id', ct.c_uint32),
         ('data', DataPointer),
     ]

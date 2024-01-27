@@ -21,6 +21,9 @@ class SDevice : public Serial
     bool Init(ios_ctl_t *ctl);
     bool Helth(){return true;};
     bool Write(uint8_t *data, uint32_t size);
+
+  // Only emulation extend funtion
+    void register_irq(ios_irq_handler_t irq);
 };
 
 #endif // SDEVICE_H

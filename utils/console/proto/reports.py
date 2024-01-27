@@ -2,11 +2,13 @@
 import ctypes as ct
 
 from cobs import cobsr
+
 from console.proto.ack import AckV1
+from console.proto.proto import MessageLowLevelHeader
 
 
 class GnssRecordV1(ct.Structure):
-    _fields_ = [('version', ct.c_uint8), ('time', ct.c_uint64),
+    _fields_ = [('time', ct.c_uint64),
                 ('latitude', ct.c_double), ('longitude', ct.c_double),
                 ('altitude', ct.c_double)]
 
@@ -18,7 +20,7 @@ def receive_handler(data: bytes) -> None:
     print(f"number of chunk {len(chunks)}")
     if len(chunks) == 1:
         try:
-            ack = AckV1.from_buffer_copy(chunks[0])
+            ack = MessageLowLevelHeader.from_buffer_copy(chunks[0])
         except Exception as e:
             print(e)
             return

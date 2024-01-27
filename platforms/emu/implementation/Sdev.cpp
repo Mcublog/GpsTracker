@@ -84,4 +84,14 @@ bool SDevice::Write(uint8_t *data, uint32_t size)
     ssize_t writed_count = write(m_io_stream, data, size);
     return writed_count == size;
 }
+
+/**
+ * @brief Redifine irq handler
+ *
+ * @param irq
+ */
+void SDevice::register_irq(ios_irq_handler_t irq)
+{
+    m_irq_handler = irq;
+}
 //<<----------------------

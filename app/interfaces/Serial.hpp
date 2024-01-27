@@ -6,7 +6,7 @@
 
 class Serial
 {
-  private:
+  protected:
     ios_irq_handler_t m_irq_handler = nullptr;
   public:
 

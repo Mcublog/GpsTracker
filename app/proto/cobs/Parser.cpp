@@ -90,9 +90,11 @@ ios_message_t *CobsParser::read_message(void)
         LOG_ERROR("result decode: %d", result.status);
         return NULL;
     }
-    LOG_INFO("rx: size: %d", ((ios_message_t *)m_ctl.out.data)->size);
+    ios_message_t *msg = reinterpret_cast<ios_message_t *>(m_ctl.out.data);
+    LOG_INFO("rx: ch: %d version: %d size: %d ", msg->head.channel, msg->head.version,
+             msg->head.size);
 
-    return (ios_message_t *)m_ctl.out.data;
+    return msg;
 }
 
 /**
@@ -103,8 +105,34 @@ ios_message_t *CobsParser::read_message(void)
  */
 uint8_t *CobsParser::get_output_buffer(uint32_t *limit)
 {
-    *limit = m_ctl.in.limit;
-    return (uint8_t *)m_ctl.in.data;
+    *limit = m_ctl.in.limit - sizeof(ios_header_t);
+    return (uint8_t *)&m_ctl.in.data[sizeof(ios_header_t)];
+}
+
+/**
+ * @brief
+ *
+ * @param msg
+ * @return true
+ * @return false
+ */
+bool CobsParser::write(const ios_message_t *msg)
+{
+    cobsr_encode_result result =
+        cobsr_encode(m_ctl.out.data, m_ctl.out.limit, m_ctl.in.data, msg->head.size);
+    if (result.status != COBSR_ENCODE_OK)
+    {
+        LOG_ERROR("result encode: %d", result.status);
+        return false;
+    }
+    if (msg->head.size == (m_ctl.out.limit - 1))
+    {
+        LOG_ERROR("size to big");
+        return false;
+    }
+    uint32_t size = msg->head.size;
+    m_ctl.out.data[size++] = kBinaryEndChar;
+    return m_sdev->Write(m_ctl.out.data, size);
 }
 
 /**
@@ -116,22 +144,31 @@ uint8_t *CobsParser::get_output_buffer(uint32_t *limit)
  */
 bool CobsParser::write_message(uint8_t *message, uint32_t size)
 {
-    ios_message_t *msg = (ios_message_t *)m_ctl.in.data;
-    msg->size = size;
-    cobsr_encode_result result =
-        cobsr_encode(m_ctl.out.data, m_ctl.out.limit, m_ctl.in.data, size);
-    if (result.status != COBSR_ENCODE_OK)
-    {
-        LOG_ERROR("result encode: %d", result.status);
-        return false;
-    }
-    if (size == (m_ctl.out.limit - 1))
-    {
-        LOG_ERROR("size to big");
-        return false;
-    }
-    m_ctl.out.data[size++] = kBinaryEndChar;
-    return m_sdev->Write(m_ctl.out.data, size);
+    ios_message_t *msg = reinterpret_cast<ios_message_t *>(m_ctl.in.data);
+    msg->head.channel = 0;
+    msg->head.version = 0;
+    msg->head.size = size + sizeof(ios_header_t);
+    return write(msg);
+}
+
+/**
+ * @brief
+ *
+ * @param channel
+ * @param version
+ * @param message
+ * @param size
+ * @return true
+ * @return false
+ */
+bool CobsParser::write_message(uint32_t channel, uint32_t version, uint8_t *message,
+                               uint32_t size)
+{
+    ios_message_t *msg = reinterpret_cast<ios_message_t *>(m_ctl.in.data);
+    msg->head.channel = channel;
+    msg->head.version = version;
+    msg->head.size = size + sizeof(ios_header_t);
+    return write(msg);
 }
 
 /**

@@ -12,7 +12,14 @@ extern "C"
 
     typedef struct
     {
+        uint32_t channel;
         uint32_t size;
+        uint32_t version;
+    } ios_header_t;
+
+    typedef struct
+    {
+        ios_header_t head;
         uint8_t data[];
     } ios_message_t;
 

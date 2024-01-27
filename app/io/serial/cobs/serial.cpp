@@ -84,7 +84,7 @@ ios_message_t *ios_read_message(void)
         LOG_ERROR("result decode: %d", result.status);
         return NULL;
     }
-    LOG_INFO("rx: size: %d", ((ios_message_t*)m_ctl.out.data)->size);
+    LOG_INFO("rx: size: %d", ((ios_message_t*)m_ctl.out.data)->head.size);
 
     return (ios_message_t*)m_ctl.out.data;
 }
@@ -105,21 +105,21 @@ uint8_t *ios_get_output_buffer(uint32_t *limit)
 bool ios_write_message(uint8_t *message, uint32_t size)
 {
     ios_message_t *msg = (ios_message_t *)m_ctl.in.data;
-    msg->size = size;
+    msg->head.size = size;
     cobsr_encode_result result =
-        cobsr_encode(m_ctl.out.data, m_ctl.out.limit, m_ctl.in.data, size);
+        cobsr_encode(m_ctl.out.data, m_ctl.out.limit, m_ctl.in.data, msg->head.size);
     if (result.status != COBSR_ENCODE_OK)
     {
         LOG_ERROR("result encode: %d", result.status);
         return false;
     }
-    if (size == (m_ctl.out.limit - 1))
+    if (msg->head.size == (m_ctl.out.limit - 1))
     {
         LOG_ERROR("size to big");
         return false;
     }
-    m_ctl.out.data[size++] = BINARY_END_CHAR;
-    return m_sdev->Write(m_ctl.out.data, size);
+    m_ctl.out.data[msg->head.size++] = BINARY_END_CHAR;
+    return m_sdev->Write(m_ctl.out.data, msg->head.size);
 }
 
 /**

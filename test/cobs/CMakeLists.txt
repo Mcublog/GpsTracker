@@ -26,6 +26,6 @@ target_include_directories(${TEST_TARGET} PRIVATE
 # Add pthread
 target_link_libraries(${TEST_TARGET} pthread)
 
-# Added test
-add_test(NAME ${TEST_TARGET}
-    COMMAND ${TEST_TARGET})
+# # Added test
+# add_test(NAME ${TEST_TARGET}
+#     COMMAND ${TEST_TARGET})

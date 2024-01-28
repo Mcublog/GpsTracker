@@ -18,6 +18,7 @@
 #include "app/system/wrapper.h"
 #include "app/utils/delay.h"
 #include "platforms/emu/implementation/Sdev.hpp"
+#include "platforms/emu/io/tty.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME     sdev
 #define LOG_MODULE_LEVEL    (3)
@@ -56,6 +57,7 @@ bool SDevice::Init(ios_ctl_t *ctl)
         perror("open");
         exit(1);
     }
+    // set_interface_attribs(m_io_stream, 9600);
     if (m_read_thread == nullptr)
     {
         LOG_ERROR("m_read_thread == nullptr");

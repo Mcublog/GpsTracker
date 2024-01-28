@@ -12,7 +12,7 @@
 
 #include "app/io/gpio/gpio.h"
 #include "platforms/emu/config/filelist.h"
-#include "platforms/emu/io/gpio/files.h"
+#include "platforms/emu/io/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME io_gpio
 #define LOG_MODULE_LEVEL (3)

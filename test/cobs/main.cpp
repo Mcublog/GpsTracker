@@ -20,7 +20,7 @@
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
 #include "platforms/emu/implementation/Sdev.hpp"
-#include "platforms/emu/io/gpio/files.h"
+#include "platforms/emu/io/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME dcobs
 #define LOG_MODULE_LEVEL (3)

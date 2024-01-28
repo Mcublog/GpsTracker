@@ -77,7 +77,7 @@ static bool m_get_report_handler(const command_t *command)
     uint32_t kMaxRecords = (limit - sizeof(command_t)) / sizeof(gnss_record_v1_t);
 
     int readed = m_log->pop(output->data, kMaxRecords);
-    int size = readed == 0 ? sizeof(command_ack_t) : readed * sizeof(gnss_record_v1_t);
+
     LOG_INFO("Read/ max record in packet: %d/%d", readed, kMaxRecords);
     if (readed == 0)
     {

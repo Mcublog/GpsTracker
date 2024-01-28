@@ -48,7 +48,7 @@
             },
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-arm",
+            "intelliSenseMode": "gcc-x64",
             "configurationProvider": "go2sh.cmake-integration"
         }
     ]

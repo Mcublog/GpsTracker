@@ -90,7 +90,8 @@
             "justMyCode": true,
             "env": {
                 "PYTHONPATH": "${workspaceRoot}/utils"
-            }
+            },
+            "args": ["-p", "/dev/ttyS10"]
         },
     ]
 }

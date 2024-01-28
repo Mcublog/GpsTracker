@@ -10,7 +10,7 @@
  */
 #include "app/utils/delay.h"
 #include "platforms/emu/implementation/Sdev.hpp"
-#include "platforms/emu/io/gpio/files.h"
+#include "platforms/emu/io/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME main
 #define LOG_MODULE_LEVEL (3)

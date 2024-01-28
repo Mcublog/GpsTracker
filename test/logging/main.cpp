@@ -13,7 +13,7 @@
 #include "app/storage/GnssLog.hpp"
 #include "app/utils/delay.h"
 #include "app/utils/time_utils.h"
-#include "platforms/emu/io/gpio/files.h"
+#include "platforms/emu/io/files.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME ringfs
 #define LOG_MODULE_LEVEL (3)

@@ -20,6 +20,11 @@ Some useful Python scritps.
 export PYTHONPATH="${PYTHONPATH}:utils"
 ```
 
+## Related repositories
+
+* [GpsTrackerTool](https://github.com/Mcublog/GpsTrackerTool)
+* [GpsTrackerHardware](https://github.com/Mcublog/GpsTrackerHardware)
+
 ## Docs
 
 * [Motion Detection Alogrithm](/doc/MotionDetectionAlgo.md)

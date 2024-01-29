@@ -57,7 +57,7 @@ bool CobsParser::init(Serial *dev)
              {m_output_buffer, OUTPUT_BUFFER_SIZE},
              wrapper_irq_handler};
     m_sdev = dev;
-    return m_sdev->Init(&m_ctl);
+    return m_sdev->init(&m_ctl);
 }
 
 /**
@@ -132,7 +132,7 @@ bool CobsParser::write(const ios_message_t *msg)
     }
     uint32_t size = msg->head.size;
     m_ctl.out.data[size++] = kBinaryEndChar;
-    return m_sdev->Write(m_ctl.out.data, size);
+    return m_sdev->write(m_ctl.out.data, size);
 }
 
 /**

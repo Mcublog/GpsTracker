@@ -48,7 +48,7 @@ static void *read_process(void*)
         }
         LOG_RAW_INFO("\\x02%x", byte);
         ios_chunk_t data = {&byte, 1};
-        sdev_rx.IrqHandler(&data);
+        sdev_rx.irq_handler(&data);
     }
     return nullptr;
 }

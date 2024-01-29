@@ -35,7 +35,7 @@ static void *communication_reading(void*);
 static void *gnss_reading(void*);
 
 static SDevice m_sdev = SDevice("/dev/ttyS11", communication_reading);
-static SDevice m_gps_sdev = SDevice("/dev/ttyS13", gnss_reading);
+static SDevice m_gps_sdev = SDevice("/dev/ttyUSB0", gnss_reading);
 static CobsParser m_cobsp = CobsParser();
 static GnssParser m_gnssp = GnssParser();
 // static AccEmu m_acc = AccEmu();
@@ -54,7 +54,7 @@ static void read_process(SDevice *ser)
             continue;
         }
         ios_chunk_t data = {&byte, 1};
-        ser->IrqHandler(&data);
+        ser->irq_handler(&data);
     }
 }
 

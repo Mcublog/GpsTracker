@@ -45,9 +45,9 @@ SDevice::SDevice(const char *portname, void*(*read_thread)(void*))
  * @return true
  * @return false
  */
-bool SDevice::Init(ios_ctl_t *ctl)
+bool SDevice::init(ios_ctl_t *ctl)
 {
-    Serial::Init(ctl);
+    Serial::init(ctl);
     // memcpy(ctl, &m_ctl, sizeof(m_ctl));
 
     LOG_INFO("Usage: %s", m_portname);
@@ -75,7 +75,7 @@ bool SDevice::Init(ios_ctl_t *ctl)
  * @return true
  * @return false
  */
-bool SDevice::Write(uint8_t *data, uint32_t size)
+bool SDevice::write(uint8_t *data, uint32_t size)
 {
     LOG_INFO("Write: %d", size);
     if (m_io_stream == (-1))
@@ -83,7 +83,7 @@ bool SDevice::Write(uint8_t *data, uint32_t size)
         LOG_ERROR("io stream");
         return false;
     }
-    ssize_t writed_count = write(m_io_stream, data, size);
+    ssize_t writed_count = ::write(m_io_stream, data, size);
     return writed_count == size;
 }
 

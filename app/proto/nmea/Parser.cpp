@@ -44,7 +44,7 @@ bool GnssParser::init(Serial *dev)
     reset();
     m_sdev = dev;
     m_ctl.irq_handler = wrapper_irq_handler;
-    return m_sdev->Init(&m_ctl);
+    return m_sdev->init(&m_ctl);
 }
 
 /**
@@ -78,7 +78,7 @@ bool GnssParser::is_message_received(void)
             return true;
         }
     }
-    if (m_sdev->Helth() == false)
+    if (m_sdev->helth() == false)
         reset();
     return false;
 }

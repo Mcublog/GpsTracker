@@ -50,7 +50,7 @@ bool ios_serial_init(void *dev)
 {
     m_ctl.irq_handler = ios_irq_handler;
     m_sdev = reinterpret_cast<Serial*>(dev);
-    return m_sdev->Init(&m_ctl);
+    return m_sdev->init(&m_ctl);
 }
 
 /**
@@ -119,7 +119,7 @@ bool ios_write_message(uint8_t *message, uint32_t size)
         return false;
     }
     m_ctl.out.data[msg->head.size++] = BINARY_END_CHAR;
-    return m_sdev->Write(m_ctl.out.data, msg->head.size);
+    return m_sdev->write(m_ctl.out.data, msg->head.size);
 }
 
 /**

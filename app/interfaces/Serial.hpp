@@ -10,17 +10,17 @@ class Serial
     ios_irq_handler_t m_irq_handler = nullptr;
   public:
 
-    virtual bool Init(ios_ctl_t *ctl)
+    virtual bool init(ios_ctl_t *ctl)
     {
         m_irq_handler = ctl->irq_handler;
         return true;
     };
 
-    virtual bool Helth() = 0;
-    virtual bool Write(uint8_t *data, uint32_t size) { return false; };
-    virtual bool Read(ios_message_t *message) { return false; };
+    virtual bool helth() = 0;
+    virtual bool write(uint8_t *data, uint32_t size) { return false; };
+    virtual bool read(ios_message_t *message) { return false; };
 
-    uint32_t IrqHandler(ios_chunk_t *chunk);
+    uint32_t irq_handler(ios_chunk_t *chunk);
 };
 
 #endif // APP_INTERFACES_SERIAL_SERIAL_HPP

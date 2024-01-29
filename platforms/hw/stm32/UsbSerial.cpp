@@ -16,13 +16,13 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
-bool USBSerial::Init(ios_ctl_t *ctl)
+bool USBSerial::init(ios_ctl_t *ctl)
 {
-    Serial::Init(ctl);
+    Serial::init(ctl);
     return CDC_Get_Ctl(ctl);
 }
 
-bool USBSerial::Write(uint8_t *data, uint32_t size)
+bool USBSerial::write(uint8_t *data, uint32_t size)
 {
     return CDC_Transmit_FS(data, size) == USBD_OK;
 }

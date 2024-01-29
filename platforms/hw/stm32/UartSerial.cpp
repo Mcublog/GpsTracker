@@ -20,14 +20,14 @@
 #include "app/debug/log_libs.h"
 //<<----------------------
 
-bool UartSerial::Init(ios_ctl_t *ctl)
+bool UartSerial::init(ios_ctl_t *ctl)
 {
-    Serial::Init(ctl);
-    Helth();
+    Serial::init(ctl);
+    helth();
     return true;
 }
 
-bool UartSerial::Helth()
+bool UartSerial::helth()
 {
     UART_HandleTypeDef *huart = USART_Get_Gnss_handle();
 
@@ -55,7 +55,7 @@ bool UartSerial::Helth()
     return err == false;
 };
 
-bool UartSerial::Write(uint8_t *data, uint32_t size)
+bool UartSerial::write(uint8_t *data, uint32_t size)
 {
     UART_HandleTypeDef *huart = USART_Get_Gnss_handle();
     return HAL_UART_Transmit(huart, data, size, 10) == HAL_OK;

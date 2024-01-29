@@ -21,7 +21,7 @@
  * @param chunk
  * @return uint32_t
  */
-uint32_t Serial::IrqHandler(ios_chunk_t *chunk)
+uint32_t Serial::irq_handler(ios_chunk_t *chunk)
 {
     if (m_irq_handler == nullptr)
     {
